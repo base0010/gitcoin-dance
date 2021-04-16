@@ -24,7 +24,7 @@ It runs up a Hardhat node, compile contracts, generates typescript interfaces, c
 
 The frontend should open at http://localhost:3000/
 
-Interacting with NFT DANCE Contracts:
+### Interacting with NFT DANCE Contracts:
 1. Get the IPFS hash of an image and place it in the [Mint NFT]
 2. Wait for tx to confirm (you'll see notification from the UI/MM)
 3. Query the NFT ID number [Query NFT] if it was your first one then query `1` (it will be higher if you run test cases first or had more mints for example)
