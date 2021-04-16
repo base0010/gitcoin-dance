@@ -29,10 +29,10 @@ Interacting with NFT DANCE Contracts:
 2. Wait for tx to confirm (you'll see notification from the UI/MM)
 3. Query the NFT ID number [Query NFT] if it was your first one then query `1` (it will be higher if you run test cases first or had more mints for example)
 
-Running Automated Tests:
+### Running Automated Tests:
 1. go to the root project directory
 2. Run `npx hardhat compile && npx hardhat test`
 
-Troubleshooting:
+### Troubleshooting:
 Ensure you are useing RPC to http://localhost:8545.
 You may also need to set the chainID to 31337 if you are useing Hardhat blockchain development node.
