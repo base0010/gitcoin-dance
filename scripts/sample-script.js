@@ -3,6 +3,8 @@
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+import {ERC721Enumerable} from "../frontend/src/hardhat/typechain/ERC721Enumerable";
+
 const hre = require("hardhat");
 
 async function main() {
@@ -14,12 +16,10 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const ERC721Mintable = await hre.ethers.getContractFactory("ERC721Mintable");
+  const gitd = await ERC721Mintable.deploy()
 
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("Deployed NFT to:", gitd.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
