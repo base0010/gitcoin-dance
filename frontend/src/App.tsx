@@ -4,6 +4,7 @@ import './App.css';
 import { Symfoni } from "./hardhat/SymfoniContext";
 import { NFT } from './components/NFT';
 
+
 function App() {
 
   return (
