@@ -5,6 +5,7 @@ import Bracket from './Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
 import gameArray from '../fixtures/gameData';
 
+
 import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
 export function Home(props) {
   const [gameData1, setGameData1] = useState(null);
@@ -30,29 +31,29 @@ export function Home(props) {
           alt="gitcoinLogo"
         />
       </Link>
-      {/*<Link to="/create">*/}
-      {/*  <h1 className="link">CREATE NEW</h1>*/}
-      {/*</Link>*/}
-      {/*{!gameData1 && (*/}
-      {/*  <div>*/}
-      {/*    {' '}*/}
-      {/*    <LinearProgress />*/}
-      {/*  </div>*/}
-      {/*)}*/}
-      {/*{gameData1 && (*/}
-      {/*  <span>*/}
-      {/*    <div className="milkyBackground">*/}
-      {/*      <h1 className="greenText paddingTwenty textAlign">*/}
-      {/*        LATEST ACTIVITY*/}
-      {/*      </h1>*/}
-      {/*      <LatestActivityCarousel gameData={gameData1} />*/}
-      {/*    </div>*/}
-      {/*    <div>*/}
-      {/*      <h1 className="paddingTwenty textAlign">CURRENT ROUND</h1>*/}
-      {/*      <Bracket gameData1={gameData1} />*/}
-      {/*    </div>*/}
-      {/*  </span>*/}
-      {/*)}*/}
+      <Link to="/create">
+       <h1 className="link">CREATE NEW</h1>
+      </Link>
+      {!gameData1 && (
+        <div>
+         {' '}
+         <LinearProgress />
+      </div>
+     )}
+      {gameData1 && 
+      <span>
+       <div className="milkyBackground">
+          <h1 className="greenText paddingTwenty textAlign">
+           LATEST ACTIVITY
+       </h1>
+          <LatestActivityCarousel gameData={gameData1} />
+        </div>
+        <div>
+          <h1 className="paddingTwenty textAlign">CURRENT ROUND</h1>
+          <Bracket gameData1={gameData1} />
+       </div>
+      </span>
+      }
     </div>
   );
 }
