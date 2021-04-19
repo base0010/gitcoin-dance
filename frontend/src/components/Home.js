@@ -5,6 +5,7 @@ import Bracket from './Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
 import gameArray from '../fixtures/gameData';
 
+import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
 export function Home(props) {
   const [gameData1, setGameData1] = useState(null);
 
@@ -25,7 +26,7 @@ export function Home(props) {
           className="marginTen"
           height="90px"
           width="145px"
-          src="../assets/gitcoin/gitcoinBanner.svg"
+          src={gitcoinBanner}
           alt="gitcoinLogo"
         />
       </Link>

@@ -11,13 +11,12 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "ethers": "^5.0.17",
-    "node-sass": "^5.0.0",
+    "node-sass": "^4.14.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "3.4.3",
     "typescript": "^3.9.7",
-    "web3modal": "^1.9.1",
-    "webpack": "^4.42.0"
+    "web3modal": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,7 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "webpack-cli": "^4.6.0"
-  }
+  "devDependencies": {}
 }
