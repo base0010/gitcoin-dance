@@ -7,10 +7,14 @@ import 'antd/dist/antd.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
       <BrowserRouter>
-          <App/>
+          <App />
+          <ToastContainer />
       </BrowserRouter>
   ,
   document.getElementById('root')

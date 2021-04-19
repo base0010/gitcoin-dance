@@ -9,15 +9,19 @@ import {
   makeStyles,
   Backdrop,
 } from '@material-ui/core/';
+import {
+  Input
+} from "antd"
 import nfts from '../assets';
 import Timer from './Timer';
-
+import { toast } from 'react-toastify';
 const classNames = require('classnames');
 
 export function Bracket(props) {
   const { gameData1 } = props;
   // const [gameData1, setGameData1] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [voting, setVoting] = useState(false);
   const [activeNft, setActiveNft] = useState(null);
 
   const useStyles = makeStyles((theme) => ({
@@ -49,6 +53,13 @@ export function Bracket(props) {
     setActiveNft(active);
   };
 
+  const Msg = ({ closeToast, toastProps }) => (
+    <div>
+       <a>PENDING</a> vote sent
+    </div>
+  )
+  
+
   return (
     <div>
       {activeNft && (
@@ -77,8 +88,12 @@ export function Bracket(props) {
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >
+            
             <div>
+              
               <DialogTitle id="form-dialog-title">{activeNft.name}</DialogTitle>
+              { !voting &&
+              <span>
               <DialogContent>
                 <img width="250px" height="250px" src={activeNft.src} alt={activeNft.description} />
                 <a style={{ display: 'block' }} href="#">
@@ -96,12 +111,44 @@ export function Bracket(props) {
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => console.log('voting logic')}
+                  onClick={() => setVoting(true)}
                   color="primary"
                 >
                   Vote
                 </Button>
               </DialogActions>
+              </span>
+            }
+            {
+              voting &&
+              <span>
+              <DialogContent>
+                <img width="250px" height="250px" src={activeNft.src} alt={activeNft.description} />
+                <p>How Much DAI?</p>
+                <Input style={{width: "250px", display: "flex"}}></Input>
+                <p>DAI Remaining: 0</p>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => setVoting(false)}
+                  color="primary"
+                >
+                  Cancel
+                </Button>
+                <Button
+                onClick={() => {
+                  setActiveNft(null);
+                  setModalOpen(false);
+                  setVoting(false);
+                  toast(Msg)
+                }}
+                color="primary"
+                >
+                  Ok
+                </Button>
+              </DialogActions>
+              </span>
+            }
             </div>
           </Dialog>
         </Backdrop>
