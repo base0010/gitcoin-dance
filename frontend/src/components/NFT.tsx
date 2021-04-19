@@ -27,6 +27,7 @@ export const NFT: React.FC<Props> = () => {
                 getNftInfo(await nft.instance.tokenURI(1))
             }
         }
+
     })
 
     const handleGetNftInfo = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{

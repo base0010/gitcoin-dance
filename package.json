@@ -9,6 +9,7 @@
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.4",
     "@types/node": "^14.14.9",
+    "@types/react-router-dom": "^5.1.7",
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.2.0",
     "ethers": "^5.0.21",
@@ -16,6 +17,7 @@
     "hardhat-deploy": "^0.7.0-beta.44",
     "hardhat-deploy-ethers": "^0.3.0-beta.7",
     "hardhat-typechain": "^0.3.4",
+    "ipfs-http-client": "^49.0.4",
     "ts-generator": "^0.1.1",
     "ts-morph": "^9.0.0",
     "ts-node": "^9.0.0",
@@ -37,5 +39,9 @@
     "url": "https://github.com/symfoni/hardhat-react-boilerplate/issues"
   },
   "homepage": "https://github.com/symfoni/hardhat-react-boilerplate#readme",
-  "dependencies": {}
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "ipfs-core": "^0.5.4",
+    "react-router-dom": "^5.2.0"
+  }
 }

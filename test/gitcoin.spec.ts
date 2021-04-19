@@ -1,7 +1,10 @@
 import { ethers } from "hardhat";
+import * as ipfsClient from "ipfs-http-client"
+import * as fs from 'fs'
 import { Signer } from "ethers";
 import { assert, expect } from "chai";
 import {Contract} from "hardhat/internal/hardhat-network/stack-traces/model";
+import {readFileSync} from "fs";
 
 describe("Deploy Gitcoin Dance ERC721 Contract", function () {
   let accounts: Signer[];
@@ -21,6 +24,16 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
 
     expect(await gitdance.name()).to.equal("Gitcoin Dance NFT")
 
+  });
+//before
+  it("should upload the images in test/nftimages to ipfs", async function(){
+    //disable timeout
+    this.timeout(0)
+    const filecontent = readFileSync('test/nftimages/adventureCat.gif')
+    const infuraIPFS = ipfsClient({host:'ipfs.infura.io',port:5001, protocol:'https' })
+
+    let cid = await infuraIPFS.add({content:filecontent})
+    console.log(cid)
   })
 
   it("should mint an NFT with an image of the cat", async function (){
@@ -35,5 +48,5 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
      expect(fired_event !== undefined, "We had an NFT mint event need to parse tho")
 
 
-  })
+  });
 });

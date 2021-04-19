@@ -1,8 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import './main.scss'
+import "./colors.scss"
+
 import { Symfoni } from "./hardhat/SymfoniContext";
 import { NFT } from './components/NFT';
+import {Route, Switch} from 'react-router-dom'
+import {Home} from './components/Home'
 
 function App() {
 
@@ -10,10 +15,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Symfoni autoInit={true} >
-
-          <NFT></NFT>
         </Symfoni>
+          <Switch>
+              / <Route exact path="/"  component={Home} />
+              / <Route exact path="/nft" component={NFT}  />
+          </Switch>
       </header>
+
     </div>
   );
 }
