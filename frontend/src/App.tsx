@@ -15,16 +15,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+      </header>
         <Symfoni autoInit={true} >
-
           <Switch>
               / <Route exact path="/"  component={Home} />
               / <Route exact path="/nft" component={NFT}  />
               / <Route exact path="/vote" component={VoteButton} />
           </Switch>
         </Symfoni>
-      </header>
-
     </div>
   );
 }
