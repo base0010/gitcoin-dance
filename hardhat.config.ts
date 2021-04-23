@@ -16,8 +16,8 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
   }
 });
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+const mnemonic:string =  "test test test test test test test test test test test junk";
+const urlOverride = undefined;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -30,18 +30,115 @@ const config: HardhatUserConfig = {
     hardhat: {
       inject: false, // optional. If true, it will EXPOSE your mnemonic in your frontend code. Then it would be available as an "in-page browser wallet" / signer which can sign without confirmation.
       accounts: {
-        mnemonic: "test test test test test test test test test test test junk", // test test test test test test test test test test test junk
+        mnemonic: mnemonic, // test test test test test test test test test test test junk
       },
     },
-    // hardhat: {
-    //   accounts: [
-    //     {
-    //       balance: "10000000000000000000000",
-    //       privateKey:
-    //         "0xe87d780e4c31c953a68aef2763df56599c9cfe73df4740fc24c2d0f5acd21bae",
-    //     },
-    //   ],
-    // },
+    localhost: {
+      accounts: {
+        accountsBalance: "0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        mnemonic,
+      },
+      chainId: 1337,
+      loggingEnabled: false,
+      saveDeployments: false,
+      url: urlOverride || "http://localhost:8545",
+    },
+    mainnet: {
+      accounts: { mnemonic },
+      chainId: 1,
+      url: urlOverride || "http://localhost:8545",
+    },
+    rinkeby: {
+      accounts: { mnemonic },
+      chainId: 4,
+      url: urlOverride || "http://localhost:8545",
+    },
+    goerli: {
+      accounts: { mnemonic },
+      chainId: 5,
+      url: urlOverride || "http://localhost:8545",
+    },
+    kovan: {
+      accounts: { mnemonic },
+      chainId: 42,
+      url: urlOverride || "http://localhost:8545",
+    },
+    matic: {
+      accounts: { mnemonic },
+      chainId: 137,
+      url: urlOverride || "http://localhost:8545",
+    },
+    mumbai: {
+      accounts: { mnemonic },
+      chainId: 80001,
+      url: urlOverride || "https://rpc-mumbai.matic.today",
+    },
+    arbitrumtest: {
+      accounts: { mnemonic },
+      chainId: 79377087078960,
+      url: urlOverride || "https://kovan3.arbitrum.io/rpc",
+    },
+    xdai: {
+      accounts: { mnemonic },
+      chainId: 100,
+      url: urlOverride || "http://localhost:8545",
+    },
+    bsctestnet: {
+      accounts: { mnemonic },
+      chainId: 97,
+      url: urlOverride || "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    },
+    bsc: {
+      accounts: { mnemonic },
+      chainId: 56,
+      url: urlOverride || "https://bsc-dataseed.binance.org/",
+    },
+    hecotestnet: {
+      accounts: { mnemonic },
+      chainId: 256,
+      url: urlOverride || "https://http-testnet.hecochain.com",
+    },
+    harmony: {
+      accounts: { mnemonic },
+      chainId: 1666600000,
+      url: urlOverride || "https://api.harmony.one/",
+    },
+    harmonytestnet: {
+      accounts: { mnemonic },
+      chainId: 1666700000,
+      url: urlOverride || "https://api.s0.b.hmny.io/",
+    },
+    heco: {
+      accounts: { mnemonic },
+      chainId: 128,
+      url: urlOverride || "https://http-mainnet.hecochain.com",
+    },
+
+    avalanchefuji: {
+      accounts: { mnemonic },
+      chainId: 43113,
+      url: urlOverride || "https://api.avax-test.network/ext/bc/C/rpc",
+    },
+    avalanche: {
+      accounts: { mnemonic },
+      chainId: 43114,
+      url: urlOverride || "https://api.avax.network/ext/bc/C/rpc",
+    },
+    fantomtestnet: {
+      accounts: { mnemonic },
+      chainId: 4002,
+      url: urlOverride || "https://rpc.testnet.fantom.network/",
+    },
+    fantom: {
+      accounts: { mnemonic },
+      chainId: 250,
+      url: urlOverride || "https://rpcapi.fantom.network",
+    },
+    moonbasealpha: {
+      accounts: { mnemonic },
+      chainId: 1287,
+      url: urlOverride || "https://rpc.testnet.moonbeam.network",
+    },
   },
   solidity: {
     compilers: [
