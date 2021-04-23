@@ -14,13 +14,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+      </header>
         <Symfoni autoInit={true} >
-        </Symfoni>
           <Switch>
               / <Route exact path="/"  component={Home} />
               / <Route exact path="/nft" component={NFT}  />
           </Switch>
-      </header>
+        </Symfoni>
+
 
     </div>
   );
