@@ -5,6 +5,7 @@ interface Props {}
 
 export const NFT: React.FC<Props> = () => {
     const nft = useContext(ERC721MintableContext)
+
     //todo: statenames are kinda janky redux or some complex state store needed
     const [nftInfo, getNftInfo] = useState("");
     const [uri, setUri] = useState("http://placehold.jp/300x300.png");
@@ -21,6 +22,7 @@ export const NFT: React.FC<Props> = () => {
     }
 
     useEffect(()=>{
+
         const doAsync = async()=>{
             //get default nft at id 1
             if(nft.instance) {

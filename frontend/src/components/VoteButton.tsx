@@ -1,22 +1,24 @@
-import {ERC721MintableContext, SymfoniContext, ProviderContext} from "../hardhat/SymfoniContext";
+import {ERC721MintableContext, SymfoniContext, ProviderContext} from "./../hardhat/SymfoniContext";
 import React, {useContext,useEffect} from 'react'
 
 interface Props {};
 export const VoteButton: React.FC<Props> = () => {
     //change
+    const vote = useContext(ERC721MintableContext);
     const [provider, setProvider] = useContext(ProviderContext);
 
-    const vote = useContext(ERC721MintableContext);
-
-
     useEffect(()=>{
-        const connToMatic = async()=>{
-            const network = await provider?.getNetwork()
-            if (network?.chainId != 137) {
-                //toastify needs matic
+
+        const getChain = async()=>{
+            const net = await provider?.getNetwork();
+            const chainId = net?.chainId;
+            if(chainId === 137){
+                console.log("connected to MATIC")
             }
+            else{console.log("Need to Connect to matic")}
         }
-        connToMatic();
+        getChain();
+
     },[])
 
     function handleVote(votes:number){
@@ -27,7 +29,7 @@ export const VoteButton: React.FC<Props> = () => {
 
     return(
         <div>
-            <button onClick={(e)=>{return 1;}}/>
+            <button onClick={(e)=>{console.log(provider);}}/>
         </div>
     )
 }
