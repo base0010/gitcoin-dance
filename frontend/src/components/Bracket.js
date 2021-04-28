@@ -15,6 +15,7 @@ import {
 import nfts from '../assets';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
+import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
 const classNames = require('classnames');
 
 export function Bracket(props) {
@@ -55,7 +56,8 @@ export function Bracket(props) {
 
   const Msg = ({ closeToast, toastProps }) => (
     <div>
-       <a>PENDING</a> vote sent
+      <img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
+       <a >PENDING</a> vote sent
     </div>
   )
   
