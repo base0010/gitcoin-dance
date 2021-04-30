@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
-import nfts from '../assets';
+import {nfts} from '../assets';
 
 const contentStyle = {
   //   height: '160px',

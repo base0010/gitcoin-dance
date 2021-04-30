@@ -1,4 +1,15 @@
-const nfts = [
+export interface ActiveNFT {
+  id: string | null;
+  src: string | null;
+  description: string | null;
+  name?: string | null;
+}
+
+
+
+
+
+export const nfts : ActiveNFT[]  = [
   {
     id: 'b304b757-30cf-4c16-a04b-8ad9ca369fd7',
     src: require('./nfts/adventureCat.gif'),
@@ -81,4 +92,4 @@ const nfts = [
   },
 ];
 
-export default nfts;
+
