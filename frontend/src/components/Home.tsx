@@ -7,8 +7,8 @@ import gameArray from '../fixtures/gameData';
 
 
 import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
-export function Home(props) {
-  const [gameData1, setGameData1] = useState(null);
+export function Home(props : any) {
+  const [gameData1, setGameData1] = useState<any>(null);
 
   useEffect(  () => {
     const getGameData = async() =>{

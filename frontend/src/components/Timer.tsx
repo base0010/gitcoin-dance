@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Timer = () => {
-  const [timerDays, setTimerDays] = useState('00');
-  const [timerHours, setTimerHours] = useState('00');
-  const [timerMinutes, setTimerMinutes] = useState('00');
-  const [timerSeconds, setTimerSeconds] = useState('00');
+  const [timerDays, setTimerDays] = useState(0o0);
+  const [timerHours, setTimerHours] = useState(0o0);
+  const [timerMinutes, setTimerMinutes] = useState(0o0);
+  const [timerSeconds, setTimerSeconds] = useState(0o0);
 
-  const interval = useRef();
+  const interval : any = useRef<number | undefined>();
 
-  const startTimer = (countdownDate) => {
+  const startTimer = (countdownDate : any) => {
     const now = new Date().getTime();
     const distance = countdownDate - now;
 
@@ -29,7 +29,7 @@ const Timer = () => {
     }
   };
 
-  function saveInLocalStorage(time) {
+  function saveInLocalStorage(time: any) {
     localStorage.setItem('timer', time);
   }
 
