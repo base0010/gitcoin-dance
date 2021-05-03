@@ -15,7 +15,11 @@ import {
 import nfts from '../assets';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
+import {VoteButton} from "./VoteButton";
+
+
 const classNames = require('classnames');
+
 
 export function Bracket(props) {
   const { gameData1 } = props;
@@ -119,7 +123,9 @@ export function Bracket(props) {
               </DialogActions>
               </span>
             }
+              <VoteButton> </VoteButton>
             {
+
               voting &&
               <span>
               <DialogContent>
@@ -127,6 +133,7 @@ export function Bracket(props) {
                 <p>How Much DAI?</p>
                 <Input style={{width: "250px", display: "flex"}}></Input>
                 <p>DAI Remaining: 0</p>
+                <VoteButton></VoteButton>
               </DialogContent>
               <DialogActions>
                 <Button

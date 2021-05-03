@@ -32,7 +32,7 @@ export function Home(props) {
         />
       </Link>
       <Link to="/create">
-       <h1 className="link">CREATE NEW</h1>
+       {/*<h1 className="link">CREATE NEW</h1>*/}
       </Link>
       {!gameData1 && (
         <div>

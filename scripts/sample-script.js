@@ -1,4 +1,4 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional 
+// We require the Hardhat Runtime Environment explicitly here. This is optional
 // but useful for running the script in a standalone fashion through `node <script>`.
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
@@ -8,18 +8,13 @@ import {ERC721Enumerable} from "../frontend/src/hardhat/typechain/ERC721Enumerab
 const hre = require("hardhat");
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile 
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
 
-  // We get the contract to deploy
   const ERC721Mintable = await hre.ethers.getContractFactory("ERC721Mintable");
   const gitd = await ERC721Mintable.deploy()
 
   console.log("Deployed NFT to:", gitd.address)
+
+  const MaticVoting = await hre.ethers.getContractFactory("Root")
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -1,18 +1,23 @@
 pragma solidity ^0.8.0;
-import "./ERC721.sol";
-import "../access/AccessControl.sol";
-import "../utils/Counters.sol";
-import "../utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract ERC721Mintable is ERC721, AccessControl{
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    string private baseURI = "https://gitcoin.dance/";
+    bytes32 public constant MATIC_ROLE = keccak256("MATIC_ROLE");
+    bytes32 public constant ZKSYNC_ROLE = keccak256("ZKSYNC_ROLE");
+
+//    string private baseURI = "https://gitcoin.dance/";
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     using Strings for uint256;
-    mapping(uint256=>string) private _tokenURIs;
+    mapping(uint256=>string) public _tokenURIs;
+
+    mapping(uint256=>uint256) public _votesById;
 
     event NFTMinted(uint256 nftId, string uri);
 
@@ -21,18 +26,19 @@ contract ERC721Mintable is ERC721, AccessControl{
         _setupRole(MINTER_ROLE, msg.sender);
     }
 
+
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 
-    function resetBaseURI(string memory newBaseURI) external{
-        require(
-            hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
-            "Cant reset URI not admin"
-            );
-        baseURI = newBaseURI;
-
-    }
+//    function resetBaseURI(string memory newBaseURI) external{
+//        require(
+//            hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
+//            "Cant reset URI not admin"
+//        );
+//        baseURI = newBaseURI;
+//
+//    }
 
     function _setTokenURI(uint256 tokenId, string memory tokenURI) internal virtual{
         require(hasRole(MINTER_ROLE,msg.sender), "Not Minter Role");
@@ -58,4 +64,6 @@ contract ERC721Mintable is ERC721, AccessControl{
         _setTokenURI(newTokenId, tokenURI);
         emit NFTMinted(newTokenId, tokenURI);
     }
+
+
 }

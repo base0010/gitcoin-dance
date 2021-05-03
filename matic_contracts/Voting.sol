@@ -83,11 +83,21 @@ function transfer(address recipient, uint256 amount) external returns (bool);
 function approve(address spender, uint256 amount) external returns (bool);
 function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
-
 event Transfer(address indexed from, address indexed to, uint256 value);
 event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
+contract ChildVoting {
+    event Data(address indexed from, bytes bytes_data);
+    uint256 public data;
+
+    function sendVotesBack(bytes memory bytes_data) public {
+        data = abi.decode(bytes_data, (uint256));
+        emit Data(msg.sender, bytes_data);
+    }f
+}
+
+//this one is the ultimate source of truth on ETH chain
 contract Voting{
 
 using Counters for Counters.Counter;
