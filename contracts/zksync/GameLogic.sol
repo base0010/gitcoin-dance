@@ -102,9 +102,12 @@ contract GameLogic is ERC721Mintable {
         address[indexToGet] winners;
         for(uint i = 0; i < indexToGet; i++){
            address winner = determineBracketWinner(i);
-            winners.push(winner);
+           uint winningNFT = nftIdByAddress[winner];
+//            winners.push(winner);
         }
-        return winners;
+
+//        return winners;
+
     }
 
     function getBracketEntropy(uint num_brackets) returns(uint bracketNo){
