@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  LinearProgress,
   Dialog,
   Button,
   DialogContent,
@@ -12,54 +11,47 @@ import {
 import {
   Input
 } from "antd"
-import nfts from '../assets';
+import { nfts, ActiveNFT}  from '../assets/index';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
+
 import {VoteButton} from "./VoteButton";
 
-
+import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
 const classNames = require('classnames');
 
 
-export function Bracket(props) {
+export function Bracket(props: any) {
   const { gameData1 } = props;
-  // const [gameData1, setGameData1] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [voting, setVoting] = useState(false);
-  const [activeNft, setActiveNft] = useState(null);
+  const [activeNft, setActiveNft] = useState<null | ActiveNFT>(null);
 
   const useStyles = makeStyles((theme) => ({
-    backdrop: {
+    backDrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: '#fff',
     },
   }));
 
+
   const classes = useStyles();
 
-  // useEffect(async () => {
-  //   const getGameData1 = async () => {
-  //     const result = await fetch('http://localhost:3000/game', {
-  //       method: 'GET',
-  //     });
-  //     return result.json();
-  //   };
-  //   if (!gameData1) {
-  //     const res = await getGameData1();
-  //     setGameData1(res);
-  //   }
-  // });
-
-  const openModal = (nft) => {
+  const openModal = (nft: any) => {
     const active = nfts.find((n) => n.id === nft.gifId);
-    active.name = nft.name;
-    setModalOpen(true);
-    setActiveNft(active);
+    if(active) {
+      active.name = nft.name;
+      setModalOpen(true);
+      setActiveNft(active);
+    } else {
+      toast("Something went wrong")
+    }
   };
 
-  const Msg = ({ closeToast, toastProps }) => (
+  const Msg = ({ closeToast, toastProps } : any) => (
     <div>
-       <a>PENDING</a> vote sent
+      <img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
+       <a >PENDING</a> vote sent
     </div>
   )
   
@@ -67,7 +59,7 @@ export function Bracket(props) {
   return (
     <div>
       {activeNft && (
-        <Backdrop className={classes.backdrop} open={modalOpen}>
+        <Backdrop className={classes.backDrop} open={modalOpen}>
           <Dialog
             BackdropProps={{
               classes: {
@@ -99,7 +91,7 @@ export function Bracket(props) {
               { !voting &&
               <span>
               <DialogContent>
-                <img width="250px" height="250px" src={activeNft.src} alt={activeNft.description} />
+                <img width="250px" height="250px" src={activeNft.src || ""} alt={activeNft.description || ""} />
                 <a style={{ display: 'block' }} href="#">
                   View On Etherscan
                 </a>
@@ -129,7 +121,7 @@ export function Bracket(props) {
               voting &&
               <span>
               <DialogContent>
-                <img width="250px" height="250px" src={activeNft.src} alt={activeNft.description} />
+                <img width="250px" height="250px" src={activeNft.src || ""} alt={activeNft.description || ""} />
                 <p>How Much DAI?</p>
                 <Input style={{width: "250px", display: "flex"}}></Input>
                 <p>DAI Remaining: 0</p>
@@ -166,7 +158,7 @@ export function Bracket(props) {
       {gameData1 && (
         <main id="tournament">
           <ul className="round round-1">
-            {gameData1.map((nft, i) => {
+            {gameData1.map((nft : any, i : number) => {
               if (i % 2 !== 0) {
                 const bottomClass = classNames({
                   game: true,
@@ -213,75 +205,53 @@ export function Bracket(props) {
           </ul>
           <ul className="round round-2">
             <li className="spacer">&nbsp;</li>
-
             <li className="game game-top winner">
-              {/* Lousville <span>82</span> */}
             </li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom ">
-              {/* Colo St <span>56</span> */}
             </li>
-
             <li className="spacer">&nbsp;</li>
-
             <li className="game game-top winner">
-              {/* Oregon <span>74</span> */}
             </li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom ">
-              {/* Saint Louis <span>57</span> */}
             </li>
-
             <li className="spacer">&nbsp;</li>
-
-            <li className="game game-top ">{/* Memphis <span>48</span> */}</li>
+            <li className="game game-top "></li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom winner">
-              {/* Mich St <span>70</span> */}
             </li>
 
             <li className="spacer">&nbsp;</li>
 
             <li className="game game-top ">
-              {/* Creighton <span>50</span> */}
             </li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom winner">
-              {/* Duke <span>66</span> */}
             </li>
 
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-3">
             <li className="spacer">&nbsp;</li>
-
             <li className="game game-top winner">
-              {/* Lousville <span>77</span> */}
             </li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom ">
-              {/* Oregon <span>69</span> */}
             </li>
-
             <li className="spacer">&nbsp;</li>
-
-            <li className="game game-top ">{/* Mich St <span>61</span> */}</li>
+            <li className="game game-top "></li>
             <li className="game game-spacer">&nbsp;</li>
             <li className="game game-bottom winner">
-              {/* Duke <span>71</span> */}
             </li>
-
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-4">
             <li className="spacer">&nbsp;</li>
-
             <li className="game game-top winner">
-              {/* Lousville <span>85</span> */}
             </li>
             <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom ">{/* Duke <span>63</span> */}</li>
-
+            <li className="game game-bottom "></li>
             <li className="spacer">&nbsp;</li>
           </ul>
         </main>
