@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
-library MathLog {
-    function log2(uint x) returns (uint y){
+contract MathLog {
+    function  log2(uint x) public returns (uint y){
         assembly {
             let arg := x
             x := sub(x,1)

@@ -57,12 +57,6 @@ export const ZKSyncTest: React.FC<Props> = () => {
             // console.log(depositReceipt)
         }
     }
-
-    useEffect(()=>{
-        setProviders()
-        zkBalance()
-
-    }, [])
     const zkBalance = async() =>{
         if(zWallet) {
             // @ts-ignore
@@ -76,6 +70,12 @@ export const ZKSyncTest: React.FC<Props> = () => {
 
         }
     }
+    useEffect(()=>{
+        setProviders()
+        zkBalance()
+
+    }, [])
+
     return(
         <div>
             {ethProvider ? (

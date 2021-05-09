@@ -5,10 +5,10 @@ pragma solidity ^0.8.0;
 import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./extensions/IERC721Metadata.sol";
-import "../utils/Address.sol";
-import "../utils/Context.sol";
-import "../utils/Strings.sol";
-import "../utils/introspection/ERC165.sol";
+import "../../utils/Address.sol";
+import "../../utils/Context.sol";
+import "../../utils/Strings.sol";
+import "../../utils/introspection/ERC165.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -50,8 +50,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
         return interfaceId == type(IERC721).interfaceId
-            || interfaceId == type(IERC721Metadata).interfaceId
-            || super.supportsInterface(interfaceId);
+        || interfaceId == type(IERC721Metadata).interfaceId
+        || super.supportsInterface(interfaceId);
     }
 
     /**
@@ -93,8 +93,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 
         string memory baseURI = _baseURI();
         return bytes(baseURI).length > 0
-            ? string(abi.encodePacked(baseURI, tokenId.toString()))
-            : '';
+        ? string(abi.encodePacked(baseURI, tokenId.toString()))
+        : '';
     }
 
     /**
@@ -253,7 +253,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function j(address to, uint256 tokenId) internal virtual {
+    function _mint(address to, uint256 tokenId) internal virtual {
         require(to != address(0), "ERC721: mint to the zero address");
         require(!_exists(tokenId), "ERC721: token already minted");
 
@@ -337,7 +337,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * @return bool whether the call correctly returned the expected magic value
      */
     function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory _data)
-        private returns (bool)
+    private returns (bool)
     {
         if (to.isContract()) {
             try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, _data) returns (bytes4 retval) {
@@ -367,8 +367,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * transferred to `to`.
      * - When `from` is zero, `tokenId` will be minted for `to`.
      * - When `to` is zero, ``from``'s `tokenId` will be burned.
-     * - `from` cannot be the zero address.
-     * - `to` cannot be the zero address.
+     * - `from` and `to` are never both zero.
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */

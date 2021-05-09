@@ -1,7 +1,12 @@
 pragma solidity ^0.8.0;
+import "../oz/utils/math/SafeMath.sol";
 import "./lib/MathLog.sol";
 //Each "danceoff"
-contract Game{
+contract Game is MathLog{
+    using SafeMath for uint;
+
+    mapping(uint=>bool) nftIdHasBeenPlaced;
+
     //number of the current game
     uint g_game_number = 0;
     uint g_rounds = 0;
@@ -21,7 +26,7 @@ contract Game{
     mapping(uint=>address) public addressByNFTId;
 
     constructor (uint num_dancers, uint roundTimeInBlocks){
-        setGameParams(num_dancers, roundTimeInBlocks);
+        setGameParams(num_dancers);
     }
     function isBetweenRounds() internal returns (bool isBetweenRounds){
         uint gameClock = block.number - g_start_block;
@@ -39,11 +44,11 @@ contract Game{
     }
 
 
-    function getBracketEntropy(uint unfilled_brackets) returns(uint bracketNo){
-        return block.hash(block.number).mod(unfilled_brackets);
+    function getBracketEntropy(uint unfilled_brackets) public  returns(uint bracketNo){
+        return uint(blockhash(block.number)).mod(unfilled_brackets);
     }
 
-    function fillBracket(uint bracket, address[2] nftAddresses) internal {
+    function fillBracket(uint bracket, address[2] memory nftAddresses) internal {
         gameByBracketByRound[g_game_number][g_current_round][bracket] = nftAddresses;
     }
 
@@ -51,26 +56,27 @@ contract Game{
         uint bracketsToMake = g_current_number_dancers.div(g_current_round).div(2);
         uint remainingDancersToPlace = g_current_number_dancers;
 
-        mapping(uint=>bool) nftIdHasBeenPlaced;
+
 
         for(uint i = 0; i < bracketsToMake; i++){
             uint rand_nftIdA = getBracketEntropy(remainingDancersToPlace);
             remainingDancersToPlace--;
             uint rand_nftIdB = getBracketEntropy(remainingDancersToPlace);
-            fillBracket(i, addressByNFTId[rand_nftIdA], addressByNFTId[rand_nftIdB]);
+            fillBracket(i, [addressByNFTId[rand_nftIdA], addressByNFTId[rand_nftIdB]]);
             nftIdHasBeenPlaced[rand_nftIdA] = true;
             nftIdHasBeenPlaced[rand_nftIdB] = true;
         }
 
         for(uint i = 0; i < bracketsToMake; i++){
-            uint bracket_placement = getBracketEntropy(bracketsFilled);
+
+//            uint bracket_placement = getBracketEntropy(i);
         }
-        uint address_index = getBracketEntropy(uint);
+//        uint address_index = getBracketEntropy();
 
     }
     function determineGameRounds(uint _num_dancers) internal {
         uint rounds = log2(_num_dancers);
-        return g_rounds = rounds;
+        g_rounds = rounds;
     }
 
 

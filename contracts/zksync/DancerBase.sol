@@ -1,26 +1,25 @@
 pragma solidity  ^0.8.0;
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./GameLogic.sol";
+import "../oz/token/ERC20/IERC20.sol";
+import "../oz/access/AccessControl.sol";
+import "./Game.sol";
 
-
-contract DancerBase is IERC20{
+abstract contract DancerBase is IERC20, AccessControl{
     bytes32 public constant GAME_LOGIC_ROLE = keccak256("GAME_LOGIC_ROLE");
 
-    IERC20 public DAI;
+    IERC20 public dai;
     //this is the Voting Logic contract
-    GameLogic public game_contract;
+    Game public game;
 
     constructor(address _game_contract, IERC20 daiAddress){
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
-        game_contract = GameLogic(_game_contract);
-        DAI = daiAddress;
+        game = Game(_game_contract);
+        dai = daiAddress;
     }
 
     function withdrawlDAI() public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
-        DAI.transfer(address(game_contract), DAI.balanceOf(address(this)));
+        dai.transfer(address(game), dai.balanceOf(address(this)));
     }
 
 
