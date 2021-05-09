@@ -3,7 +3,7 @@ import "../oz/token/ERC20/IERC20.sol";
 import "../oz/access/AccessControl.sol";
 import "./Game.sol";
 
-abstract contract DancerBase is IERC20, AccessControl{
+contract DancerBase is AccessControl{
     bytes32 public constant GAME_LOGIC_ROLE = keccak256("GAME_LOGIC_ROLE");
 
     IERC20 public dai;
