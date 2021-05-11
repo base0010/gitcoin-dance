@@ -5,6 +5,7 @@ import { Signer } from "ethers";
 import { assert, expect } from "chai";
 import {Contract} from "hardhat/internal/hardhat-network/stack-traces/model";
 import {readFileSync} from "fs";
+import {log} from "util";
 
 describe("Deploy Gitcoin Dance ERC721 Contract", function () {
   let accounts: Signer[];
@@ -52,67 +53,71 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
     expect(address);
   })
 
-  it("Should deploy Dancer Base contracts with Game Address assinged", async function(){
-    const DancerBase = await ethers.getContractFactory("DancerBase");
+  //todo this should happen by calling the Game contract directly
+  it("Should deploy Dancer Base contracts from the Game Contract", async function(){
 
-    for(let i = 0; i < num_dancers; i++) {
-      const game_address = await game.address;
-      const dancer_base_x = await DancerBase.deploy(game_address, dai.address)
-      const deployed = await dancer_base_x.deployed()
-      console.log("Dancer Base" + i + " address " + deployed.address)
+    const num_dancers = 8;
+    for(let i = 0; i <= num_dancers; i++) {
+      const fake_dai = await accounts[1].getAddress()
+      const mint = await game.mintNFTAndDeployDonationAddress('http://fuck.com', fake_dai);
+      let waited = await mint.wait()
+      const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')
+      const deployedDBAddress = dancer_created_e[0].args[0]
 
-      dancer_base_contracts[i] = deployed.address;
-      expect(deployed.address)
+      dancer_base_contracts[i] = deployedDBAddress;
+      expect(deployedDBAddress !== undefined)
     }
 
   })
   it("Should send DAI to a base dancer contract & withdrawl it to the Game contract", async function(){
-    const db_address = dancer_base_contracts[1];
-    const tx = dai.transfer(db_address, 10000);
+    for(let i = 0; i < 1; i++) {
 
-    const db_instance =  await ethers.getContractFactory("DancerBase");
+      const db_address = dancer_base_contracts[i];
+      console.log("For Dance Proxy @ " + db_address )
+      const amount = Math.floor(Math.random() * 10000);
 
-    let inst = await db_instance.attach(db_address)
-    await inst.deployed();
-    //wei should have the right 18 decimals.
-   const dancer_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
-   console.log("Dancer Contract Balance Before Withdrawl", dancer_dai_bal);
-    const withdrawl_tx = await inst.withdrawlDAI();
-    const dancer_dai_post_wd = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
-    console.log("Dancer Contract Balance After Withdrawl", dancer_dai_post_wd);
-    const game_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(game.address), "wei");
-    console.log("Game Contract Balance After Withdrawl", game_dai_bal);
+      console.log("Random amount " + amount)
+      const tx = await dai.transfer(db_address, amount);
+      await  tx.wait();
+      //
+      const db_instance = await ethers.getContractFactory("DancerProxy");
+      //
+      let inst = await db_instance.attach(db_address)
+      console.log(inst.address)
+      //  await inst.deployed();
+      //  //wei should have the right 18 decimals.
+      const dancer_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
+      console.log("Dancer Contract Balance Before Withdrawl", dancer_dai_bal);
 
+      const withdrawl_tx = await inst.withdrawlDAI();
+      const wd_waited = await withdrawl_tx.wait(1)
 
+      console.log(withdrawl_tx, wd_waited)
 
+      const dancer_dai_post_wd = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
+      console.log("Dancer Contract Balance After Withdrawl", dancer_dai_post_wd);
 
+      const game_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(game.address), "wei");
+      console.log("Game Contract Balance After Withdrawl", game_dai_bal);
 
-
-
+      expect(Number(dancer_dai_bal) - amount == Number(dancer_dai_bal))
+      expect(Number(game_dai_bal) > 0)
+    }
 
   })
-//before
-//   it("should upload the images in test/nftimages to ipfs", async function(){
-//     //disable timeout
-//     this.timeout(0)
-//     const filecontent = readFileSync('test/nftimages/adventureCat.gif')
-//     const infuraIPFS = ipfsClient({host:'ipfs.infura.io',port:5001, protocol:'https' })
-//
-//     let cid = await infuraIPFS.add({content:filecontent})
-//     console.log(cid)
-//   })
-//
-//   it("should mint an NFT with an image of the cat", async function (){
-//      const kitty_ipfshash = "QmWWNzzY6YXPdMvRBoJpTCMoU1b2HzXoqRs7SZT4VpihLY";
-//      //mint tokenId 1 with kittyhash
-//      const mint = await gitdance.mint(accounts[0].getAddress(), kitty_ipfshash);
-//     //wait for contract event to show we minted the kitty (1, $kittyhash)
-//      const tx_receipt = await mint.wait()
-//      const fired_event = tx_receipt.events?.filter((e)=>{return e.event === "NFTMinted"})
-//
-//       // expect(tx_receipt.to.emit(gitdance, 'NFTMinted').withArgs(1, kitty_ipfshash))
-//      expect(fired_event !== undefined, "We had an NFT mint event need to parse tho")
-//
-//
-//   });
+  it("Should increment vote by the amount", async function(){
+    for(let i = 0; i < 8; i++) {
+      const totalVotes = await game.votesPerNftId(i)
+      console.log("NFT ID " + i + " Has " + totalVotes + " Votes")
+    }
+  })
+  it("Should calculate the log2() of number of dancers", async function(){
+    const num_dancers = 128;
+    let log_res = await game.determineGameRounds(num_dancers);
+    await log_res.wait(1);
+
+    const determined_rounds =  ethers.utils.formatUnits(await game.g_rounds(),"wei");
+    expect(Math.log2(num_dancers) == Number(determined_rounds))
+  })
+
 });

@@ -1,8 +1,8 @@
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import "../oz/token/ERC721/ERC721.sol";
+import "../oz/access/AccessControl.sol";
+import "../oz/utils/Counters.sol";
+import "../oz/utils/Strings.sol";
 
 contract ERC721Mintable is ERC721, AccessControl{
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
