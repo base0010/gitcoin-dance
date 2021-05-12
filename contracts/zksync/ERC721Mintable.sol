@@ -57,12 +57,16 @@ contract ERC721Mintable is ERC721, AccessControl{
             hasRole(MINTER_ROLE, msg.sender),
             "721Mint: account isnt Minter role"
         );
+
+        _mint(to, _tokenIds.current());
+        _setTokenURI(_tokenIds.current(), tokenURI);
+
+        uint mintedId = _tokenIds.current();
         _tokenIds.increment();
 
-        uint256 newTokenId = _tokenIds.current();
-        _mint(to, newTokenId);
-        _setTokenURI(newTokenId, tokenURI);
-        emit NFTMinted(newTokenId, tokenURI);
+        emit NFTMinted(mintedId, tokenURI);
+        return mintedId;
+
     }
 
 

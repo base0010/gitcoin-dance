@@ -11,10 +11,10 @@ import "./DancerProxy.sol";
 //Each "danceoff"
 contract Game is MathLog, ERC721Mintable{
     using SafeMath for uint;
-    event DancerCreated(address indexed a);
+    event DancerCreated(address indexed a, uint indexed nftid);
 
-    address dai_address = 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa;
-    IERC20 dai = IERC20(dai_address);
+//    address dai_address = 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa;
+    IERC20 dai;
 
     mapping(uint=>bool) nftIdHasBeenPlaced;
     mapping(uint=>address) public donationAddressByNftId;
@@ -40,7 +40,8 @@ contract Game is MathLog, ERC721Mintable{
     mapping(address=>bool) public notEliminated;
     mapping(uint=>address) public addressByNFTId;
 
-    constructor (uint num_dancers, uint roundTimeInBlocks){
+    constructor (uint num_dancers, uint roundTimeInBlocks, address dai_address){
+        dai = IERC20(dai_address);
         setGameParams(num_dancers);
     }
     function isBetweenRounds() internal returns (bool isBetweenRounds){
@@ -107,28 +108,43 @@ contract Game is MathLog, ERC721Mintable{
 
         }
 
+    event MintDebug(address indexed donation_address, uint indexed nftbyaddress);
     function mintNFTAndDeployDonationAddress(string memory nftURI, address creator) public returns (address nft_donation_address){
             require(hasRole(DEFAULT_ADMIN_ROLE,msg.sender), "Not default admin");
             uint nftId = mint(address(this), nftURI);
             //require dai address set
             DancerProxy dancer =  new DancerProxy(address(this), address(dai));
-            emit DancerCreated((address(dancer)));
+
+            emit DancerCreated(address(dancer), nftId);
+
         //ghetto linkedlist
             donationAddressByNftId[nftId] = address(dancer);
             nftIdByDonationAddress[address(dancer)] = nftId;
 
+            emit MintDebug(donationAddressByNftId[nftId], nftIdByDonationAddress[address(dancer)]);
+
             return donationAddressByNftId[nftId];
-
         }
-    function incrementVotes(address dancer, uint amount) internal {
-        uint nftId = nftIdByDonationAddress[dancer];
-        votesPerNftId[nftId] += amount;
-    }
-    function withdrawlFromDonationProxyToSelf(address donation_proxy) public returns (bool success){
-       address(donation_proxy).call(abi.encodeWithSignature("withdrawlDAI(uint256)"));
 
-       incrementVotes(donation_proxy, 100);
-       return true;
+    event NFTID(uint id);
+    event VotesTalleyed(uint indexed nftId, uint indexed votes);
+
+    function incrementVotes(address dancer, uint amount) internal {
+        uint256 nftId = nftIdByDonationAddress[dancer];
+        votesPerNftId[nftId] += amount;
+
+        emit VotesTalleyed(nftId, votesPerNftId[nftId]);
+    }
+
+    function withdrawlFromDonationProxyToSelf(address donation_proxy) public returns (bool success){
+        (bool success, bytes memory returnData) = address(donation_proxy).call(abi.encodeWithSignature("withdrawlDAI()"));
+
+        uint votes = abi.decode(returnData, (uint));
+
+        incrementVotes(donation_proxy, votes);
+
+
+       return success;
     }
 
 

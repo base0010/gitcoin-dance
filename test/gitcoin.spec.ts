@@ -46,7 +46,7 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
     const Game = await ethers.getContractFactory("Game");
     const round_blocktime = 150;
     
-    game = await Game.deploy(num_dancers,round_blocktime);
+    game = await Game.deploy(num_dancers,round_blocktime,dai.address);
     await game.deployed();
     const address = await game.address
     console.log("Game Address " + address)
@@ -55,14 +55,20 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
 
   //todo this should happen by calling the Game contract directly
   it("Should deploy Dancer Base contracts from the Game Contract", async function(){
-
-    const num_dancers = 8;
     for(let i = 0; i <= num_dancers; i++) {
-      const fake_dai = await accounts[1].getAddress()
+      const fake_dai = dai.address;
+
       const mint = await game.mintNFTAndDeployDonationAddress('http://fuck.com', fake_dai);
       let waited = await mint.wait()
+      // console.log(waited)
+
       const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')
+      const nft_mint_e = waited.events.filter(event=>event.event === 'NFTMinted')
+      const mint_debug_e = waited.events.filter(event=>event.event === 'MintDebug')
+      console.log(" NFT mint debug", nft_mint_e[0].args[0] )
       const deployedDBAddress = dancer_created_e[0].args[0]
+      console.log("deployed dancerproxy address ",deployedDBAddress)
+
 
       dancer_base_contracts[i] = deployedDBAddress;
       expect(deployedDBAddress !== undefined)
@@ -70,7 +76,7 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
 
   })
   it("Should send DAI to a base dancer contract & withdrawl it to the Game contract", async function(){
-    for(let i = 0; i < 1; i++) {
+    for(let i = 0; i < num_dancers; i++) {
 
       const db_address = dancer_base_contracts[i];
       console.log("For Dance Proxy @ " + db_address )
@@ -83,16 +89,16 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
       const db_instance = await ethers.getContractFactory("DancerProxy");
       //
       let inst = await db_instance.attach(db_address)
-      console.log(inst.address)
-      //  await inst.deployed();
-      //  //wei should have the right 18 decimals.
+
       const dancer_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
       console.log("Dancer Contract Balance Before Withdrawl", dancer_dai_bal);
 
-      const withdrawl_tx = await inst.withdrawlDAI();
-      const wd_waited = await withdrawl_tx.wait(1)
+      const wd_tx = await game.withdrawlFromDonationProxyToSelf(db_address);
+      const wd_waited = await wd_tx.wait();
 
-      console.log(withdrawl_tx, wd_waited)
+      const votes_e = wd_waited.events.filter(event=>event.event === 'VotesTalleyed')
+
+      // console.log("votes tally", votes_e[0])
 
       const dancer_dai_post_wd = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
       console.log("Dancer Contract Balance After Withdrawl", dancer_dai_post_wd);
@@ -106,7 +112,8 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
 
   })
   it("Should increment vote by the amount", async function(){
-    for(let i = 0; i < 8; i++) {
+    for(let i = 0; i < num_dancers; i++) {
+      // console.log("game address", game.address)
       const totalVotes = await game.votesPerNftId(i)
       console.log("NFT ID " + i + " Has " + totalVotes + " Votes")
     }

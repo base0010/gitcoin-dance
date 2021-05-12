@@ -18,12 +18,14 @@ contract DancerProxy is AccessControl{
         dai = IERC20(daiAddress);
     }
 
-    function withdrawlDAI() public {
+    function withdrawlDAI() public returns (uint256 bal){
 //        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender),"not msg sender");
-
+        uint256 bal = dai.balanceOf((address (this)));
         require(dai.approve(address(game), dai.balanceOf(address(this))));
         dai.transfer(address(game), dai.balanceOf(address(this)));
-//        emit WithdrawlToGameLogic(address(game));
+
+        emit WithdrawlToGameLogic(address(game));
+        return bal;
 
     }
 
