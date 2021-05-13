@@ -20,6 +20,10 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
     accounts = await ethers.getSigners();
   });
 
+  it("should have accounts", async function () {
+    assert(accounts.length > 0, "Account legth should be more then zero");
+  });
+
   it("Should deploy fake DAI to local chain", async function(){
     const DAI = await ethers.getContractFactory("TestDAI");
     dai = await DAI.deploy("DAI", "DAI");
@@ -31,9 +35,6 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
     expect(acc0_bal > 0)
   })
 
-  it("should have accounts", async function () {
-    assert(accounts.length > 0, "Account legth should be more then zero");
-  });
   it("should deploy the Gitcoin Dance ERC721 Contract", async function (){
     const ERC721 = await ethers.getContractFactory("ERC721Mintable")
     gitdance = await ERC721.deploy();
@@ -73,6 +74,29 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
       dancer_base_contracts[i] = deployedDBAddress;
       expect(deployedDBAddress !== undefined)
     }
+
+  })
+  it("Should start the Game", async function(){
+    const start_game = await game.startGame();
+    const start_waited = start_game.wait()
+
+    expect(start_waited !== undefined)
+  })
+  it("Should advance the game a round", async function(){
+
+    const block_to_wait = 2048;
+    console.log("Starting block", (await ethers.provider.getBlock('latest')).number);
+
+    const adv_time = await ethers.provider.send("evm_increaseTime", [block_to_wait])   // add 60 seconds
+    console.log("advtime", adv_time)
+
+    const mine = await ethers.provider.send("evm_mine", [0])      // mine the next block
+    console.log(mine)
+    // const some_txn = await game.startGame();
+    // await some_txn.wait();
+    const a = await ethers.provider.send("evm_mine", [0])      // mine the next block
+    const block_future = await ethers.provider.getBlock('latest');
+    console.log("Future block", block_future.number);
 
   })
   it("Should send DAI to a base dancer contract & withdrawl it to the Game contract", async function(){

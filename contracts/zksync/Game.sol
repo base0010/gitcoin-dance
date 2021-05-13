@@ -45,8 +45,14 @@ contract Game is MathLog, ERC721Mintable{
         setGameParams(num_dancers);
     }
     function isBetweenRounds() internal returns (bool isBetweenRounds){
+        require(g_game_started);
         uint gameClock = block.number - g_start_block;
         return (gameClock % g_round_blocktime) <= g_intermission_blocktime;
+    }
+    function startGame() public {
+        require(!g_game_started);
+        g_game_started = true;
+        g_start_block = block.number;
     }
     function changeTime(uint round_time, uint intermission_time) internal{
 //        require(hasRole(ADMIN))
@@ -137,12 +143,14 @@ contract Game is MathLog, ERC721Mintable{
     }
 
     function withdrawlFromDonationProxyToSelf(address donation_proxy) public returns (bool success){
+        require(isBetweenRounds());
+
         (bool success, bytes memory returnData) = address(donation_proxy).call(abi.encodeWithSignature("withdrawlDAI()"));
 
+        if(success) {
         uint votes = abi.decode(returnData, (uint));
-
         incrementVotes(donation_proxy, votes);
-
+        }
 
        return success;
     }
