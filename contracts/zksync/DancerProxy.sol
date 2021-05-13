@@ -19,14 +19,12 @@ contract DancerProxy is AccessControl{
     }
 
     function withdrawlDAI() public returns (uint256 bal){
-//        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender),"not msg sender");
         uint256 bal = dai.balanceOf((address (this)));
         require(dai.approve(address(game), dai.balanceOf(address(this))));
         dai.transfer(address(game), dai.balanceOf(address(this)));
 
         emit WithdrawlToGameLogic(address(game));
         return bal;
-
     }
 
 

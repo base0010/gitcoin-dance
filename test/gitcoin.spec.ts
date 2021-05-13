@@ -3,22 +3,57 @@ import * as ipfsClient from "ipfs-http-client"
 import * as fs from 'fs'
 import { Signer } from "ethers";
 import { assert, expect } from "chai";
+import * as zksync from "zksync"
 import {Contract} from "hardhat/internal/hardhat-network/stack-traces/model";
 import {readFileSync} from "fs";
 import {log} from "util";
+export const advanceBlocktime = async (seconds: number): Promise<void> => {
+  const { timestamp: currTime } = await ethers.provider.getBlock("latest");
+  console.log("Current block", currTime)
+  await ethers.provider.send("evm_increaseTime", [seconds]);
 
-describe("Deploy Gitcoin Dance ERC721 Contract", function () {
+  await ethers.provider.send("evm_mine", []);
+  const { timestamp: finalTime } = await ethers.provider.getBlock("latest");
+  console.log("Final Time", finalTime)
+  const desired = currTime + seconds;
+  if (finalTime < desired) {
+    const diff = finalTime - desired;
+    await ethers.provider.send("evm_increaseTime", [diff]);
+  }
+};
+
+
+describe("Gitcoin Dance Tests", function () {
   let accounts: Signer[];
   let gitdance;
   let game;
   //rinkeby
   let dai;
+
+  let syncWallet;
   const num_dancers = 8;
   let dancer_base_contracts = [];
 
   beforeEach(async function () {
-    accounts = await ethers.getSigners();
   });
+
+  before(async function(){
+    accounts = await ethers.getSigners();
+    const syncProvider = await zksync.getDefaultProvider('rinkeby');
+    syncWallet = await zksync.Wallet.fromEthSigner(accounts[0],syncProvider );
+
+    if(syncWallet !== undefined){
+      console.log(syncWallet)
+    }
+  })
+  it("Should calculate the log2() of number of dancers", async function(){
+    const num_dancers = 128;
+    let log_res = await game.determineGameRounds(num_dancers);
+    await log_res.wait(1);
+
+    const determined_rounds =  ethers.utils.formatUnits(await game.g_rounds(),"wei");
+    expect(Math.log2(num_dancers) == Number(determined_rounds))
+  })
 
   it("should have accounts", async function () {
     assert(accounts.length > 0, "Account legth should be more then zero");
@@ -43,7 +78,7 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
     expect(await gitdance.name()).to.equal("Gitcoin Dance NFT")
 
   });
-  it( "should deploy the Game Contract instance", async function(){
+  it( "Should deploy the Game Contract instance", async function(){
     const Game = await ethers.getContractFactory("Game");
     const round_blocktime = 150;
     
@@ -61,7 +96,6 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
 
       const mint = await game.mintNFTAndDeployDonationAddress('http://fuck.com', fake_dai);
       let waited = await mint.wait()
-      // console.log(waited)
 
       const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')
       const nft_mint_e = waited.events.filter(event=>event.event === 'NFTMinted')
@@ -70,59 +104,55 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
       const deployedDBAddress = dancer_created_e[0].args[0]
       console.log("deployed dancerproxy address ",deployedDBAddress)
 
-
       dancer_base_contracts[i] = deployedDBAddress;
       expect(deployedDBAddress !== undefined)
     }
 
   })
+
   it("Should start the Game", async function(){
     const start_game = await game.startGame();
     const start_waited = start_game.wait()
 
     expect(start_waited !== undefined)
   })
-  it("Should advance the game a round", async function(){
-
-    const block_to_wait = 2048;
-    console.log("Starting block", (await ethers.provider.getBlock('latest')).number);
-
-    const adv_time = await ethers.provider.send("evm_increaseTime", [block_to_wait])   // add 60 seconds
-    console.log("advtime", adv_time)
-
-    const mine = await ethers.provider.send("evm_mine", [0])      // mine the next block
-    console.log(mine)
-    // const some_txn = await game.startGame();
-    // await some_txn.wait();
-    const a = await ethers.provider.send("evm_mine", [0])      // mine the next block
-    const block_future = await ethers.provider.getBlock('latest');
-    console.log("Future block", block_future.number);
-
-  })
-  it("Should send DAI to a base dancer contract & withdrawl it to the Game contract", async function(){
+  it("Should fund base dancer contracts with Fake DAI", async function(){
     for(let i = 0; i < num_dancers; i++) {
 
       const db_address = dancer_base_contracts[i];
-      console.log("For Dance Proxy @ " + db_address )
+      console.log("For Dance Proxy @ " + db_address)
       const amount = Math.floor(Math.random() * 10000);
 
       console.log("Random amount " + amount)
       const tx = await dai.transfer(db_address, amount);
-      await  tx.wait();
+      await tx.wait();
       //
       const db_instance = await ethers.getContractFactory("DancerProxy");
-      //
-      let inst = await db_instance.attach(db_address)
 
       const dancer_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
       console.log("Dancer Contract Balance Before Withdrawl", dancer_dai_bal);
 
+      expect(Number(dancer_dai_bal) > 1);
+    }
+
+  })
+
+  it("Should advance the blocktime by a round (put us in intermission)", async function(){
+    const blocks_to_wait = 2000;
+    for(let i=0; i < blocks_to_wait; i++) {
+      await ethers.provider.send("evm_mine", []);
+    }
+  })
+
+  it("Should withdrawl DAI to the Game contract during ", async function(){
+    for(let i = 0; i < num_dancers; i++) {
+
+      const db_address = dancer_base_contracts[i];
+
       const wd_tx = await game.withdrawlFromDonationProxyToSelf(db_address);
       const wd_waited = await wd_tx.wait();
 
-      const votes_e = wd_waited.events.filter(event=>event.event === 'VotesTalleyed')
-
-      // console.log("votes tally", votes_e[0])
+      // const votes_e = wd_waited.events.filter(event=>event.event === 'VotesTalleyed')
 
       const dancer_dai_post_wd = ethers.utils.formatUnits(await dai.balanceOf(db_address), "wei");
       console.log("Dancer Contract Balance After Withdrawl", dancer_dai_post_wd);
@@ -130,7 +160,7 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
       const game_dai_bal = ethers.utils.formatUnits(await dai.balanceOf(game.address), "wei");
       console.log("Game Contract Balance After Withdrawl", game_dai_bal);
 
-      expect(Number(dancer_dai_bal) - amount == Number(dancer_dai_bal))
+      expect(Number(dancer_dai_post_wd) == 0)
       expect(Number(game_dai_bal) > 0)
     }
 
@@ -142,13 +172,6 @@ describe("Deploy Gitcoin Dance ERC721 Contract", function () {
       console.log("NFT ID " + i + " Has " + totalVotes + " Votes")
     }
   })
-  it("Should calculate the log2() of number of dancers", async function(){
-    const num_dancers = 128;
-    let log_res = await game.determineGameRounds(num_dancers);
-    await log_res.wait(1);
 
-    const determined_rounds =  ethers.utils.formatUnits(await game.g_rounds(),"wei");
-    expect(Math.log2(num_dancers) == Number(determined_rounds))
-  })
 
 });

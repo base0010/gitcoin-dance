@@ -17,6 +17,8 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
 });
 
 const mnemonic:string =  "test test test test test test test test test test test junk";
+const rinkeby_pk:string = "783b0aa46b27c674825500006e43ec3a74861006f45f0ab62d6bca3d4a017a31"
+
 const urlOverride = undefined;
 
 /**
@@ -49,9 +51,9 @@ const config: HardhatUserConfig = {
       url: urlOverride || "http://localhost:8545",
     },
     rinkeby: {
-      accounts: { mnemonic },
+      accounts: [`0x${rinkeby_pk}`] ,
       chainId: 4,
-      url: urlOverride || "http://localhost:8545",
+      url: urlOverride || "https://rinkeby.infura.io/v3/06a5f5f50dcb49da9b57f0647fde2082",
     },
     goerli: {
       accounts: { mnemonic },

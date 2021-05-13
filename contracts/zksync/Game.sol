@@ -47,7 +47,15 @@ contract Game is MathLog, ERC721Mintable{
     function isBetweenRounds() internal returns (bool isBetweenRounds){
         require(g_game_started);
         uint gameClock = block.number - g_start_block;
-        return (gameClock % g_round_blocktime) <= g_intermission_blocktime;
+
+        if(gameClock >= g_round_blocktime){
+            uint blocks_past_round = (gameClock % g_round_blocktime);
+
+            if(blocks_past_round <= g_intermission_blocktime){
+                return true;
+            }
+        }
+        return false;
     }
     function startGame() public {
         require(!g_game_started);
@@ -74,11 +82,9 @@ contract Game is MathLog, ERC721Mintable{
         gameByBracketByRound[g_game_number][g_current_round][bracket] = nftAddresses;
     }
 
-    function determineBrackets() internal {
+    function determineBrackets() public {
         uint bracketsToMake = g_current_number_dancers.div(g_current_round).div(2);
         uint remainingDancersToPlace = g_current_number_dancers;
-
-
 
         for(uint i = 0; i < bracketsToMake; i++){
             uint rand_nftIdA = getBracketEntropy(remainingDancersToPlace);
@@ -89,9 +95,11 @@ contract Game is MathLog, ERC721Mintable{
             nftIdHasBeenPlaced[rand_nftIdB] = true;
         }
 
+        uint brackets_made = 0;
+
         for(uint i = 0; i < bracketsToMake; i++){
 
-//            uint bracket_placement = getBracketEntropy(i);
+            uint bracket_placement = getBracketEntropy(i);
         }
 //        uint address_index = getBracketEntropy();
 
@@ -114,7 +122,6 @@ contract Game is MathLog, ERC721Mintable{
 
         }
 
-    event MintDebug(address indexed donation_address, uint indexed nftbyaddress);
     function mintNFTAndDeployDonationAddress(string memory nftURI, address creator) public returns (address nft_donation_address){
             require(hasRole(DEFAULT_ADMIN_ROLE,msg.sender), "Not default admin");
             uint nftId = mint(address(this), nftURI);
@@ -127,24 +134,17 @@ contract Game is MathLog, ERC721Mintable{
             donationAddressByNftId[nftId] = address(dancer);
             nftIdByDonationAddress[address(dancer)] = nftId;
 
-            emit MintDebug(donationAddressByNftId[nftId], nftIdByDonationAddress[address(dancer)]);
-
             return donationAddressByNftId[nftId];
         }
 
-    event NFTID(uint id);
-    event VotesTalleyed(uint indexed nftId, uint indexed votes);
 
     function incrementVotes(address dancer, uint amount) internal {
         uint256 nftId = nftIdByDonationAddress[dancer];
         votesPerNftId[nftId] += amount;
-
-        emit VotesTalleyed(nftId, votesPerNftId[nftId]);
     }
 
     function withdrawlFromDonationProxyToSelf(address donation_proxy) public returns (bool success){
         require(isBetweenRounds());
-
         (bool success, bytes memory returnData) = address(donation_proxy).call(abi.encodeWithSignature("withdrawlDAI()"));
 
         if(success) {
