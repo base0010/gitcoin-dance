@@ -44,7 +44,7 @@ export function Home(props : any) {
       {gameData1 && 
       <span>
        <div className="purp-teal">
-          <h1 className="yellowText paddingTwenty">
+          <h1 className="yellowText marginTen">
            LATEST VOTES
        </h1>
           <LatestActivityCarousel gameData={gameData1} />

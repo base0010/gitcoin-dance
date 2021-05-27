@@ -19,6 +19,18 @@ body {
   font-family: "Days One", sans-serif;
 }
 
+.slick-list {
+  margin: 0 -5px;
+}
+.slick-slide > div {
+  padding: 0 5px;
+}
+.dark-card {
+  background-color: $background;
+  border-radius: 20px;
+  font-family: "Days One", sans-serif;
+}
+
 .yellowText {
   color: #ffe924;
   font-family: "Days One", sans-serif;

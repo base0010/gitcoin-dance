@@ -9,7 +9,7 @@ const contentStyle : any = {
   //   lineHeight: '160px',
   textAlign: 'center',
   // background: '#15003e',
-  maxWidth: '1000px',
+  maxWidth: '1500px',
   display: 'inline-block',
 };
 
@@ -17,29 +17,30 @@ export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="paddingTwenty flexCenter">
+    <div className="flexCenter">
       <Carousel
-        slidesToShow={4}
+        slidesToShow={5}
         arrows
         infinite={false}
         style={contentStyle}
         autoplay
+        dots={false}
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
           if(nft) {
             return (
-              <div>
-                <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3>
+              <div className="dark-card paddingTwenty">
+                {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <img
-                  style={{ textAlign: 'center' }}
+                  style={{ textAlign: 'center', display: "inline" }}
                   height="200px"
                   width="200px"
                   src={nft.src || ""}
                   alt={nft.description || ""}
                 />
                 <h3
-                  style={{ color: 'white', padding: '45px', textAlign: 'center' }}
+                  style={{ color: 'white',textAlign: 'center' }}
                 >
                   {nft.description}
                 </h3>
