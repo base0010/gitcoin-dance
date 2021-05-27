@@ -157,19 +157,18 @@ export function Bracket(props: any) {
                 let prevNft = gameData1[i-1]
                 const bottomClass = classNames({
                   game: true,
-                  'purp-teal': true,
                   'game-bottom': true,
                   winner: nft.voteCount > gameData1[i - 1].voteCount,
                 });
                 const topClass = classNames({
                   game: true,
-                  'purp-teal': true,
                   'game-top': true,
                   winner: nft.voteCount > gameData1[i].voteCount,
                 });
                 return (
-                  <>       
+                  <>
                   <li className="spacer">&nbsp;</li>
+                  <span className="purp-teal paddingTwenty">       
                   <li className={topClass}>
                     <p
                       className="link backgroundForText"
@@ -189,28 +188,12 @@ export function Bracket(props: any) {
                       </p>{' '}
                       <span>{nft.voteCount}</span>
                     </li>
+                  </span>
                   </>
                 );
               }
-              // const topClass = classNames({
-              //   game: true,
-              //   'purp-teal': true,
-              //   'game-top': true,
-              //   winner: nft.voteCount > gameData1[i + 1].voteCount,
-              // });
               return (
                 <>
-                  {/* <li className="spacer">&nbsp;</li>
-
-                  <li className={topClass}>
-                    <p
-                      className="link backgroundForText"
-                      onClick={() => openModal(nft)}
-                    >
-                      {nft.name}
-                    </p>{' '}
-                    <span>{nft.voteCount}</span>
-                  </li> */}
                 </>
               );
             })}
