@@ -9,7 +9,8 @@ import {
   Backdrop,
 } from '@material-ui/core/';
 import {
-  Input
+  Input,
+  Modal
 } from "antd"
 import { nfts, ActiveNFT}  from '../assets/index';
 import Timer from './Timer';
@@ -56,95 +57,38 @@ export function Bracket(props: any) {
   return (
     <div>
       {activeNft && (
-        <Backdrop className={classes.backDrop} open={modalOpen}>
-          <Dialog
-            BackdropProps={{
-              classes: {
-                root: classes.backDrop,
-              },
-            }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-            }}
-            open={modalOpen}
-            onClose={() => {
-              setActiveNft(null);
-              setModalOpen(false);
-            }}
-            onBackdropClick={() => {
-              setActiveNft(null);
-              setModalOpen(false);
-            }}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            
-            <div>
-              
-              <DialogTitle id="form-dialog-title">{activeNft.name}</DialogTitle>
-              { !voting &&
+        <Modal 
+        visible={modalOpen} 
+        title={activeNft.name}
+        onCancel={() => {
+          setActiveNft(null);
+          setModalOpen(false);
+        }}
+        footer={[
+          <Button
+          onClick={() => {
+            setActiveNft(null);
+            setModalOpen(false);
+          }}
+          color="primary"
+        >
+          Cancel
+        </Button>,
+          <Button
+          onClick={() => setVoting(true)}
+          color="primary"
+        >
+          Vote
+        </Button>
+        ]}
+        >
               <span>
-              <DialogContent>
                 <img width="250px" height="250px" src={activeNft.src || ""} alt={activeNft.description || ""} />
                 <a style={{ display: 'block' }} href="#">
                   View On Etherscan
                 </a>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={() => {
-                    setActiveNft(null);
-                    setModalOpen(false);
-                  }}
-                  color="primary"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => setVoting(true)}
-                  color="primary"
-                >
-                  Vote
-                </Button>
-              </DialogActions>
               </span>
-            }
-            {
-              voting &&
-              <span>
-              <DialogContent>
-                <img width="250px" height="250px" src={activeNft.src || ""} alt={activeNft.description || ""} />
-                <p>How Much DAI?</p>
-                <Input style={{width: "250px", display: "flex"}}></Input>
-                <p>DAI Remaining: 0</p>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={() => setVoting(false)}
-                  color="primary"
-                >
-                  Cancel
-                </Button>
-                <Button
-                onClick={() => {
-                  setActiveNft(null);
-                  setModalOpen(false);
-                  setVoting(false);
-                  toast(Msg)
-                }}
-                color="primary"
-                >
-                  Ok
-                </Button>
-              </DialogActions>
-              </span>
-            }
-            </div>
-          </Dialog>
-        </Backdrop>
+        </Modal>
       )}
       <div className="flexCenter">
         <Timer />
