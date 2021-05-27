@@ -8,7 +8,7 @@ const contentStyle : any = {
   color: '#fff',
   //   lineHeight: '160px',
   textAlign: 'center',
-  background: '#15003e',
+  // background: '#15003e',
   maxWidth: '1000px',
   display: 'inline-block',
 };

@@ -156,6 +156,7 @@ export function Bracket(props: any) {
               if (i % 2 !== 0) {
                 const bottomClass = classNames({
                   game: true,
+                  'purp-teal': true,
                   'game-bottom': true,
                   winner: nft.voteCount > gameData1[i - 1].voteCount,
                 });
@@ -176,6 +177,7 @@ export function Bracket(props: any) {
               }
               const topClass = classNames({
                 game: true,
+                'purp-teal': true,
                 'game-top': true,
                 winner: nft.voteCount > gameData1[i + 1].voteCount,
               });

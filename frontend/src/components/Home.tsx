@@ -22,18 +22,19 @@ export function Home(props : any) {
   }, []);
   return (
     <div>
-      <Link to="/">
+      
+      {/* <Link to="/">
         <img
           className="marginTen"
           height="90px"
           width="145px"
-          src={gitcoinBanner}
+          // src={gitcoinBanner}
           alt="gitcoinLogo"
         />
       </Link>
       <Link to="/create">
        <h1 className="link">CREATE NEW</h1>
-      </Link>
+      </Link> */}
       {!gameData1 && (
         <div>
          {' '}
@@ -42,14 +43,15 @@ export function Home(props : any) {
      )}
       {gameData1 && 
       <span>
-       <div className="milkyBackground">
-          <h1 className="greenText paddingTwenty textAlign">
-           LATEST ACTIVITY
+       <div className="purp-teal">
+          <h1 className="yellowText paddingTwenty">
+           LATEST VOTES
        </h1>
           <LatestActivityCarousel gameData={gameData1} />
         </div>
+        <hr></hr>
         <div>
-          <h1 className="paddingTwenty textAlign">CURRENT ROUND</h1>
+          <h1 className="paddingTwenty textAlign yellowText">CURRENT ROUND</h1>
           <Bracket gameData1={gameData1} />
        </div>
       </span>
