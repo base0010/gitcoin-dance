@@ -14,7 +14,7 @@ body {
 }
 
 .purp-teal {
-  background-image: linear-gradient($polaris-blue, $cosmic-teal);
+  background-image: linear-gradient($polaris-blue, $reg-teal);
   border-radius: 20px;
   font-family: "Days One", sans-serif;
 }
@@ -59,6 +59,13 @@ body {
 .link:hover {
   transform: scale(1.1);
   color: #ffe924;
+}
+
+.ellipsisTruncation {
+  width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 hr {

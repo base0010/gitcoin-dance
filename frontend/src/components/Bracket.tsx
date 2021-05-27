@@ -58,8 +58,11 @@ export function Bracket(props: any) {
     <div>
       {activeNft && (
         <Modal 
+        centered
+        width={1000}
+        bodyStyle={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}}
         visible={modalOpen} 
-        title={activeNft.name}
+        // title={activeNft.name}
         onCancel={() => {
           setActiveNft(null);
           setModalOpen(false);
@@ -72,7 +75,7 @@ export function Bracket(props: any) {
           }}
           color="primary"
         >
-          Cancel
+          Vote
         </Button>,
           <Button
           onClick={() => setVoting(true)}
@@ -82,12 +85,9 @@ export function Bracket(props: any) {
         </Button>
         ]}
         >
-              <span>
-                <img width="250px" height="250px" src={activeNft.src || ""} alt={activeNft.description || ""} />
-                <a style={{ display: 'block' }} href="#">
-                  View On Etherscan
-                </a>
-              </span>
+                <img width="350px" height="350px" src={activeNft.src || ""} alt={activeNft.description || ""} />
+                <span style={{margin: "50px"}}>VS</span>
+                <img width="350px" height="350px" src={activeNft.src || ""} alt={activeNft.description || ""} />
         </Modal>
       )}
       <div className="flexCenter">
@@ -102,11 +102,13 @@ export function Bracket(props: any) {
                 const bottomClass = classNames({
                   game: true,
                   'game-bottom': true,
+                  ellipsisTruncation: true,
                   winner: nft.voteCount > gameData1[i - 1].voteCount,
                 });
                 const topClass = classNames({
                   game: true,
                   'game-top': true,
+                  ellipsisTruncation: true,
                   winner: nft.voteCount > gameData1[i].voteCount,
                 });
                 return (
@@ -115,7 +117,8 @@ export function Bracket(props: any) {
                   <span className="purp-teal paddingTwenty">       
                   <li className={topClass}>
                     <p
-                      className="link backgroundForText"
+                    style={{fontSize: "12px"}}
+                      className="link backgroundForText ellipsisTruncation"
                       onClick={() => openModal(prevNft)}
                     >
                       {prevNft.name}
@@ -125,7 +128,8 @@ export function Bracket(props: any) {
                     <li className="game game-spacer">&nbsp;</li>
                     <li className={bottomClass}>
                       <p
-                        className="link backgroundForText"
+                        style={{fontSize: "12px"}}
+                        className="link backgroundForText ellipsisTruncation"
                         onClick={() => openModal(nft)}
                       >
                         {nft.name}
