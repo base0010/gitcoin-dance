@@ -154,14 +154,31 @@ export function Bracket(props: any) {
           <ul className="round round-1">
             {gameData1.map((nft : any, i : number) => {
               if (i % 2 !== 0) {
+                let prevNft = gameData1[i-1]
                 const bottomClass = classNames({
                   game: true,
                   'purp-teal': true,
                   'game-bottom': true,
                   winner: nft.voteCount > gameData1[i - 1].voteCount,
                 });
+                const topClass = classNames({
+                  game: true,
+                  'purp-teal': true,
+                  'game-top': true,
+                  winner: nft.voteCount > gameData1[i].voteCount,
+                });
                 return (
-                  <>
+                  <>       
+                  <li className="spacer">&nbsp;</li>
+                  <li className={topClass}>
+                    <p
+                      className="link backgroundForText"
+                      onClick={() => openModal(prevNft)}
+                    >
+                      {prevNft.name}
+                    </p>{' '}
+                    <span>{prevNft.voteCount}</span>
+                  </li>
                     <li className="game game-spacer">&nbsp;</li>
                     <li className={bottomClass}>
                       <p
@@ -175,15 +192,15 @@ export function Bracket(props: any) {
                   </>
                 );
               }
-              const topClass = classNames({
-                game: true,
-                'purp-teal': true,
-                'game-top': true,
-                winner: nft.voteCount > gameData1[i + 1].voteCount,
-              });
+              // const topClass = classNames({
+              //   game: true,
+              //   'purp-teal': true,
+              //   'game-top': true,
+              //   winner: nft.voteCount > gameData1[i + 1].voteCount,
+              // });
               return (
                 <>
-                  <li className="spacer">&nbsp;</li>
+                  {/* <li className="spacer">&nbsp;</li>
 
                   <li className={topClass}>
                     <p
@@ -193,7 +210,7 @@ export function Bracket(props: any) {
                       {nft.name}
                     </p>{' '}
                     <span>{nft.voteCount}</span>
-                  </li>
+                  </li> */}
                 </>
               );
             })}
