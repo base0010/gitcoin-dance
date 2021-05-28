@@ -17,14 +17,14 @@ export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="flexCenter">
+    <div style={{display: "inline-flex"}} className="flexCenter paddingTwenty purp-teal">
       <Carousel
         slidesToShow={5}
         arrows
         infinite={false}
         style={contentStyle}
         autoplay
-        dots={false}
+        dots
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);

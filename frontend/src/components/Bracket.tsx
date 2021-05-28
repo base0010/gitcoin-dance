@@ -20,7 +20,7 @@ const classNames = require('classnames');
 
 
 export function Bracket(props: any) {
-  const { gameData1 } = props;
+  const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [voting, setVoting] = useState(false);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT>(null);
@@ -148,54 +148,159 @@ export function Bracket(props: any) {
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-2">
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top winner">
-            </li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom ">
-            </li>
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top winner">
-            </li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom ">
-            </li>
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top "></li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom winner">
-            </li>
-
-            <li className="spacer">&nbsp;</li>
-
-            <li className="game game-top ">
-            </li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom winner">
-            </li>
-
+          {gd2.map((nft : any, i : number) => {
+              if (i % 2 !== 0) {
+                let prevNft = gd2[i-1]
+                const bottomClass = classNames({
+                  game: true,
+                  'game-bottom': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd2[i - 1].voteCount,
+                });
+                const topClass = classNames({
+                  game: true,
+                  'game-top': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd2[i].voteCount,
+                });
+                return (
+                  <>
+                  <li className="spacer">&nbsp;</li>
+                  <span className="purp-teal paddingTwenty">       
+                  <li className={topClass}>
+                    <p
+                    style={{fontSize: "12px"}}
+                      className="link backgroundForText ellipsisTruncation"
+                      onClick={() => openModal(prevNft)}
+                    >
+                      {prevNft.name}
+                    </p>{' '}
+                    <span>{prevNft.voteCount}</span>
+                  </li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className={bottomClass}>
+                      <p
+                        style={{fontSize: "12px"}}
+                        className="link backgroundForText ellipsisTruncation"
+                        onClick={() => openModal(nft)}
+                      >
+                        {nft.name}
+                      </p>{' '}
+                      <span>{nft.voteCount}</span>
+                    </li>
+                  </span>
+                  </>
+                );
+              }
+              return (
+                <>
+                </>
+              );
+            })}
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-3">
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top winner">
-            </li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom ">
-            </li>
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top "></li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom winner">
-            </li>
+          {gd3.map((nft : any, i : number) => {
+              if (i % 2 !== 0) {
+                let prevNft = gd3[i-1]
+                const bottomClass = classNames({
+                  game: true,
+                  'game-bottom': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd3[i - 1].voteCount,
+                });
+                const topClass = classNames({
+                  game: true,
+                  'game-top': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd3[i].voteCount,
+                });
+                return (
+                  <>
+                  <li className="spacer">&nbsp;</li>
+                  <span className="purp-teal paddingTwenty">       
+                  <li className={topClass}>
+                    <p
+                    style={{fontSize: "12px"}}
+                      className="link backgroundForText ellipsisTruncation"
+                      onClick={() => openModal(prevNft)}
+                    >
+                      {prevNft.name}
+                    </p>{' '}
+                    <span>{prevNft.voteCount}</span>
+                  </li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className={bottomClass}>
+                      <p
+                        style={{fontSize: "12px"}}
+                        className="link backgroundForText ellipsisTruncation"
+                        onClick={() => openModal(nft)}
+                      >
+                        {nft.name}
+                      </p>{' '}
+                      <span>{nft.voteCount}</span>
+                    </li>
+                  </span>
+                  </>
+                );
+              }
+              return (
+                <>
+                </>
+              );
+            })}
             <li className="spacer">&nbsp;</li>
           </ul>
-          <ul className="round round-4">
-            <li className="spacer">&nbsp;</li>
-            <li className="game game-top winner">
-            </li>
-            <li className="game game-spacer">&nbsp;</li>
-            <li className="game game-bottom "></li>
+          <ul className="round round-3">
+          {gd4.map((nft : any, i : number) => {
+              if (i % 2 !== 0) {
+                let prevNft = gd4[i-1]
+                const bottomClass = classNames({
+                  game: true,
+                  'game-bottom': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd4[i - 1].voteCount,
+                });
+                const topClass = classNames({
+                  game: true,
+                  'game-top': true,
+                  ellipsisTruncation: true,
+                  winner: nft.voteCount > gd4[i].voteCount,
+                });
+                return (
+                  <>
+                  <li className="spacer">&nbsp;</li>
+                  <span className="purp-teal paddingTwenty">       
+                  <li className={topClass}>
+                    <p
+                    style={{fontSize: "12px"}}
+                      className="link backgroundForText ellipsisTruncation"
+                      onClick={() => openModal(prevNft)}
+                    >
+                      {prevNft.name}
+                    </p>{' '}
+                    <span>{prevNft.voteCount}</span>
+                  </li>
+                    <li className="game game-spacer">&nbsp;</li>
+                    <li className={bottomClass}>
+                      <p
+                        style={{fontSize: "12px"}}
+                        className="link backgroundForText ellipsisTruncation"
+                        onClick={() => openModal(nft)}
+                      >
+                        {nft.name}
+                      </p>{' '}
+                      <span>{nft.voteCount}</span>
+                    </li>
+                  </span>
+                  </>
+                );
+              }
+              return (
+                <>
+                </>
+              );
+            })}
             <li className="spacer">&nbsp;</li>
           </ul>
         </main>

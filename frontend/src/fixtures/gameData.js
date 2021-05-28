@@ -113,4 +113,63 @@ const gameArray = [
   },
 ];
 
-export default gameArray;
+const dummyArray = [
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+  {
+    name: '',
+    userAddress: '',
+    gifId: '',
+    nftId: '',
+    voteCount: '',
+  },
+];
+
+export { gameArray, dummyArray };

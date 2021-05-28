@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { LinearProgress } from '@material-ui/core/';
 import Bracket from './Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
-import gameArray from '../fixtures/gameData';
+import {gameArray, dummyArray } from '../fixtures/gameData';
 
 
 import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
 export function Home(props : any) {
   const [gameData1, setGameData1] = useState<any>(null);
+  const [gameData2, setGameData2] = useState<any>(dummyArray);
+  const [gameData3, setGameData3] = useState<any>(dummyArray.slice(0,5));
+  const [gameData4, setGameData4] = useState<any>(dummyArray.slice(0,3));
 
   useEffect(  () => {
     const getGameData = async() =>{
@@ -43,16 +46,16 @@ export function Home(props : any) {
      )}
       {gameData1 && 
       <span>
-       <div className="purp-teal">
+       {/* <div className="purp-teal"> */}
           <h1 className="yellowText marginTen">
            LATEST VOTES
-       </h1>
+          </h1>
           <LatestActivityCarousel gameData={gameData1} />
-        </div>
+       {/* </div> */}
         <hr></hr>
         <div>
           <h1 className="paddingTwenty textAlign yellowText">CURRENT ROUND</h1>
-          <Bracket gameData1={gameData1} />
+          <Bracket gameData1={gameData1}  gd2={gameData2} gd3={gameData3} gd4={gameData4} />
        </div>
       </span>
       }
