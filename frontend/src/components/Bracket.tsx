@@ -9,7 +9,7 @@ import { nfts, ActiveNFT}  from '../assets/index';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
-
+import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
 const classNames = require('classnames');
 
 

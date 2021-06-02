@@ -5,8 +5,9 @@ import Bracket from './Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
 import {gameArray, dummyArray } from '../fixtures/gameData';
 
-
+import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
 import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
+
 export function Home(props : any) {
   const [gameData1, setGameData1] = useState<any>(null);
   const [gameData2, setGameData2] = useState<any>(dummyArray);
@@ -25,16 +26,27 @@ export function Home(props : any) {
   }, [gameData1]);
   return (
     <div>
-      <header className="bg-grid" style={{height: "120px"}}>
+      <div style={{display: "flex"}}>
+      <img style={{margin: "auto"}} src={gitcoinDance} alt="Gitcoin Dance Logo" />
       {/* <Link to="/">
         HOME
       </Link> */}
-      <Link to="/connect">
-       <h1 style={{display: "inline", float: "right"}} className="yellowText marginTen">CONNECT WALLET</h1>
+      {/* <Link to="/connect">
+       <h1 style={{display: "inline"}} className="yellowText marginTen">CONNECT WALLET</h1>
       </Link>
       <Link to="/about">
-       <h1 style={{display: "inline", float: "right"}} className="yellowText marginTen">ABOUT</h1>
+       <h1 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h1>
+      </Link> */}
+      </div>
+      <div style={{display: "flex", justifyContent: "flex-end"}}>
+      <Link to="/connect">
+       <h1 style={{display: "inline"}} className="yellowText marginTen">CONNECT WALLET</h1>
       </Link>
+      <Link to="/about">
+       <h1 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h1>
+      </Link>
+      </div>
+      <header className="bg-grid" style={{height: "120px"}}>
       </header>
       {!gameData1 && (
         <div>

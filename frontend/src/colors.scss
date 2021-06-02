@@ -105,14 +105,15 @@ body {
 }
 
 .bg-grid {
-  background-size: 40px 40px;
-  background-image: linear-gradient(
-      to right,
-      transparent,
-      $polaris-blue 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, $polaris-blue 1px, transparent 1px);
+  background-image: url(./assets/gitcoin/bgGrid.svg);
+  // background-size: 40px 40px;
+  // background-image: linear-gradient(
+  //     to right,
+  //     transparent,
+  //     $polaris-blue 1px,
+  //     transparent 1px
+  //   ),
+  //   linear-gradient(to bottom, $polaris-blue 1px, transparent 1px);
 }
 
 .marginTen {
