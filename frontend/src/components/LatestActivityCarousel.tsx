@@ -17,7 +17,7 @@ export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div style={{display: "inline-flex"}} className="flexCenter paddingTwenty purp-teal">
+    <div className="flexCenter paddingTwenty purp-teal">
       <Carousel
         slidesToShow={5}
         arrows

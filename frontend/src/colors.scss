@@ -14,8 +14,8 @@ body {
 }
 
 .purp-teal {
-  background-image: linear-gradient($polaris-blue, $reg-teal);
-  border-radius: 20px;
+  background-image: linear-gradient($polaris-blue 90%, $reg-teal);
+  border-radius: 10px;
   font-family: "Days One", sans-serif;
 }
 
@@ -33,6 +33,11 @@ body {
 
 .yellowText {
   color: #ffe924;
+  font-family: "Days One", sans-serif;
+}
+
+.tealText {
+  color: #05f5bc;
   font-family: "Days One", sans-serif;
 }
 
@@ -68,13 +73,13 @@ body {
   cursor: pointer;
 }
 
-.link:hover {
-  transform: scale(1.1);
-  color: #ffe924;
-}
+// .link:hover {
+//   transform: scale(1.1);
+//   color: #ffe924;
+// }
 
 .ellipsisTruncation {
-  width: 160px;
+  // width: 160px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

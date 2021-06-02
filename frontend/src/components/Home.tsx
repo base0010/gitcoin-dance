@@ -22,22 +22,26 @@ export function Home(props : any) {
         };
     }
     getGameData();
-  }, []);
+  }, [gameData1]);
   return (
     <div>
-      
-      {/* <Link to="/">
-        <img
+      <header style={{height: "100px"}}>
+      <Link to="/">
+        {/* <img
           className="marginTen"
           height="90px"
           width="145px"
           // src={gitcoinBanner}
           alt="gitcoinLogo"
-        />
+        /> */}
       </Link>
-      <Link to="/create">
-       <h1 className="link">CREATE NEW</h1>
-      </Link> */}
+      <Link to="/connect">
+       <h1 style={{display: "inline", float: "right"}} className="yellowText marginTen">CONNECT WALLET</h1>
+      </Link>
+      <Link to="/about">
+       <h1 style={{display: "inline", float: "right"}} className="yellowText marginTen">ABOUT</h1>
+      </Link>
+      </header>
       {!gameData1 && (
         <div>
          {' '}

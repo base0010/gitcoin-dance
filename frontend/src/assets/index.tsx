@@ -1,7 +1,7 @@
 export interface ActiveNFT {
   id: string | null;
-  src: string | null;
-  description: string | null;
+  src: string | undefined;
+  description: string | undefined;
   name?: string | null;
 }
 

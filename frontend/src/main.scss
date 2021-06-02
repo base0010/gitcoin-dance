@@ -9,9 +9,10 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 200px;
+  // width: 200px;
   list-style: none;
   padding: 0;
+  margin: 20px;
 }
 .round .spacer {
   flex-grow: 1;
