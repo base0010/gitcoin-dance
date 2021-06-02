@@ -9,7 +9,6 @@ import { nfts, ActiveNFT}  from '../assets/index';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
-import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
 const classNames = require('classnames');
 
 
@@ -36,6 +35,10 @@ export function Bracket(props: any) {
        <a>PENDING</a> vote sent
     </div>
   )
+
+  const CloseIcon = () => {
+    return <div className="imgBorder marginTen">X</div>
+  }
   
 
   return (
@@ -46,6 +49,7 @@ export function Bracket(props: any) {
         width={1500}
         bodyStyle={{background: "radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)"}}
         visible={modalOpen} 
+        closeIcon={<CloseIcon/>}
         // title={activeNft.name}
         onCancel={() => {
           setActiveNft(null);

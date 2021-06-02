@@ -51,6 +51,7 @@ export function LatestActivityCarousel(props : any) {
                   backgroundRepeat: 'no-repeat',
                   minHeight: "200px"
                 }}></div>
+                <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
               </div>
             );
           }
