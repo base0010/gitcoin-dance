@@ -14,9 +14,34 @@ body {
 }
 
 .purp-teal {
-  background-image: linear-gradient($polaris-blue, $cosmic-teal);
+  background: linear-gradient(182.51deg, #6f3ff5 -4.54%, #16dac5 200.21%);
+  border-radius: 8px;
+  font-family: "Days One", sans-serif;
+}
+
+.imgBorder {
+  border: 1px solid;
+  border-image-source: linear-gradient(
+    184.23deg,
+    #ff86b1 40.25%,
+    #ff2473 66.63%,
+    #ffe924 98.48%
+  );
+  border-image-slice: 1;
+}
+
+.slick-list {
+  margin: 0 -5px;
+}
+.slick-slide > div {
+  padding: 0 5px;
+}
+.dark-card {
+  background-color: $background;
   border-radius: 20px;
   font-family: "Days One", sans-serif;
+  border: 1px solid #7e3ff5;
+  box-sizing: border-box;
 }
 
 .yellowText {
@@ -24,11 +49,9 @@ body {
   font-family: "Days One", sans-serif;
 }
 
-.clockText {
-  font-family: "VT323", monospace;
-  font-size: 30px;
-  background-color: $dark-cosmic-teal;
-  padding: 10px;
+.tealText {
+  color: #05f5bc;
+  font-family: "Days One", sans-serif;
 }
 
 .marginTen {
@@ -56,9 +79,11 @@ body {
   cursor: pointer;
 }
 
-.link:hover {
-  transform: scale(1.1);
-  color: $polaris-blue;
+.ellipsisTruncation {
+  // width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 hr {
