@@ -54,6 +54,20 @@ body {
   border-image-slice: 1;
 }
 
+.ant-btn-ghost {
+  color: white !important;
+  font-family: "Days One", sans-serif !important;
+  margin: 0px 275px;
+  border: 2px solid !important;
+  border-image-slice: 1 !important;
+  border-image-source: linear-gradient(
+    176.9deg,
+    #ff86b1 23.91%,
+    #ff2473 65.82%,
+    #ffe924 116.41%
+  ) !important;
+}
+
 .slick-list {
   margin: 0 -5px;
 }
@@ -68,8 +82,25 @@ body {
   box-sizing: border-box;
 }
 
+.ant-modal-content {
+  overflow: auto;
+  border-radius: 8px !important;
+}
+
+.ant-btn-lg {
+  height: 60px !important;
+  padding: 12.4px 25px !important;
+  font-size: 24px !important;
+  border-radius: 2px !important;
+}
+
 .yellowText {
   color: #ffe924;
+  font-family: "Days One", sans-serif;
+}
+
+.tealText {
+  color: #05f5bc;
   font-family: "Days One", sans-serif;
 }
 
@@ -82,11 +113,6 @@ body {
       transparent 1px
     ),
     linear-gradient(to bottom, $polaris-blue 1px, transparent 1px);
-}
-
-.tealText {
-  color: #05f5bc;
-  font-family: "Days One", sans-serif;
 }
 
 .marginTen {

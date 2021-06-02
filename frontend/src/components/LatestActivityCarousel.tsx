@@ -51,16 +51,6 @@ export function LatestActivityCarousel(props : any) {
                   backgroundRepeat: 'no-repeat',
                   minHeight: "200px"
                 }}></div>
-                {/* <img
-                  style={{ textAlign: 'center', display: "inline", 
-                  }}
-                  className="imgBorder"
-                  height="200px"
-                  width="200px"
-                  src={nft.src || ""}
-                  alt={nft.description || ""}
-                /> */}
-          
               </div>
             );
           }
