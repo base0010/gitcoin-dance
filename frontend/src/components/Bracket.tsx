@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Dialog,
   Button,
-  DialogContent,
-  DialogActions,
-  DialogTitle,
-  makeStyles,
-  Backdrop,
 } from '@material-ui/core/';
 import {
   Input,
@@ -26,16 +20,6 @@ export function Bracket(props: any) {
   const [voting, setVoting] = useState(false);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT>(null);
 
-  // const useStyles = makeStyles((theme) => ({
-  //   backDrop: {
-  //     zIndex: theme.zIndex.drawer + 1,
-  //     color: '#fff',
-  //   },
-  // }));
-
-
-  // const classes = useStyles();
-
   const openModal = (nft: any) => {
     const active = nfts.find((n) => n.id === nft.gifId);
     if(active) {
@@ -50,7 +34,7 @@ export function Bracket(props: any) {
   const Msg = ({ closeToast, toastProps } : any) => (
     <div>
       <img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
-       <a >PENDING</a> vote sent
+       <a>PENDING</a> vote sent
     </div>
   )
   

@@ -32,13 +32,22 @@ export function LatestActivityCarousel(props : any) {
             return (
               <div className="dark-card paddingTwenty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
-                <img
-                  style={{ textAlign: 'center', display: "inline" }}
+                <div className="imgBorder" style={{  
+                  backgroundImage: `url(${nft.src})`,
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  minHeight: "200px"
+                }}></div>
+                {/* <img
+                  style={{ textAlign: 'center', display: "inline", 
+                  }}
+                  className="imgBorder"
                   height="200px"
                   width="200px"
                   src={nft.src || ""}
                   alt={nft.description || ""}
-                />
+                /> */}
                 <h3
                   style={{ color: 'white',textAlign: 'center' }}
                 >

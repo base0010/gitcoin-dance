@@ -26,15 +26,9 @@ export function Home(props : any) {
   return (
     <div>
       <header style={{height: "100px"}}>
-      <Link to="/">
-        {/* <img
-          className="marginTen"
-          height="90px"
-          width="145px"
-          // src={gitcoinBanner}
-          alt="gitcoinLogo"
-        /> */}
-      </Link>
+      {/* <Link to="/">
+        HOME
+      </Link> */}
       <Link to="/connect">
        <h1 style={{display: "inline", float: "right"}} className="yellowText marginTen">CONNECT WALLET</h1>
       </Link>
@@ -50,12 +44,10 @@ export function Home(props : any) {
      )}
       {gameData1 && 
       <span>
-       {/* <div className="purp-teal"> */}
           <h1 className="yellowText marginTen">
-           LATEST VOTES
+           RECENT VOTES
           </h1>
           <LatestActivityCarousel gameData={gameData1} />
-       {/* </div> */}
         <hr></hr>
         <div>
           <h1 className="paddingTwenty textAlign yellowText">CURRENT ROUND</h1>
