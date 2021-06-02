@@ -6,7 +6,7 @@ import LatestActivityCarousel from './LatestActivityCarousel';
 import {gameArray, dummyArray } from '../fixtures/gameData';
 
 import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
-import gitcoinBanner from "../assets/gitcoin/gitcoinBanner.svg"
+import nftDanceOff from "../assets/gitcoin/nftDanceOff.svg"
 
 export function Home(props : any) {
   const [gameData1, setGameData1] = useState<any>(null);
@@ -39,11 +39,11 @@ export function Home(props : any) {
       </Link> */}
       </div>
       <div style={{display: "flex", justifyContent: "flex-end"}}>
-      <Link to="/connect">
-       <h1 style={{display: "inline"}} className="yellowText marginTen">CONNECT WALLET</h1>
-      </Link>
       <Link to="/about">
        <h1 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h1>
+      </Link>
+      <Link to="/connect">
+       <h1 style={{display: "inline"}} className="yellowText marginTen">CONNECT WALLET</h1>
       </Link>
       </div>
       <header className="bg-grid" style={{height: "120px"}}>
@@ -60,7 +60,10 @@ export function Home(props : any) {
            RECENT VOTES
           </h1>
           <LatestActivityCarousel gameData={gameData1} />
-        <hr></hr>
+          <div style={{margin: "20px"}}>
+            <img src={nftDanceOff} alt="NFT Dance Off logo" />
+            <hr style={{width: "85%", float: "right"}}></hr>
+          </div>
         <div>
           <h1 className="paddingTwenty textAlign yellowText">CURRENT ROUND</h1>
           <Bracket gameData1={gameData1}  gd2={gameData2} gd3={gameData3} gd4={gameData4} />
