@@ -125,9 +125,17 @@ export function Bracket(props: any) {
                       className="link backgroundForText ellipsisTruncation tealText"
                       onClick={() => openModal(prevNft)}
                     >
-                      {prevNft.name}
+                      <h3
+                      title={prevNft.name}
+                      className="tealText ellipsisTruncation"
+                      style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                      >
+                       {prevNft.name}
+                      </h3>
+                      <h4 className="underscoreDance">_dance</h4>
                       <hr style={{borderTop: "1px solid yellow"}}></hr>
                     </span>{' '}
+                    
                     <span className="tealText" style={{alignSelf: "flex-end"}}>{prevNft.voteCount}</span>
                   </li>
                     <li className="game game-spacer">&nbsp;</li>
@@ -147,7 +155,14 @@ export function Bracket(props: any) {
                         className="link backgroundForText ellipsisTruncation tealText"
                         onClick={() => openModal(nft)}
                       >
-                        {n.name}
+                                <h3
+                      title={n.name}
+                      className="tealText ellipsisTruncation"
+                      style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                      >
+                       {n.name}
+                      </h3>
+                      <h4 className="underscoreDance">_dance</h4>
                         <hr style={{borderTop: "1px solid yellow"}}></hr>
                       </span>{' '}
                       <span className="tealText" style={{alignSelf: "flex-end"}}>{n.voteCount}</span>

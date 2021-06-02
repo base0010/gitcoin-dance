@@ -13,6 +13,30 @@ body {
   background-color: $background !important;
 }
 
+.underscoreDance {
+  font-family: "Caveat", cursive;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  background: linear-gradient(
+    184.23deg,
+    #ff86b1 40.25%,
+    #ff2473 66.63%,
+    #ffe924 98.48%
+  );
+  line-height: 23px;
+  /* identical to box height */
+
+  text-align: center;
+
+  transform: rotate(-0.84deg);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
 .purp-teal {
   background: linear-gradient(182.51deg, #6f3ff5 -4.54%, #16dac5 200.21%);
   border-radius: 8px;
@@ -49,6 +73,17 @@ body {
   font-family: "Days One", sans-serif;
 }
 
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(
+      to right,
+      transparent,
+      $polaris-blue 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, $polaris-blue 1px, transparent 1px);
+}
+
 .tealText {
   color: #05f5bc;
   font-family: "Days One", sans-serif;
@@ -60,6 +95,11 @@ body {
 
 .paddingTwenty {
   padding: 20px;
+  justify-content: space-around;
+}
+
+.paddingForty {
+  padding: 40px;
   justify-content: space-around;
 }
 

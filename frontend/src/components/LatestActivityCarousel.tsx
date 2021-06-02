@@ -30,8 +30,20 @@ export function LatestActivityCarousel(props : any) {
           const nft = nfts.find((nf) => nf.id === n.gifId);
           if(nft) {
             return (
-              <div className="dark-card paddingTwenty">
+              <div className="dark-card paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
+                <span className="ellipsisTruncation" style={{display: "flex"}}>
+                <hr style={{width: "20%"}}></hr>
+                <h3
+                  title={nft.description}
+                  className="tealText ellipsisTruncation"
+                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                >
+                  {nft.description}
+                </h3>
+                <hr style={{width: "20%"}}></hr>
+                </span>
+                <h4 className="underscoreDance">_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${nft.src})`,
                   backgroundPosition: 'center',
@@ -48,11 +60,7 @@ export function LatestActivityCarousel(props : any) {
                   src={nft.src || ""}
                   alt={nft.description || ""}
                 /> */}
-                <h3
-                  style={{ color: 'white',textAlign: 'center' }}
-                >
-                  {nft.description}
-                </h3>
+          
               </div>
             );
           }

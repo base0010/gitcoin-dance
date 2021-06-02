@@ -25,7 +25,7 @@ export function Home(props : any) {
   }, [gameData1]);
   return (
     <div>
-      <header style={{height: "100px"}}>
+      <header className="bg-grid" style={{height: "120px"}}>
       {/* <Link to="/">
         HOME
       </Link> */}
