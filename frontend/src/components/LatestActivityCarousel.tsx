@@ -4,45 +4,49 @@ import 'antd/dist/antd.css';
 import {nfts} from '../assets';
 
 const contentStyle : any = {
-  //   height: '160px',
   color: '#fff',
-  //   lineHeight: '160px',
   textAlign: 'center',
-  background: '#15003e',
-  maxWidth: '1000px',
-  display: 'inline-block',
 };
 
 export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="paddingTwenty flexCenter">
+    <div className="paddingForty purp-teal">
       <Carousel
-        slidesToShow={4}
+        slidesToShow={5}
         arrows
         infinite={false}
         style={contentStyle}
         autoplay
+        dots
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
           if(nft) {
             return (
-              <div>
-                <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3>
-                <img
-                  style={{ textAlign: 'center' }}
-                  height="200px"
-                  width="200px"
-                  src={nft.src || ""}
-                  alt={nft.description || ""}
-                />
+              <div className="dark-card paddingForty">
+                {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
+                <span className="ellipsisTruncation" style={{display: "flex"}}>
+                <hr style={{width: "20%"}}></hr>
                 <h3
-                  style={{ color: 'white', padding: '45px', textAlign: 'center' }}
+                  title={nft.description}
+                  className="tealText ellipsisTruncation"
+                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
                 >
                   {nft.description}
                 </h3>
+                <hr style={{width: "20%"}}></hr>
+                </span>
+                <h4 className="underscoreDance">_dance</h4>
+                <div className="imgBorder" style={{  
+                  backgroundImage: `url(${nft.src})`,
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  minHeight: "200px"
+                }}></div>
+                <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
               </div>
             );
           }
