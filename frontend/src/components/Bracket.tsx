@@ -15,14 +15,17 @@ export function Bracket(props: any) {
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [voting, setVoting] = useState(false);
-  const [activeNft, setActiveNft] = useState<null | ActiveNFT>(null);
+  const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
 
-  const openModal = (nft: any) => {
-    const active = nfts.find((n) => n.id === nft.gifId);
-    if(active) {
-      active.name = nft.name;
+  const openModal = (...nftArray: any[]) => {
+    console.log(nftArray, "no gifId?")
+    const active1 = nfts.find((n) => n.id === nftArray[0].gifId);
+    const active2 = nfts.find((n) => n.id === nftArray[1].gifId);
+    if(active1 && active2) {
+      active1.name = nftArray[0].name;
+      active2.name = nftArray[1].name;
       setModalOpen(true);
-      setActiveNft(active);
+      setActiveNft([active1, active2]);
     } else {
       toast("Something went wrong")
     }
@@ -63,17 +66,17 @@ export function Bracket(props: any) {
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 <h3
-                  title={activeNft.description}
+                  title={activeNft[0].description}
                   className="tealText ellipsisTruncation"
                   style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
                 >
-                  {activeNft.description}
+                  {activeNft[0].description}
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDance">_dance</h4>
                 <div className="imgBorder" style={{  
-                  backgroundImage: `url(${activeNft.src})`,
+                  backgroundImage: `url(${activeNft[0].src})`,
                   backgroundPosition: 'center',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
@@ -86,17 +89,17 @@ export function Bracket(props: any) {
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 <h3
-                  title={activeNft.description}
+                  title={activeNft[1].description}
                   className="tealText ellipsisTruncation"
                   style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
                 >
-                  {activeNft.description}
+                  {activeNft[1].description}
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDance">_dance</h4>
                 <div className="imgBorder" style={{  
-                  backgroundImage: `url(${activeNft.src})`,
+                  backgroundImage: `url(${activeNft[1].src})`,
                   backgroundPosition: 'center',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
@@ -177,7 +180,7 @@ export function Bracket(props: any) {
                       <span
                       style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation tealText"
-                        onClick={() => openModal(prevNft)}
+                        onClick={() => openModal(prevNft, n)}
                       >
                         <h3
                         title={prevNft.name}
@@ -207,7 +210,7 @@ export function Bracket(props: any) {
                       <span
                         style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation tealText"
-                        onClick={() => openModal(n)}
+                        onClick={() => openModal(prevNft, n)}
                       >
                                 <h3
                       title={n.name}
@@ -267,7 +270,7 @@ export function Bracket(props: any) {
                       <p
                       style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(prevNft2)}
+                        // onClick={() => openModal(prevNft2)}
                       >
                         {prevNft2.name}
                       </p>{' '}
@@ -278,7 +281,7 @@ export function Bracket(props: any) {
                       <p
                         style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(nft)}
+                        // onClick={() => openModal(nft)}
                       >
                         {n.name}
                       </p>{' '}
@@ -330,7 +333,7 @@ export function Bracket(props: any) {
                       <p
                       style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(prevNft2)}
+                        // onClick={() => openModal(prevNft2)}
                       >
                         {prevNft2.name}
                       </p>{' '}
@@ -341,7 +344,7 @@ export function Bracket(props: any) {
                       <p
                         style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(nft)}
+                        // onClick={() => openModal(nft)}
                       >
                         {n.name}
                       </p>{' '}
@@ -393,7 +396,7 @@ export function Bracket(props: any) {
                       <p
                       style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(prevNft2)}
+                        // onClick={() => openModal(prevNft2)}
                       >
                         {prevNft2.name}
                       </p>{' '}
@@ -404,7 +407,7 @@ export function Bracket(props: any) {
                       <p
                         style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation"
-                        onClick={() => openModal(nft)}
+                        // onClick={() => openModal(nft)}
                       >
                         {n.name}
                       </p>{' '}
