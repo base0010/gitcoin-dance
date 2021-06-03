@@ -5,6 +5,7 @@ import {
   Button
 } from "antd"
 import { nfts, ActiveNFT}  from '../assets/index';
+import {EmptyBracketCell} from "./EmptyBracketCell"
 import Timer from './Timer';
 import { toast } from 'react-toastify';
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
@@ -18,7 +19,6 @@ export function Bracket(props: any) {
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
 
   const openModal = (...nftArray: any[]) => {
-    console.log(nftArray, "no gifId?")
     const active1 = nfts.find((n) => n.id === nftArray[0].gifId);
     const active2 = nfts.find((n) => n.id === nftArray[1].gifId);
     if(active1 && active2) {
@@ -239,57 +239,8 @@ export function Bracket(props: any) {
           <h1 className="paddingTwenty polarisText">SECOND</h1>
           <hr></hr>
           {gd2.map((n : any, i : number) => {
-             let nft = nfts.find((nf) => nf.id === n.gifId);
-             let pnft
               if (i % 2 !== 0) {
-                let prevNft2 = gd2[i-1]
-                pnft = nfts.find((nf) => nf.id === prevNft2.gifId);
-                const bottomClass2 = classNames({
-                  game: true,
-                  'game-bottom': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i - 1].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                const topClass2 = classNames({
-                  game: true,
-                  'game-top': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                return (
-                  <>
-                  <li className="spacer">&nbsp;</li>
-                  <span className="paddingTwenty">       
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={topClass2}>
-                      <p
-                      style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(prevNft2)}
-                      >
-                        {prevNft2.name}
-                      </p>{' '}
-                      <span>{prevNft2.voteCount}</span>
-                    </li>
-                    <li className="game game-spacer">&nbsp;</li>
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
-                      <p
-                        style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(nft)}
-                      >
-                        {n.name}
-                      </p>{' '}
-                      <span>{n.voteCount}</span>
-                    </li>
-                  </span>
-                  </>
-                );
+                return <EmptyBracketCell/>
               }
               return (
                 <>
@@ -302,57 +253,8 @@ export function Bracket(props: any) {
           <h1 className="paddingTwenty polarisText">SEMIS</h1>
           <hr></hr>
           {gd3.map((n : any, i : number) => {
-             let nft = nfts.find((nf) => nf.id === n.gifId);
-             let pnft
               if (i % 2 !== 0) {
-                let prevNft2 = gd2[i-1]
-                pnft = nfts.find((nf) => nf.id === prevNft2.gifId);
-                const bottomClass2 = classNames({
-                  game: true,
-                  'game-bottom': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i - 1].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                const topClass2 = classNames({
-                  game: true,
-                  'game-top': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                return (
-                  <>
-                  <li className="spacer">&nbsp;</li>
-                  <span className="paddingTwenty">       
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={topClass2}>
-                      <p
-                      style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(prevNft2)}
-                      >
-                        {prevNft2.name}
-                      </p>{' '}
-                      <span>{prevNft2.voteCount}</span>
-                    </li>
-                    <li className="game game-spacer">&nbsp;</li>
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
-                      <p
-                        style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(nft)}
-                      >
-                        {n.name}
-                      </p>{' '}
-                      <span>{n.voteCount}</span>
-                    </li>
-                  </span>
-                  </>
-                );
+                return <EmptyBracketCell/>
               }
               return (
                 <>
@@ -365,57 +267,8 @@ export function Bracket(props: any) {
           <h1 className="paddingTwenty polarisText">FINALS</h1>
           <hr></hr>
           {gd4.map((n : any, i : number) => {
-             let nft = nfts.find((nf) => nf.id === n.gifId);
-             let pnft
               if (i % 2 !== 0) {
-                let prevNft2 = gd2[i-1]
-                pnft = nfts.find((nf) => nf.id === prevNft2.gifId);
-                const bottomClass2 = classNames({
-                  game: true,
-                  'game-bottom': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i - 1].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                const topClass2 = classNames({
-                  game: true,
-                  'game-top': true,
-                  'inactive-round': true,
-                  ellipsisTruncation: true,
-                  winner: n.voteCount > gameData1[i].voteCount,
-                  paddingTwenty: true,
-                  display: "flex"
-                });
-                return (
-                  <>
-                  <li className="spacer">&nbsp;</li>
-                  <span className="paddingTwenty">       
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={topClass2}>
-                      <p
-                      style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(prevNft2)}
-                      >
-                        {prevNft2.name}
-                      </p>{' '}
-                      <span>{prevNft2.voteCount}</span>
-                    </li>
-                    <li className="game game-spacer">&nbsp;</li>
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
-                      <p
-                        style={{fontSize: "12px"}}
-                        className="link backgroundForText ellipsisTruncation"
-                        // onClick={() => openModal(nft)}
-                      >
-                        {n.name}
-                      </p>{' '}
-                      <span>{n.voteCount}</span>
-                    </li>
-                  </span>
-                  </>
-                );
+                return <EmptyBracketCell/>
               }
               return (
                 <>
