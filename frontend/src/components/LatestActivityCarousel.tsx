@@ -4,11 +4,8 @@ import 'antd/dist/antd.css';
 import {nfts} from '../assets';
 
 const contentStyle : any = {
-  //   height: '160px',
   color: '#fff',
-  //   lineHeight: '160px',
   textAlign: 'center',
-  // background: '#15003e',
   maxWidth: '1500px',
   display: 'inline-block',
 };

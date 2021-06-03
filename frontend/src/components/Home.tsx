@@ -28,15 +28,6 @@ export function Home(props : any) {
     <div>
       <div style={{display: "flex"}}>
       <img style={{margin: "auto"}} src={gitcoinDance} alt="Gitcoin Dance Logo" />
-      {/* <Link to="/">
-        HOME
-      </Link> */}
-      {/* <Link to="/connect">
-       <h1 style={{display: "inline"}} className="yellowText marginTen">CONNECT WALLET</h1>
-      </Link>
-      <Link to="/about">
-       <h1 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h1>
-      </Link> */}
       </div>
       <div style={{display: "flex", justifyContent: "flex-end"}}>
       <Link to="/about">
@@ -65,7 +56,6 @@ export function Home(props : any) {
             <hr style={{width: "85%", float: "right"}}></hr>
           </div>
         <div>
-          <h1 className="paddingTwenty textAlign yellowText">CURRENT ROUND</h1>
           <Bracket gameData1={gameData1}  gd2={gameData2} gd3={gameData3} gd4={gameData4} />
        </div>
       </span>

@@ -7,9 +7,7 @@ $reg-teal: #15d9c5;
 $background: #0f0333;
 
 body {
-  // background-color: $stardust-yellow !important;
   padding: 80px !important;
-  font-family: "Miriam Libre", sans-serif !important;
   background-color: $background !important;
 }
 
@@ -25,10 +23,7 @@ body {
     #ffe924 98.48%
   );
   line-height: 23px;
-  /* identical to box height */
-
   text-align: center;
-
   transform: rotate(-0.84deg);
   background-size: 100%;
   -webkit-background-clip: text;
@@ -39,6 +34,12 @@ body {
 
 .purp-teal {
   background: linear-gradient(182.51deg, #6f3ff5 -4.54%, #16dac5 200.21%);
+  border-radius: 8px;
+  font-family: "Days One", sans-serif;
+}
+
+.inactive-round {
+  background: linear-gradient(182.51deg, #473e66 -4.54%, #5b726f 200.21%);
   border-radius: 8px;
   font-family: "Days One", sans-serif;
 }
@@ -75,6 +76,7 @@ body {
 .slick-slide > div {
   padding: 0 5px;
 }
+
 .dark-card {
   background-color: $background;
   border-radius: 20px;
@@ -113,16 +115,13 @@ body {
   font-family: "Days One", sans-serif;
 }
 
+.polarisText {
+  color: $polaris-blue;
+  font-family: "Days One", sans-serif;
+}
+
 .bg-grid {
-  background-image: url(./assets/gitcoin/bgGrid.svg);
-  // background-size: 40px 40px;
-  // background-image: linear-gradient(
-  //     to right,
-  //     transparent,
-  //     $polaris-blue 1px,
-  //     transparent 1px
-  //   ),
-  //   linear-gradient(to bottom, $polaris-blue 1px, transparent 1px);
+  background-image: url(../assets/gitcoin/bgGrid.svg);
 }
 
 .marginTen {
@@ -156,7 +155,6 @@ body {
 }
 
 .ellipsisTruncation {
-  // width: 160px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
