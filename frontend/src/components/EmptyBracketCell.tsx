@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const classNames = require('classnames');
 
@@ -29,22 +29,16 @@ export function EmptyBracketCell(props : any) {
         <p
         style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
-          // onClick={() => openModal(prevNft2)}
         >
-          {/* {prevNft2.name} */}
         </p>{' '}
-        {/* <span>{prevNft2.voteCount}</span> */}
       </li>
       <li className="game game-spacer">&nbsp;</li>
       <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
         <p
           style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
-          // onClick={() => openModal(nft)}
         >
-          {/* {n.name} */}
         </p>{' '}
-        {/* <span>{n.voteCount}</span> */}
       </li>
     </span>
     </>

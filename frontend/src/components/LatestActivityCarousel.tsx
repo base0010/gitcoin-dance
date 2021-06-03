@@ -6,15 +6,13 @@ import {nfts} from '../assets';
 const contentStyle : any = {
   color: '#fff',
   textAlign: 'center',
-  maxWidth: '1500px',
-  display: 'inline-block',
 };
 
 export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="flexCenter paddingTwenty purp-teal">
+    <div className="paddingForty purp-teal">
       <Carousel
         slidesToShow={5}
         arrows
