@@ -40,7 +40,7 @@ export function LatestActivityCarousel(props : any) {
                 </h3>
                 <hr style={{width: "20%"}}></hr>
                 </span>
-                <h4 className="underscoreDance" style={{right: i * 252 + 100}}>_dance</h4>
+                <h4 className="underscoreDance" style={{right: i * 252 + 100, top: 50, position: "absolute"}}>_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${nft.src})`,
                   backgroundPosition: 'center',
