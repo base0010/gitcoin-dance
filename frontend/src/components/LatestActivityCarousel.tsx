@@ -6,6 +6,7 @@ import {nfts} from '../assets';
 const contentStyle : any = {
   color: '#fff',
   textAlign: 'center',
+  maxHeight: "277px"
 };
 
 export function LatestActivityCarousel(props : any) {
@@ -15,11 +16,12 @@ export function LatestActivityCarousel(props : any) {
     <div className="paddingForty purp-teal">
       <Carousel
         slidesToShow={5}
-        arrows
+        // arrows
         infinite={false}
         style={contentStyle}
         autoplay
-        dots
+        dots={false}
+        adaptiveHeight
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
@@ -32,19 +34,19 @@ export function LatestActivityCarousel(props : any) {
                 <h3
                   title={nft.description}
                   className="tealText ellipsisTruncation"
-                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                  style={{ textAlign: 'center', fontSize: "16px", width: "300px" }}
                 >
                   {nft.description}
                 </h3>
                 <hr style={{width: "20%"}}></hr>
                 </span>
-                <h4 className="underscoreDance">_dance</h4>
+                <h4 className="underscoreDance" style={{right: i * 252 + 100}}>_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${nft.src})`,
                   backgroundPosition: 'center',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
-                  minHeight: "200px"
+                  minHeight: "100px"
                 }}></div>
                 <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
               </div>

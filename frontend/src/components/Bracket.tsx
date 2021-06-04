@@ -130,9 +130,9 @@ export function Bracket(props: any) {
               </div>
         </Modal>
       )}
-      <div className="flexCenter">
+      {/* <div className="flexCenter">
         <Timer />
-      </div>
+      </div> */}
       {gameData1 && (
         <main id="tournament">
           <ul className="round round-1">
