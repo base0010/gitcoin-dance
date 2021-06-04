@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import {Home} from './components/Home'
 import {VoteButton} from './components/VoteButton'
 import {ZKSyncTest} from "./components/ZKSyncTest";
-
+import {ConnectWallet} from "./components/ConnectWallet";
 
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
               / <Route exact path="/nft" component={NFT}  />
               / <Route exact path="/vote" component={VoteButton} />
               / <Route exact path="/zk" component={ZKSyncTest} />
+              / <Route exact path="/connect" component={ConnectWallet} />
           </Switch>
         </Symfoni>
     </div>

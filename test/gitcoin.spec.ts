@@ -4,9 +4,7 @@ import * as fs from 'fs'
 import { Signer } from "ethers";
 import { assert, expect } from "chai";
 import * as zksync from "zksync"
-import {Contract} from "hardhat/internal/hardhat-network/stack-traces/model";
-import {readFileSync} from "fs";
-import {log} from "util";
+
 export const advanceBlocktime = async (seconds: number): Promise<void> => {
   const { timestamp: currTime } = await ethers.provider.getBlock("latest");
   console.log("Current block", currTime)
@@ -31,7 +29,7 @@ describe("Gitcoin Dance Tests", function () {
   let dai;
 
   let syncWallet;
-  const num_dancers = 8;
+  const num_dancers = 16;
   let dancer_base_contracts = [];
 
   beforeEach(async function () {
@@ -45,14 +43,6 @@ describe("Gitcoin Dance Tests", function () {
     if(syncWallet !== undefined){
       console.log(syncWallet)
     }
-  })
-  it("Should calculate the log2() of number of dancers", async function(){
-    const num_dancers = 128;
-    let log_res = await game.determineGameRounds(num_dancers);
-    await log_res.wait(1);
-
-    const determined_rounds =  ethers.utils.formatUnits(await game.g_rounds(),"wei");
-    expect(Math.log2(num_dancers) == Number(determined_rounds))
   })
 
   it("should have accounts", async function () {
@@ -78,6 +68,7 @@ describe("Gitcoin Dance Tests", function () {
     expect(await gitdance.name()).to.equal("Gitcoin Dance NFT")
 
   });
+
   it( "Should deploy the Game Contract instance", async function(){
     const Game = await ethers.getContractFactory("Game");
     const round_blocktime = 150;
@@ -87,6 +78,15 @@ describe("Gitcoin Dance Tests", function () {
     const address = await game.address
     console.log("Game Address " + address)
     expect(address);
+  })
+
+  it("Should calculate the log2() of number of dancers", async function(){
+    const num_dancers = 128;
+    let log_res = await game.determineGameRounds(num_dancers);
+    await log_res.wait(1);
+
+    const determined_rounds =  ethers.utils.formatUnits(await game.g_rounds(),"wei");
+    expect(Math.log2(num_dancers) == Number(determined_rounds))
   })
 
   //todo this should happen by calling the Game contract directly
@@ -112,10 +112,16 @@ describe("Gitcoin Dance Tests", function () {
 
   it("Should start the Game", async function(){
     const start_game = await game.startGame();
-    const start_waited = start_game.wait()
+    const start_waited =  await start_game.wait()
+
 
     expect(start_waited !== undefined)
   })
+  it("Should Return the bracket competitors", async function(){
+
+
+  })
+
   it("Should fund base dancer contracts with Fake DAI", async function(){
     for(let i = 0; i < num_dancers; i++) {
 
@@ -165,12 +171,18 @@ describe("Gitcoin Dance Tests", function () {
     }
 
   })
-  it("Should increment vote by the amount", async function(){
-    for(let i = 0; i < num_dancers; i++) {
-      // console.log("game address", game.address)
-      const totalVotes = await game.votesPerNftId(i)
-      console.log("NFT ID " + i + " Has " + totalVotes + " Votes")
+  it("There Should be votes by nft", async function(){
+
+    for(let i = 0; i < num_dancers/2; i++) {
+      const call_bracket_a = await game.gameByBracketByRound(1,1,i,0)
+      const totalVotes_a = await game.votesPerNftId(await game.nftIdByDonationAddress(call_bracket_a))
+
+      const call_bracket_b = await game.gameByBracketByRound(1,1,i,1)
+      const totalVotes_b = await game.votesPerNftId(await game.nftIdByDonationAddress(call_bracket_b))
+
+      console.log(`Bracket ${i}, A:${call_bracket_a} votes: ${totalVotes_a}, B:${call_bracket_b} votes: ${totalVotes_b}`)
     }
+    expect(1===1)
   })
 
 
