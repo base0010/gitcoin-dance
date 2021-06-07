@@ -61,7 +61,10 @@ contract Game is MathLog, ERC721Mintable{
         g_game_started = true;
         determineBrackets();
 
-
+    }
+    function advanceGame() public{
+        require(isBetweenRounds);
+        determineBracketWinners();
     }
     constructor (uint num_dancers, uint roundTimeInBlocks, address dai_address){
         dai = IERC20(dai_address);
@@ -101,6 +104,13 @@ contract Game is MathLog, ERC721Mintable{
         gameByBracketByRound[g_game_number][g_current_round][bracket] = nftAddresses;
     }
 
+    function determineBracketWinners(uint bracketNumber) public {
+        //require(bracket number exists in the current round
+        address [2] contestants = gameByBracketByRound[g_game_number][g_current_round][bracket];
+        address winner = dai.balanceOf(contestants[1]) > dai.balanceOf(contestants[2])? contestants[1] : contestants[2];
+        //need data structure for winners and loosers;
+    }
+
 
     function determineBrackets() public {
         uint bracketsToMake = g_current_number_dancers.div(g_current_round).div(2);
@@ -115,9 +125,7 @@ contract Game is MathLog, ERC721Mintable{
 
             index_a = index_b + 1;
             index_b = index_a + 1;
-
         }
-
     }
     function determineGameRounds(uint _num_dancers) public returns (uint n) {
         uint rounds = log2(_num_dancers);

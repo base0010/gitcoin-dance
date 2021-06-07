@@ -71,7 +71,7 @@ describe("Gitcoin Dance Tests", function () {
 
   it( "Should deploy the Game Contract instance", async function(){
     const Game = await ethers.getContractFactory("Game");
-    const round_blocktime = 150;
+    const round_blocktime = 15;
     
     game = await Game.deploy(num_dancers,round_blocktime,dai.address);
     await game.deployed();
