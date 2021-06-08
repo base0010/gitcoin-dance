@@ -150,7 +150,6 @@ export function Bracket(props: any) {
                   'purp-teal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i - 1].voteCount,
-                  paddingTwenty: true,
                   display: "flex"
                 });
                 const topClass = classNames({
@@ -159,19 +158,18 @@ export function Bracket(props: any) {
                   'purp-teal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i].voteCount,
-                  paddingTwenty: true,
                   display: "flex"
                 });
                 return (
                   <>
                   <li className="spacer">&nbsp;</li>
-                  <span className="paddingTwenty">       
-                    <li  style={{display: "flex", width: "550px", height: "200px"}}  className={topClass}>
-                      <span className="dark-card paddingTwenty">
+                  <span>       
+                    <li  style={{display: "flex", width: "285px", height: "120px"}}  className={topClass}>
+                      <span style={{height: "96px", width: "80px"}} className="dark-card">
                       <img
                         style={{ textAlign: 'center', display: "inline" }}
-                        height="100px"
-                        width="100px"
+                        height="60px"
+                        width="60px"
                         src={pnft ? pnft.src : ""}
                         alt={pnft ? pnft.description : ""}
                       />
@@ -185,23 +183,22 @@ export function Bracket(props: any) {
                         <h3
                         title={prevNft.name}
                         className="tealText ellipsisTruncation"
-                        style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
                         >
                         {prevNft.name}
                         </h3>
-                        <h4 className="underscoreDance">_dance</h4>
-                        <hr style={{borderTop: "1px solid yellow"}}></hr>
+                        <h4 style={{left: 200, top: 830 + i * 151, position: "absolute"}} className="underscoreDance">_dance</h4>
+                        <hr style={{borderTop: "1px solid yellow", width: "1000px"}}></hr>
                       </span>{' '}
                       
-                      <span className="tealText" style={{alignSelf: "flex-end"}}>{prevNft.voteCount}</span>
+                      <span className="tealText" style={{alignSelf: "flex-end"}}>{prevNft.voteCount} VOTES</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
-                    <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass}>
-                  <span  className="dark-card paddingTwenty">
+                    <li style={{display: "flex", width: "285px", height: "120px"}} className={bottomClass}>
+                  <span style={{height: "96px", width: "80px"}}   className="dark-card">
                     <img
                       style={{ textAlign: 'center', display: "inline" }}
-                      height="100px"
-                      width="100px"
+                      height="60px"
+                      width="60px"
                       src={nft ? nft.src : ""}
                       alt={nft ? nft.description : ""}
                     />
@@ -215,14 +212,13 @@ export function Bracket(props: any) {
                                 <h3
                       title={n.name}
                       className="tealText ellipsisTruncation"
-                      style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
                       >
                        {n.name}
                       </h3>
-                      <h4 className="underscoreDance">_dance</h4>
-                        <hr style={{borderTop: "1px solid yellow"}}></hr>
+                      <h4 style={{left: 200, top: 990 + i * 151, position: "absolute"}} className="underscoreDance">_dance</h4>
+                        <hr style={{borderTop: "1px solid yellow", width: "1000px"}}></hr>
                       </span>{' '}
-                      <span className="tealText" style={{alignSelf: "flex-end"}}>{n.voteCount}</span>
+                      <span className="tealText" style={{alignSelf: "flex-end"}}>{n.voteCount} VOTES</span>
                     </li>
                   </span>
                   </>

@@ -25,7 +25,7 @@ export function EmptyBracketCell(props : any) {
     <>
     <li className="spacer">&nbsp;</li>
     <span className="paddingTwenty">       
-      <li style={{display: "flex", width: "550px", height: "200px"}} className={topClass2}>
+      <li style={{display: "flex", width: "275px", height: "100px"}} className={topClass2}>
         <p
         style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
@@ -33,7 +33,7 @@ export function EmptyBracketCell(props : any) {
         </p>{' '}
       </li>
       <li className="game game-spacer">&nbsp;</li>
-      <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
+      <li style={{display: "flex", width: "275px", height: "100px"}} className={bottomClass2}>
         <p
           style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
