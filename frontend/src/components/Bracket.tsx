@@ -138,7 +138,10 @@ export function Bracket(props: any) {
       {gameData1 && (
         <main id="tournament">
           <ul className="round round-1">
-          <h1 className="paddingTwenty yellowText">FIRST</h1>
+          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <h5 className="yellowText">FIRST</h5>
+          <Timer active/>
+          </span>
             <hr></hr>
             {gameData1.map((n : any, i : number) => {
               let nft = nfts.find((nf) => nf.id === n.gifId);
@@ -233,7 +236,10 @@ export function Bracket(props: any) {
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-2">
-          <h1 className="paddingTwenty polarisText">SECOND</h1>
+          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <h5 className="polarisText">SECOND</h5>
+          <Timer/>
+          </span>
           <hr></hr>
           {gd2.map((n : any, i : number) => {
               if (i % 2 !== 0 || i === 0) {
@@ -244,10 +250,12 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            <li className="spacer"></li>
           </ul>
           <ul className="round round-3">
-          <h1 className="paddingTwenty polarisText">SEMIS</h1>
+          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <h5 className="polarisText">SEMIS</h5>
+          <Timer/>
+          </span>
           <hr></hr>
           {gd3.map((n : any, i : number) => {
               if (i % 2 !== 0) {
@@ -261,7 +269,10 @@ export function Bracket(props: any) {
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-3">
-          <h1 className="paddingTwenty polarisText">FINALS</h1>
+          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <h5 className="polarisText">FINALS</h5>
+          <Timer/>
+          </span>
           <hr></hr>
           {gd4.map((n : any, i : number) => {
               if (i % 2 !== 0) {
