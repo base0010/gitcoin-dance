@@ -190,14 +190,14 @@ body {
 
 .ellipsisTruncation {
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
 }
 
 hr {
   border: 0;
   height: 2px !important;
-  margin: 18px;
+  // margin: 18px;
   position: relative;
   background: linear-gradient(
     left,

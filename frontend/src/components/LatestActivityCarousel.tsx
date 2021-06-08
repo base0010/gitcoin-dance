@@ -30,7 +30,7 @@ export function LatestActivityCarousel(props : any) {
               <div className="dark-card paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation textOverlay" style={{display: "flex", position: "relative"}}>
-                <hr style={{width: "20%"}}></hr>
+                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
                 <span></span>
                 <h3
                   title={nft.description}
@@ -39,7 +39,7 @@ export function LatestActivityCarousel(props : any) {
                 >
                   {nft.description}
                 </h3>
-                <hr style={{width: "20%"}}></hr>
+                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
                 <h4 className="underscoreDance" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
                 </span>
                 <div className="imgBorder" style={{  
