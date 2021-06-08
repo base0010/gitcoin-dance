@@ -62,15 +62,14 @@ export function Bracket(props: any) {
         footer={null}
 
         >
-          <span style={{display: "flex", justifyContent: "space-around", padding: "100px 100px 40px"}}>
+          <span className="modalContainer">
                 <span className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 <h3
                   title={activeNft[0].description}
-                  className="tealText ellipsisTruncation"
-                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                  className="tealText ellipsisTruncation cardTitleModal"
                 >
                   {activeNft[0].description}
                 </h3>
@@ -89,8 +88,7 @@ export function Bracket(props: any) {
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 <h3
                   title={activeNft[1].description}
-                  className="tealText ellipsisTruncation"
-                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                  className="tealText ellipsisTruncation cardTitleModal"
                 >
                   {activeNft[1].description}
                 </h3>
@@ -103,7 +101,7 @@ export function Bracket(props: any) {
                 }}></div>
               </span>
           </span>
-          <div style={{display: "flex", justifyContent: "space-between"}}>
+          <div className="spaceBetween">
                 <Button
                 onClick={() => {
                   setActiveNft(null);
@@ -132,7 +130,7 @@ export function Bracket(props: any) {
       {gameData1 && (
         <main id="tournament">
           <ul className="round round-1">
-          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <span className="spaceBetween">
           <h5 className="yellowText">FIRST</h5>
           <Timer active/>
           </span>
@@ -149,7 +147,8 @@ export function Bracket(props: any) {
                   'purpTeal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i - 1].voteCount,
-                  display: "flex"
+                  imageInBracketCard: true
+
                 });
                 const topClass = classNames({
                   game: true,
@@ -157,14 +156,14 @@ export function Bracket(props: any) {
                   'purpTeal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i].voteCount,
-                  display: "flex"
+                  imageInBracketCard: true
                 });
                 return (
                   <>
                   <li className="spacer">&nbsp;</li>
                   <span>       
-                    <li  style={{display: "flex", width: "285px", height: "120px", padding: "10px", position: "relative"}}  className={topClass}>
-                      <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}} className="darkCard">
+                    <li className={topClass}>
+                      <span className="darkCard darkCardBracket">
                       <img
                         style={{ textAlign: 'center', display: "inline" }}
                         height="60px"
@@ -193,8 +192,8 @@ export function Bracket(props: any) {
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{prevNft.voteCount} VOTES</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
-                  <li style={{display: "flex", width: "285px", height: "120px", padding: "10px", position: "relative"}} className={bottomClass}>
-                  <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}}   className="darkCard">
+                  <li className={bottomClass}>
+                  <span className="darkCard darkCardBracket">
                     <img
                       style={{ textAlign: 'center', display: "inline" }}
                       height="60px"
@@ -233,7 +232,7 @@ export function Bracket(props: any) {
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-2">
-          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <span className="spaceBetween">
           <h5 className="polarisText">SECOND</h5>
           <Timer/>
           </span>
@@ -249,7 +248,7 @@ export function Bracket(props: any) {
             })}
           </ul>
           <ul className="round round-3">
-          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <span className="spaceBetween">
           <h5 className="polarisText">SEMIS</h5>
           <Timer/>
           </span>
@@ -266,7 +265,7 @@ export function Bracket(props: any) {
             <li className="spacer">&nbsp;</li>
           </ul>
           <ul className="round round-3">
-          <span style={{display: "flex", justifyContent: "space-between"}}>
+          <span className="spaceBetween">
           <h5 className="polarisText">FINALS</h5>
           <Timer/>
           </span>

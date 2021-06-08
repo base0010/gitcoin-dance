@@ -79,11 +79,25 @@ body {
   background: $orangeGradient2;
 }
 
+.modalContainer {
+  display: flex;
+  justify-content: space-around;
+  padding: 100px 100px 40px;
+}
+
 .darkCard {
   background-color: $background;
   border-radius: 20px;
   border: 1px solid #7e3ff5;
   box-sizing: border-box;
+}
+
+.darkCardBracket {
+  height: 96px;
+  width: 80px;
+  align-items: center;
+  justify-content: space-evenly;
+  display: flex;
 }
 
 .bracketCard {
@@ -98,10 +112,29 @@ body {
   width: 300px;
 }
 
+.cardTitleModal {
+  text-align: center;
+  font-size: 20px;
+  width: 300px;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
 .imageInCard {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.imageInBracketCard {
+  display: flex;
+  width: 285px;
+  height: 120px;
+  padding: 10px;
+  position: relative;
 }
 
 .yellowText {
