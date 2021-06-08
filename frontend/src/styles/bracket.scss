@@ -1,0 +1,60 @@
+main {
+  display: flex;
+  flex-direction: row;
+}
+.round {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 285px;
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+}
+.round .spacer {
+  flex-grow: 1;
+}
+.round .spacer:first-child,
+.round .spacer:last-child {
+  flex-grow: 0.5;
+}
+
+.round .game-spacer {
+  flex-grow: 1;
+}
+
+.round-2 {
+  align-self: flex-start;
+}
+
+li.game.winner {
+  font-weight: bold;
+}
+li.game span {
+  float: right;
+}
+
+li.game-top {
+  border-bottom: 1px solid #aaa;
+}
+
+.round-2 li.game-spacer {
+  height: 45px;
+  background-color: red;
+}
+
+.round-2 li.spacer {
+  height: 120px;
+}
+
+li.game-bottom {
+  border-top: 1px solid #aaa;
+}
+
+.ant-carousel .slick-slide img {
+  display: inline;
+}
+
+h5 {
+  margin-bottom: 0 !important;
+}

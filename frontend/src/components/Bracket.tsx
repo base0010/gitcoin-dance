@@ -41,7 +41,7 @@ export function Bracket(props: any) {
   )
 
   const CloseIcon = () => {
-    return <div className="imgBorder marginTen x-button">X</div>
+    return <div className="imgBorder marginTen xButton">X</div>
   }
   
 
@@ -63,7 +63,7 @@ export function Bracket(props: any) {
 
         >
           <span style={{display: "flex", justifyContent: "space-around", padding: "100px 100px 40px"}}>
-                <span className="dark-card paddingForty">
+                <span className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
@@ -76,7 +76,7 @@ export function Bracket(props: any) {
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
-                <h4 className="underscoreDance">_dance</h4>
+                <h4 className="underscoreDanceText">_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${activeNft[0].src})`,
                   backgroundPosition: 'center',
@@ -86,7 +86,7 @@ export function Bracket(props: any) {
                 }}></div>
               </span>
                 <img style={{alignSelf: "center"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
-                <span className="dark-card paddingForty">
+                <span className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
@@ -99,7 +99,7 @@ export function Bracket(props: any) {
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
-                <h4 className="underscoreDance">_dance</h4>
+                <h4 className="underscoreDanceText">_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${activeNft[1].src})`,
                   backgroundPosition: 'center',
@@ -152,7 +152,7 @@ export function Bracket(props: any) {
                 const bottomClass = classNames({
                   game: true,
                   'game-bottom': true,
-                  'purp-teal': true,
+                  'purpTeal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i - 1].voteCount,
                   display: "flex"
@@ -160,7 +160,7 @@ export function Bracket(props: any) {
                 const topClass = classNames({
                   game: true,
                   'game-top': true,
-                  'purp-teal': true,
+                  'purpTeal': true,
                   ellipsisTruncation: true,
                   winner: n.voteCount > gameData1[i].voteCount,
                   display: "flex"
@@ -170,7 +170,7 @@ export function Bracket(props: any) {
                   <li className="spacer">&nbsp;</li>
                   <span>       
                     <li  style={{display: "flex", width: "285px", height: "120px", padding: "10px", position: "relative"}}  className={topClass}>
-                      <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}} className="dark-card">
+                      <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}} className="darkCard">
                       <img
                         style={{ textAlign: 'center', display: "inline" }}
                         height="60px"
@@ -192,15 +192,15 @@ export function Bracket(props: any) {
                         >
                         {prevNft.name}
                         </h3>
-                        <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDance">_dance</h4>
-                        <hr style={{borderTop: "1px solid yellow"}}></hr>
+                        <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
+                        {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
                       
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{prevNft.voteCount} VOTES</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
                   <li style={{display: "flex", width: "285px", height: "120px", padding: "10px", position: "relative"}} className={bottomClass}>
-                  <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}}   className="dark-card">
+                  <span style={{height: "96px", width: "80px", alignItems: "center", justifyContent: "space-evenly", display: "flex"}}   className="darkCard">
                     <img
                       style={{ textAlign: 'center', display: "inline" }}
                       height="60px"
@@ -222,8 +222,8 @@ export function Bracket(props: any) {
                       >
                        {n.name}
                       </h3>
-                      <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDance">_dance</h4>
-                        <hr style={{borderTop: "1px solid yellow"}}></hr>
+                      <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
+                        {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTES</span>
                     </li>

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
-import './styles/main.scss'
-import './styles/colors.scss'
 import 'antd/dist/antd.css';
+import './styles/bracket.scss'
+
+import './styles/main.scss'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";

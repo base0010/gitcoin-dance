@@ -31,14 +31,14 @@ export function Home(props : any) {
       <div style={{display: "flex"}}>
       <img style={{margin: "auto"}} src={gitcoinDance} alt="Gitcoin Dance Logo" />
       </div>
-      <div style={{float: "right", margin: "-50px 0px"}}>
+      <div className="navBar">
       <Link to="/about">
        <h4 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h4>
       </Link>
       <Link to="/connect">
-       <Button style={{padding: "5px", borderRadius: "4px"}} type="ghost" className="marginTen meta-mask-button">        
+       <Button type="ghost" className="marginTen metaMaskButton">        
           <img style={{verticalAlign: "baseline", margin: "0px 10px 0px 0px"}} src={iconWallet} alt="wallet" />
-          <span className="gradeText">METAMASK</span>
+          <span className="metaMaskText">METAMASK</span>
       </Button>
       </Link>
       </div>

@@ -13,21 +13,21 @@ export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="paddingForty purp-teal">
+    <div className="paddingForty purpTeal">
       <Carousel
         slidesToShow={5}
         // arrows
         infinite={false}
         style={contentStyle}
         autoplay
-        dots={true}
+        dots={false}
         adaptiveHeight
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
           if(nft) {
             return (
-              <div className="dark-card paddingForty">
+              <div className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation textOverlay" style={{display: "flex", position: "relative"}}>
                 {/* <hr style={{width: "20%", float: "right"}}></hr> */}
@@ -40,7 +40,7 @@ export function LatestActivityCarousel(props : any) {
                   {nft.description}
                 </h3>
                 {/* <hr style={{width: "20%", float: "right"}}></hr> */}
-                <h4 className="underscoreDance" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
+                <h4 className="underscoreDanceText" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
                 </span>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${nft.src})`,
