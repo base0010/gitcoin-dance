@@ -39,7 +39,7 @@ export function Bracket(props: any) {
   )
 
   const CloseIcon = () => {
-    return <div className="imgBorder marginTen">X</div>
+    return <div className="imgBorder marginTen x-button">X</div>
   }
   
 
@@ -107,7 +107,7 @@ export function Bracket(props: any) {
                 }}></div>
               </span>
           </span>
-          <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}}>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Button
                 onClick={() => {
                   setActiveNft(null);
@@ -176,7 +176,7 @@ export function Bracket(props: any) {
       
                       </span>
                       <span
-                      style={{fontSize: "12px"}}
+                  
                         className="link backgroundForText ellipsisTruncation tealText"
                         onClick={() => openModal(prevNft, n)}
                       >
@@ -205,7 +205,6 @@ export function Bracket(props: any) {
      
                     </span>
                       <span
-                        style={{fontSize: "12px"}}
                         className="link backgroundForText ellipsisTruncation tealText"
                         onClick={() => openModal(prevNft, n)}
                       >
@@ -235,7 +234,7 @@ export function Bracket(props: any) {
           <h1 className="paddingTwenty polarisText">SECOND</h1>
           <hr></hr>
           {gd2.map((n : any, i : number) => {
-              if (i % 2 !== 0) {
+              if (i % 2 !== 0 || i === 0) {
                 return <EmptyBracketCell/>
               }
               return (
@@ -243,7 +242,7 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            <li className="spacer">&nbsp;</li>
+            {/* <li className="spacer"></li> */}
           </ul>
           <ul className="round round-3">
           <h1 className="paddingTwenty polarisText">SEMIS</h1>

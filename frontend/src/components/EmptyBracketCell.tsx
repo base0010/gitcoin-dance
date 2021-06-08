@@ -23,8 +23,8 @@ export function EmptyBracketCell(props : any) {
   
   return (
     <>
-    <li className="spacer">&nbsp;</li>
-    <span className="paddingTwenty">       
+    <li className="spacer"></li>
+    <span>       
       <li style={{display: "flex", width: "275px", height: "100px"}} className={topClass2}>
         <p
         style={{fontSize: "12px"}}
