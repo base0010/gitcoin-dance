@@ -50,7 +50,7 @@ export function Bracket(props: any) {
       {activeNft && (
         <Modal 
         centered
-        width={1500}
+        width={1200}
         bodyStyle={{background: "radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)"}}
         visible={modalOpen} 
         closeIcon={<CloseIcon/>}
@@ -81,7 +81,7 @@ export function Bracket(props: any) {
                   minHeight: "200px"
                 }}></div>
               </span>
-                <img style={{alignSelf: "center"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
+                <img style={{alignSelf: "center", margin: "40px"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
                 <span className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
@@ -101,7 +101,7 @@ export function Bracket(props: any) {
                 }}></div>
               </span>
           </span>
-          <div className="spaceBetween">
+          <div style={{margin: "10px -445px 30px", justifyContent: "space-evenly", display: "flex"}}>
                 <Button
                 onClick={() => {
                   setActiveNft(null);
