@@ -77,11 +77,8 @@ export function Bracket(props: any) {
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDanceText">_dance</h4>
-                <div className="imgBorder" style={{  
+                <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${activeNft[0].src})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
                   minHeight: "200px"
                 }}></div>
               </span>
@@ -100,11 +97,8 @@ export function Bracket(props: any) {
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDanceText">_dance</h4>
-                <div className="imgBorder" style={{  
+                <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${activeNft[1].src})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
                   minHeight: "200px"
                 }}></div>
               </span>

@@ -34,19 +34,15 @@ export function LatestActivityCarousel(props : any) {
                 <span></span>
                 <h3
                   title={nft.description}
-                  className="tealText ellipsisTruncation"
-                  style={{ textAlign: 'center', fontSize: "16px", width: "300px" }}
+                  className="tealText ellipsisTruncation cardTitle"
                 >
                   {nft.description}
                 </h3>
                 {/* <hr style={{width: "20%", float: "right"}}></hr> */}
                 <h4 className="underscoreDanceText" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
                 </span>
-                <div className="imgBorder" style={{  
+                <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${nft.src})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
                   minHeight: "100px"
                 }}></div>
                 <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
