@@ -52,9 +52,9 @@ export function Home(props : any) {
      )}
       {gameData1 && 
       <span>
-          <h1 className="yellowText marginTen">
+          {/* <h1 className="yellowText marginTen">
            RECENT VOTES
-          </h1>
+          </h1> */}
           <LatestActivityCarousel gameData={gameData1} />
           <div style={{margin: "20px"}}>
             <img src={nftDanceOff} alt="NFT Dance Off logo" />
