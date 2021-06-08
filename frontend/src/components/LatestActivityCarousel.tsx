@@ -20,7 +20,7 @@ export function LatestActivityCarousel(props : any) {
         infinite={false}
         style={contentStyle}
         autoplay
-        dots={false}
+        dots={true}
         adaptiveHeight
       >
         {gameData.map((n : any, i : any) => {
@@ -29,8 +29,9 @@ export function LatestActivityCarousel(props : any) {
             return (
               <div className="dark-card paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
-                <span className="ellipsisTruncation" style={{display: "flex"}}>
+                <span className="ellipsisTruncation textOverlay" style={{display: "flex", position: "relative"}}>
                 <hr style={{width: "20%"}}></hr>
+                <span></span>
                 <h3
                   title={nft.description}
                   className="tealText ellipsisTruncation"
@@ -39,8 +40,8 @@ export function LatestActivityCarousel(props : any) {
                   {nft.description}
                 </h3>
                 <hr style={{width: "20%"}}></hr>
+                <h4 className="underscoreDance" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
                 </span>
-                <h4 className="underscoreDance" style={{right: i * 252 + 100, top: 50, position: "absolute"}}>_dance</h4>
                 <div className="imgBorder" style={{  
                   backgroundImage: `url(${nft.src})`,
                   backgroundPosition: 'center',

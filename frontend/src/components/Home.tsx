@@ -31,7 +31,7 @@ export function Home(props : any) {
       <div style={{display: "flex"}}>
       <img style={{margin: "auto"}} src={gitcoinDance} alt="Gitcoin Dance Logo" />
       </div>
-      <div style={{float: "right", margin: "-50px 50px"}}>
+      <div style={{float: "right", margin: "-50px 0px"}}>
       <Link to="/about">
        <h4 style={{display: "inline"}} className="yellowText marginTen">ABOUT</h4>
       </Link>
