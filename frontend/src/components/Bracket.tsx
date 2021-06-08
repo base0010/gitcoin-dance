@@ -254,7 +254,7 @@ export function Bracket(props: any) {
           </span>
           <hr></hr>
           {gd3.map((n : any, i : number) => {
-              if (i % 2 !== 0) {
+              if (i % 2 !== 0 || i === 0) {
                 return <EmptyBracketCell/>
               }
               return (
@@ -262,16 +262,15 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            <li className="spacer">&nbsp;</li>
           </ul>
-          <ul className="round round-3">
+          <ul className="round round-4">
           <span className="spaceBetween">
           <h5 className="polarisText">FINALS</h5>
           <Timer/>
           </span>
           <hr></hr>
           {gd4.map((n : any, i : number) => {
-              if (i % 2 !== 0) {
+              if (i % 2 !== 0 || i === 0) {
                 return <EmptyBracketCell/>
               }
               return (
@@ -279,7 +278,6 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            <li className="spacer">&nbsp;</li>
           </ul>
         </main>
       )}
