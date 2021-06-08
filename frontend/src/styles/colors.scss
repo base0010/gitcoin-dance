@@ -32,6 +32,17 @@ body {
   -moz-text-fill-color: transparent;
 }
 
+.gradeText {
+  background: -webkit-linear-gradient(
+    184.23deg,
+    #ff86b1 40.25%,
+    #ff2473 66.63%,
+    #ffe924 98.48%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .purp-teal {
   background: linear-gradient(182.51deg, #6f3ff5 -4.54%, #16dac5 200.21%);
   border-radius: 8px;
@@ -70,7 +81,7 @@ body {
   ) !important;
 }
 
-.ant-btn-ghost:hover {
+.ant-modal .ant-btn-ghost:hover {
   background: linear-gradient(
     176.9deg,
     #ff86b1 23.91%,
