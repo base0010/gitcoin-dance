@@ -26,6 +26,9 @@ main {
   flex-grow: 1;
 }
 
+.round-2 {
+  align-self: flex-start;
+}
 /*
    *  General Styles
   */
@@ -55,12 +58,12 @@ li.game-spacer {
 
 .round-2 li.game-spacer {
   // border-right: 1px solid #aaa;
-  height: 100px;
+  height: 40px;
 }
 
 .round-2 li.spacer {
   // border-right: 1px solid #aaa;
-  height: 40px;
+  height: 120px;
 }
 
 li.game-bottom {

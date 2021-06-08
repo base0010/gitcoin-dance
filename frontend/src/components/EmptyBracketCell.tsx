@@ -23,7 +23,7 @@ export function EmptyBracketCell(props : any) {
   
   return (
     <>
-    <li className="spacer"></li>
+    <li className="spacer">&nbsp;</li>
     <span>       
       <li style={{display: "flex", width: "275px", height: "100px"}} className={topClass2}>
         <p
@@ -41,6 +41,7 @@ export function EmptyBracketCell(props : any) {
         </p>{' '}
       </li>
     </span>
+    <li className="spacer"></li>
     </>
   );
 }

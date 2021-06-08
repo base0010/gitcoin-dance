@@ -9,6 +9,8 @@ import {EmptyBracketCell} from "./EmptyBracketCell"
 import Timer from './Timer';
 import { toast } from 'react-toastify';
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
+import danceOff from "../assets/gitcoin/danceOff.svg"
+
 const classNames = require('classnames');
 
 
@@ -83,7 +85,7 @@ export function Bracket(props: any) {
                   minHeight: "200px"
                 }}></div>
               </span>
-                <span style={{margin: "50px"}}>VS</span>
+                <img style={{alignSelf: "center"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
                 <span className="dark-card paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
@@ -242,7 +244,7 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            {/* <li className="spacer"></li> */}
+            <li className="spacer"></li>
           </ul>
           <ul className="round round-3">
           <h1 className="paddingTwenty polarisText">SEMIS</h1>
