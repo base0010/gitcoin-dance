@@ -6,45 +6,45 @@ import {nfts} from '../assets';
 const contentStyle : any = {
   color: '#fff',
   textAlign: 'center',
+  maxHeight: "277px"
 };
 
 export function LatestActivityCarousel(props : any) {
   const { gameData } = props;
 
   return (
-    <div className="paddingForty purp-teal">
+    <div className="paddingForty purpTeal">
+     <h1 className="yellowText">RECENT VOTES</h1>
       <Carousel
         slidesToShow={5}
-        arrows
+        // arrows
         infinite={false}
         style={contentStyle}
         autoplay
-        dots
+        dots={false}
+        adaptiveHeight
       >
         {gameData.map((n : any, i : any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
           if(nft) {
             return (
-              <div className="dark-card paddingForty">
+              <div className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
-                <span className="ellipsisTruncation" style={{display: "flex"}}>
-                <hr style={{width: "20%"}}></hr>
+                <span className="ellipsisTruncation textOverlay" style={{display: "flex", position: "relative"}}>
+                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
+                <span></span>
                 <h3
                   title={nft.description}
-                  className="tealText ellipsisTruncation"
-                  style={{ textAlign: 'center', fontSize: "20px", width: "300px" }}
+                  className="tealText ellipsisTruncation cardTitle"
                 >
                   {nft.description}
                 </h3>
-                <hr style={{width: "20%"}}></hr>
+                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
+                <h4 className="underscoreDanceText" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
                 </span>
-                <h4 className="underscoreDance">_dance</h4>
-                <div className="imgBorder" style={{  
+                <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${nft.src})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  minHeight: "200px"
+                  minHeight: "100px"
                 }}></div>
                 <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
               </div>

@@ -7,25 +7,26 @@ export function EmptyBracketCell(props : any) {
   const bottomClass2 = classNames({
     game: true,
     'game-bottom': true,
-    'inactive-round': true,
+    'inactiveRound': true,
     ellipsisTruncation: true,
     paddingTwenty: true,
-    display: "flex"
+    display: "flex",
+    bracketCard: true
   });
   const topClass2 = classNames({
     game: true,
     'game-top': true,
-    'inactive-round': true,
+    'inactiveRound': true,
     ellipsisTruncation: true,
     paddingTwenty: true,
-    display: "flex"
+    bracketCard: true
   });
   
   return (
     <>
     <li className="spacer">&nbsp;</li>
-    <span className="paddingTwenty">       
-      <li style={{display: "flex", width: "550px", height: "200px"}} className={topClass2}>
+    <span>       
+      <li className={topClass2}>
         <p
         style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
@@ -33,7 +34,7 @@ export function EmptyBracketCell(props : any) {
         </p>{' '}
       </li>
       <li className="game game-spacer">&nbsp;</li>
-      <li style={{display: "flex", width: "550px", height: "200px"}} className={bottomClass2}>
+      <li className={bottomClass2}>
         <p
           style={{fontSize: "12px"}}
           className="link backgroundForText ellipsisTruncation"
@@ -41,6 +42,7 @@ export function EmptyBracketCell(props : any) {
         </p>{' '}
       </li>
     </span>
+    <li className="spacer"></li>
     </>
   );
 }

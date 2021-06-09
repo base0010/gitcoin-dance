@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Timer = () => {
+const Timer = (props: any) => {
   const [timerDays, setTimerDays] = useState(0o0);
   const [timerHours, setTimerHours] = useState(0o0);
   const [timerMinutes, setTimerMinutes] = useState(0o0);
@@ -20,6 +20,7 @@ const Timer = () => {
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     if (distance < 0) {
+      localStorage.clear()
       clearInterval(interval.current);
     } else {
       setTimerDays(days);
@@ -38,30 +39,30 @@ const Timer = () => {
   }
 
   useEffect(() => {
-    const localTimer = getTimeFromLocalStorage();
-
-    if (localTimer) {
-      interval.current = setInterval(() => {
-        startTimer(+localTimer);
-      }, 1000);
-    } else {
-      const countdownDate = new Date().getTime() + 60 * 24 * 60 * 1000;
-      saveInLocalStorage(countdownDate);
-      interval.current = setInterval(() => {
-        startTimer(+countdownDate);
-      }, 1000);
+    if (props.active) {
+      const localTimer = getTimeFromLocalStorage();
+      if (localTimer) {
+        interval.current = setInterval(() => {
+          startTimer(+localTimer);
+        }, 1000);
+      } else {
+        const countdownDate = new Date().getTime() + 60 * 24 * 60 * 1000;
+        saveInLocalStorage(countdownDate);
+        interval.current = setInterval(() => {
+          startTimer(+countdownDate);
+        }, 1000);
+      }
+      return () => clearInterval(interval.current);
     }
-
-    return () => clearInterval(interval.current);
-  }, []);
+  }, [timerHours]);
 
   return (
     <div>
-      <h1 className="clockText">
+      <h5 className={props.active ? "yellowText": "polarisText"}>
         {String(timerHours).padStart(2, '0')}:
         {String(timerMinutes).padStart(2, '0')}:
         {String(timerSeconds).padStart(2, '0')}
-      </h1>
+      </h5>
     </div>
   );
 };
