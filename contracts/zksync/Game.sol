@@ -14,6 +14,8 @@ contract Game is MathLog, ERC721Mintable{
     event DancerCreated(address indexed a, uint indexed nftid);
     event GotBracketParticipants(uint bracket, address indexed a, address indexed b);
 
+    address[] remainingContestants;
+
 //    address dai_address = 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa;
     IERC20 dai;
 
