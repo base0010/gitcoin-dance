@@ -9,6 +9,8 @@ import {gameArray, dummyArray } from '../fixtures/gameData';
 import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
 import nftDanceOff from "../assets/gitcoin/nftDanceOff.svg"
 import iconWallet from "../assets/gitcoin/iconWallet.svg"
+import {nfts} from '../assets';
+
 
 export function Home(props : any) {
   const [gameData1, setGameData1] = useState<any>(null);
