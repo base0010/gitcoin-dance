@@ -27,7 +27,7 @@ export const nfts : ActiveNFT[]  = [
   },
   {
     id: '8c713f8a-79e4-49de-9ac9-f3e1a7868e68',
-    src: require('./nfts/combonus.mov'),
+    src: require('./nfts/combonus.gif'),
     description: 'combonus',
   },
   {
