@@ -42,7 +42,7 @@ const gameArray = [
     voteCount: 23,
   },
   {
-    name: 'bmo',
+    name: 'combonus',
     userAddress: '0x7',
     gifId: '8c713f8a-79e4-49de-9ac9-f3e1a7868e68',
     nftId: 7,

@@ -27,8 +27,8 @@ export const nfts : ActiveNFT[]  = [
   },
   {
     id: '8c713f8a-79e4-49de-9ac9-f3e1a7868e68',
-    src: require('./nfts/bmoDance.gif'),
-    description: 'bmO',
+    src: require('./nfts/combonus.mov'),
+    description: 'combonus',
   },
   {
     id: 'c50218a4-5c60-4af6-bd55-3268fac273c6',

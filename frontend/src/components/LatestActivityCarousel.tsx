@@ -14,6 +14,7 @@ export function LatestActivityCarousel(props : any) {
 
   return (
     <div className="paddingForty purpTeal">
+
      <h1 className="yellowText">RECENT VOTES</h1>
       <Carousel
         slidesToShow={5}

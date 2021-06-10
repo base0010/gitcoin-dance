@@ -20,7 +20,7 @@ const classNames = require('classnames');
 export function Bracket(props: any) {
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
-  const [voting, setVoting] = useState(false);
+  const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
 
   const openModal = (...nftArray: any[]) => {
@@ -107,25 +107,68 @@ export function Bracket(props: any) {
               </span>
           </span>
           <div style={{margin: "10px -445px 30px", justifyContent: "space-evenly", display: "flex"}}>
+            {voting !== 0 &&
                 <Button
-                onClick={() => {
-                  setActiveNft(null);
-                  setModalOpen(false);
-                }}
+                onClick={() => setVoting(0)}
                 type="ghost"
                 size="large"
                 className="imgBorder2"
                 >
                  SELECT
                </Button>
+            }
+               {
+                 voting === 0 &&       
+                 <>
                 <Button
-                onClick={() => setVoting(true)}
+                 onClick={() => console.log("IMPLEMENT a vote for activeNft[0]")}
+                 type="ghost"
+                 size="large"
+                 className="imgBorder2"
+                 >
+                  VOTE
+                </Button>
+                <Button
+                onClick={() => setVoting(null)}
+                type="ghost"
+                size="large"
+                className="imgBorder2"
+                >
+                BACK
+                </Button>
+                </>
+               }
+               {voting !== 1 &&
+                <Button
+                onClick={() => setVoting(1)}
                 type="ghost"
                 size="large"
                 className="imgBorder2"
                 >
                 SELECT
               </Button>
+               }
+               {
+                 voting === 1 &&       
+                 <>
+                <Button
+                 onClick={() => console.log("IMPLEMENT a vote for activeNft[1]")}
+                 type="ghost"
+                 size="large"
+                 className="imgBorder2"
+                 >
+                  VOTE
+                </Button>
+                <Button
+                onClick={() => setVoting(null)}
+                type="ghost"
+                size="large"
+                className="imgBorder2"
+                >
+                BACK
+                </Button>
+                </>
+               }
               </div>
         </Modal>
       )}
