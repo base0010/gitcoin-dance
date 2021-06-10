@@ -51,14 +51,19 @@ const config: HardhatUserConfig = {
       url: urlOverride || "http://localhost:8545",
     },
     rinkeby: {
+      gas: 'auto',
+      gasPrice: 8000000000,
       accounts: [`0x${rinkeby_pk}`] ,
       chainId: 4,
       url: urlOverride || "https://rinkeby.infura.io/v3/06a5f5f50dcb49da9b57f0647fde2082",
     },
     goerli: {
-      accounts: { mnemonic },
+      gas: 'auto',
+      gasPrice: 800000000000,
+      accounts: [`0x${rinkeby_pk}`] ,
       chainId: 5,
-      url: urlOverride || "http://localhost:8545",
+      url: urlOverride || "https://goerli.infura.io/v3/06a5f5f50dcb49da9b57f0647fde2082",
+
     },
     kovan: {
       accounts: { mnemonic },

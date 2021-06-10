@@ -27,6 +27,7 @@ export const NFT: React.FC<Props> = () => {
             //get default nft at id 1
             if(nft.instance) {
                 getNftInfo(await nft.instance.tokenURI(1))
+
             }
         }
 

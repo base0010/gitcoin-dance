@@ -53,6 +53,7 @@ describe("Gitcoin Dance Tests", function () {
     const DAI = await ethers.getContractFactory("TestDAI");
     dai = await DAI.deploy("DAI", "DAI");
     await dai.deployed();
+    // await dai.mint("10000000000000", await accounts[0].getAddress())
 
     const acc0_bal = await dai.balanceOf(await accounts[0].getAddress());
     console.log("acc0 bal " + acc0_bal);
@@ -71,7 +72,7 @@ describe("Gitcoin Dance Tests", function () {
 
   it( "Should deploy the Game Contract instance", async function(){
     const Game = await ethers.getContractFactory("Game");
-    const round_blocktime = 150;
+    const round_blocktime = 15;
     
     game = await Game.deploy(num_dancers,round_blocktime,dai.address);
     await game.deployed();
@@ -174,13 +175,17 @@ describe("Gitcoin Dance Tests", function () {
   it("There Should be votes by nft", async function(){
 
     for(let i = 0; i < num_dancers/2; i++) {
-      const call_bracket_a = await game.gameByBracketByRound(1,1,i,0)
-      const totalVotes_a = await game.votesPerNftId(await game.nftIdByDonationAddress(call_bracket_a))
 
+
+      const call_bracket_a = await game.gameByBracketByRound(1,1,i,0);
+      const a_address = await game.donationAddressByNftId(call_bracket_a)
+      const totalVotes_a = await game.votesPerNftId(call_bracket_a)
+      //
       const call_bracket_b = await game.gameByBracketByRound(1,1,i,1)
-      const totalVotes_b = await game.votesPerNftId(await game.nftIdByDonationAddress(call_bracket_b))
+      const b_address = await game.donationAddressByNftId(call_bracket_b)
+      const totalVotes_b = await game.votesPerNftId(call_bracket_b)
 
-      console.log(`Bracket ${i}, A:${call_bracket_a} votes: ${totalVotes_a}, B:${call_bracket_b} votes: ${totalVotes_b}`)
+      console.log(`Bracket ${i}, A:${call_bracket_a}, add:${a_address} votes: ${totalVotes_a}, B:${call_bracket_b} add:${b_address} votes: ${totalVotes_b}`)
     }
     expect(1===1)
   })

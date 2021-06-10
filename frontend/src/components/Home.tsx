@@ -6,6 +6,7 @@ import  {Button} from "antd"
 import LatestActivityCarousel from './LatestActivityCarousel';
 import {gameArray, dummyArray } from '../fixtures/gameData';
 
+
 import gitcoinDance from "../assets/gitcoin/gitcoinDance.svg"
 import nftDanceOff from "../assets/gitcoin/nftDanceOff.svg"
 import iconWallet from "../assets/gitcoin/iconWallet.svg"
