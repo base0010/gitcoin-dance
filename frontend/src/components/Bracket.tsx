@@ -4,7 +4,8 @@ import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniConte
 
 import {
   Modal,
-  Button
+  Button,
+  Spin
 } from "antd"
 import { nfts, ActiveNFT}  from '../assets/index';
 import {EmptyBracketCell} from "./EmptyBracketCell"
@@ -27,6 +28,7 @@ export function Bracket(props: any) {
 
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
 
@@ -44,9 +46,16 @@ export function Bracket(props: any) {
   };
 
   const vote = async (nft: ActiveNFT) => {
+    setApiCall(true)
     console.log(nft, "nft")
-    const ethAddress = await game.instance?.donationAddressByNftId(1)
-    console.log(ethAddress, "etths")
+    setTimeout(() => {
+      setApiCall(false)
+      setModalOpen(false)
+      toast(<div><img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
+      <div>You have succesfully voted for <b>{nft.name}</b>!! 🎉</div></div>)
+    }, 3000)
+    // const ethAddress = await game.instance?.donationAddressByNftId(1)
+    // console.log(ethAddress, "etths")
   }
 
   useEffect(() => {
@@ -92,7 +101,7 @@ export function Bracket(props: any) {
         <Modal 
         centered
         width={1200}
-        bodyStyle={{background: "radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)"}}
+        bodyStyle={{background: "radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)", minHeight: "600px"}}
         visible={modalOpen} 
         closeIcon={<CloseIcon/>}
         // title={activeNft.name}
@@ -103,7 +112,11 @@ export function Bracket(props: any) {
         footer={null}
 
         >
-          <span className="modalContainer">
+          <span className="modalContainer" style={{minHeight: "600px"}}>
+            {
+              apiCall && <Spin spinning={apiCall} style={{position: "absolute", top: "50%"}}></Spin>
+            }
+            { !apiCall && <>
               <span className="darkCard paddingForty" style={{position: "relative"}}>
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
@@ -143,7 +156,10 @@ export function Bracket(props: any) {
                   minHeight: "200px"
                 }}></div>
               </span>
+              </>
+              }
           </span>
+          {!apiCall && <>
           <div style={{textAlign: "center", display: "inline-block", width: "425px"}}>
             {voting !== 0 &&
                 <Button
@@ -210,6 +226,8 @@ export function Bracket(props: any) {
                 </>
                }
               </div>
+              </>
+              }
         </Modal>
       )}
       {/* <div className="flexCenter">
