@@ -43,7 +43,13 @@ export function Bracket(props: any) {
     }
   };
 
-  useEffect(  () => {
+  const vote = async (nft: ActiveNFT) => {
+    console.log(nft, "nft")
+    const ethAddress = await game.instance?.donationAddressByNftId(1)
+    console.log(ethAddress, "etths")
+  }
+
+  useEffect(() => {
     const initContract = async() =>{
       if (!game.instance) return;
       console.log("Game is deployed at ", game.instance.address);
@@ -153,7 +159,7 @@ export function Bracket(props: any) {
                  voting === 0 &&       
                  <>
                 <Button
-                 onClick={() => console.log("IMPLEMENT a vote for activeNft[0]")}
+                 onClick={() => vote(activeNft[0])}
                  type="ghost"
                  size="large"
                  className="imgBorder2"
@@ -186,7 +192,7 @@ export function Bracket(props: any) {
                  voting === 1 &&       
                  <>
                 <Button
-                 onClick={() => console.log("IMPLEMENT a vote for activeNft[1]")}
+                 onClick={() => vote(activeNft[1])}
                  type="ghost"
                  size="large"
                  className="imgBorder2"
@@ -300,7 +306,7 @@ export function Bracket(props: any) {
                       <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTESF</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTES</span>
                     </li>
                   </span>
                   </>
