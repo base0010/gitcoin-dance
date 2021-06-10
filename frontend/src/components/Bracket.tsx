@@ -51,6 +51,7 @@ export function Bracket(props: any) {
     setTimeout(() => {
       setApiCall(false)
       setModalOpen(false)
+      setVoting(null)
       toast(<div><img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
       <div>You have succesfully voted for <b>{nft.name}</b>!! 🎉</div></div>)
     }, 3000)
