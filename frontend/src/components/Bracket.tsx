@@ -113,7 +113,7 @@ export function Bracket(props: any) {
         footer={null}
 
         >
-          <span className="modalContainer" style={{minHeight: "600px"}}>
+          <span className="modalContainer">
             {
               apiCall && <Spin spinning={apiCall} style={{position: "absolute", top: "50%"}}></Spin>
             }
