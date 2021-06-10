@@ -66,7 +66,7 @@ export function Bracket(props: any) {
 
         >
           <span className="modalContainer">
-                <span className="darkCard paddingForty">
+              <span className="darkCard paddingForty" style={{position: "relative"}}>
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
@@ -78,14 +78,14 @@ export function Bracket(props: any) {
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
-                <h4 className="underscoreDanceText">_dance</h4>
+                <h4 className="underscoreDanceText" style={{position: "absolute", top: "16%", right: "45%"}}>_dance</h4>
                 <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${activeNft[0].src})`,
                   minHeight: "200px"
                 }}></div>
               </span>
                 <img style={{alignSelf: "center", margin: "40px"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
-                <span className="darkCard paddingForty">
+                <span className="darkCard paddingForty" style={{position: "relative"}}>
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
@@ -99,7 +99,7 @@ export function Bracket(props: any) {
                 </h3>
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
-                <h4 className="underscoreDanceText">_dance</h4>
+                <h4 className="underscoreDanceText" style={{position: "absolute", top: "16%", right: "45%"}}>_dance</h4>
                 <div className="imgBorder imageInCard" style={{  
                   backgroundImage: `url(${activeNft[1].src})`,
                   minHeight: "200px"
