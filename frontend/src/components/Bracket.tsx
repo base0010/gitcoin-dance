@@ -106,7 +106,7 @@ export function Bracket(props: any) {
                 }}></div>
               </span>
           </span>
-          <div style={{margin: "10px -445px 30px", justifyContent: "space-evenly", display: "flex"}}>
+          <div style={{textAlign: "center", display: "inline-block", width: "425px"}}>
             {voting !== 0 &&
                 <Button
                 onClick={() => setVoting(0)}
@@ -138,6 +138,8 @@ export function Bracket(props: any) {
                 </Button>
                 </>
                }
+            </div>
+            <div style={{width: "615px", textAlign: "end", display: "inline-block"}}>
                {voting !== 1 &&
                 <Button
                 onClick={() => setVoting(1)}
