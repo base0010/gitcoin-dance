@@ -53,6 +53,7 @@ describe("Gitcoin Dance Tests", function () {
     const DAI = await ethers.getContractFactory("TestDAI");
     dai = await DAI.deploy("DAI", "DAI");
     await dai.deployed();
+    // await dai.mint("10000000000000", await accounts[0].getAddress())
 
     const acc0_bal = await dai.balanceOf(await accounts[0].getAddress());
     console.log("acc0 bal " + acc0_bal);
