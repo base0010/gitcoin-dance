@@ -3,9 +3,9 @@ export interface ActiveNFT {
   src: string | undefined;
   description: string | undefined;
   name?: string | null;
+  nftId?: string | null;
+
 }
-
-
 
 
 

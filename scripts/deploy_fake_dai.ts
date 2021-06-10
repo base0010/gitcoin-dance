@@ -1,20 +1,18 @@
 
-import {Game} from "../frontend/src/hardhat/typechain";
+import {ERC20PresetMinterPauser} from "../frontend/src/hardhat/typechain";
 import {expect} from "chai";
-const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
+const {deployments, getNamedAccounts, ethers, provider, network} = require('hardhat')
 
-const r_game_address = '0xE1EE35396406B7e295561563B5b613124362Ef94'
+const r_fake_dai = '0x2e055eee18284513b993db7568a592679ab13188'
 
 async function main(){
-    const DAI = await ethers.getContractFactory("TestDAI");
-    const dai = await DAI.deploy("DAI", "DAI");
-    await dai.deployed();
-    // await dai.mint("10000000000000", await accounts[0].getAddress())
+    const DAI = await ethers.getContractFactory("ERC20PresetMinterPauser");
+    const { deployer } = await getNamedAccounts();
 
-    const acc0_bal = await dai.balanceOf(await getNamedAcounts.getAddress());
-    console.log("acc0 bal " + acc0_bal);
+    const dai = DAI.attach(r_fake_dai);
+    const acc0_bal = await dai.mint(deployer,"100000000000000000000000");
+    console.log("acc0 bal " + JSON.stringify(acc0_bal));
 
-    expect(acc0_bal > 0)
 }
 
 main()

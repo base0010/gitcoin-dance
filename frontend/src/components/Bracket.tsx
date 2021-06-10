@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {GameContext, ERC721MintableContext} from "./../hardhat/SymfoniContext";
 import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniContext";
+import { ethers} from "hardhat";
+import hre from 'hardhat'
+import * as zksync from "zksync"
 
 import {
   Modal,
@@ -16,6 +19,7 @@ import {VoteButton} from "./VoteButton";
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
 import danceOff from "../assets/gitcoin/danceOff.svg"
 import {gameArray} from "../fixtures/gameData";
+import {SignerWithAddress} from "@nomiclabs/hardhat-ethers/signers";
 
 const classNames = require('classnames');
 
@@ -36,6 +40,8 @@ export function Bracket(props: any) {
     if(active1 && active2) {
       active1.name = nftArray[0].name;
       active2.name = nftArray[1].name;
+      active1.nftId = nftArray[0].nftId;
+      active2.nftId = nftArray[1].nftId;
       setModalOpen(true);
       setActiveNft([active1, active2]);
     } else {
@@ -45,8 +51,40 @@ export function Bracket(props: any) {
 
   const vote = async (nft: ActiveNFT) => {
     console.log(nft, "nft")
-    const ethAddress = await game.instance?.donationAddressByNftId(1)
-    console.log(ethAddress, "etths")
+    // @ts-ignore
+    const nftAddress = await game.instance?.donationAddressByNftId(nft.nftId -1);
+    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("100"));
+
+    const setProviders = async function(){
+      const zkprovider =  await zksync.getDefaultProvider("rinkeby");
+
+      // const ethprovider = await ethers.getDefaultProvider("rinkeby");
+      const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+
+      const signer = provider.getSigner()
+      const syncWallet = await zksync.Wallet.fromEthSigner(signer, zkprovider);
+
+      const transfer = await syncWallet.syncTransfer({
+          to: nftAddress || "",
+          token: "DAI",
+          amount,
+      })
+      const transfer_recepit = await transfer.awaitReceipt();
+      console.log("transferred on l2", transfer_recepit);
+    }
+
+
+
+
+    //
+    // // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
+    // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
+    //     ethAddress:nftAddress,
+    //     token: "ETH",
+    //     amount: ethers.utils.parseEther("0.05")
+    // })
+    // const wd_verification = await wd_from_sync.awaitVerifyReceipt()
+    // console.log("Withdrawl verification", wd_verification);
   }
 
   useEffect(() => {

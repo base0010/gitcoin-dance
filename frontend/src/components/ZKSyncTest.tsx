@@ -46,8 +46,8 @@ export const ZKSyncTest: React.FC<Props> = () => {
         const deposit =  await zWallet.depositToSyncFromEthereum({
                 //@ts-ignore
                 depositTo: zWallet.address(),
-                token: "ETH",
-                amount: ethers.utils.parseEther(".002"),
+                token: "DAI",
+                amount: ethers.utils.parseEther("250"),
             })
             const depReceipt = await deposit.awaitReceipt();
             setDepositReciept(depReceipt)
@@ -60,11 +60,11 @@ export const ZKSyncTest: React.FC<Props> = () => {
     const zkBalance = async() =>{
         if(zWallet) {
             // @ts-ignore
-            const committedETHBal = await zWallet.getBalance("ETH")
+            const committedETHBal = await zWallet.getBalance("DAI")
 
             setComittedETHDeposit(ethers.utils.formatEther(committedETHBal._hex))
             //@ts-ignore
-            const verifiedETHBalance = await zWallet.getBalance("ETH", "verified");
+            const verifiedETHBalance = await zWallet.getBalance("DAI", "verified");
 
             setVerifiedETHDeposit(ethers.utils.formatEther(verifiedETHBalance._hex));
 
@@ -85,11 +85,11 @@ export const ZKSyncTest: React.FC<Props> = () => {
                 </h4>
                 <h3>
                 Pending ZKSync Deposit:
-                    {committedETHDeposit + " ETH"}
+                    {committedETHDeposit + " DAI"}
                 </h3>
                 <h3>
                 Confirmed ZKSync Deposit:
-                    {verifiedETHDeposit + " ETH"}
+                    {verifiedETHDeposit + " DAI"}
                 </h3>
                 </div>
             ) : (

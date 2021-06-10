@@ -7,7 +7,7 @@ const hre = require('hardhat');
 import { Signer } from "ethers";
 import {expect} from "chai";
 
-const rinkeby_dai_address = '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa';
+const r_fake_dai = '0x2e055eee18284513b993db7568a592679ab13188'
 const rinkeby_game_address = '0x59A6C0197D174c018f10886e25AD7A4AdF7ba63c';
 
 let game;
@@ -20,8 +20,9 @@ const numDancers = 15;
 
 const deploy_game = async function(){
     const Game = await hre.ethers.getContractFactory("Game");
-    const round_blocktime = 150;
-    game = await Game.deploy(16,round_blocktime, rinkeby_dai_address);
+    const round_blocktime = 25;
+
+    game = await Game.deploy(16,round_blocktime, r_fake_dai);
     await game.deployed();
     const address = await game.address
     console.log("Game Deployed to: " + address)
@@ -46,7 +47,7 @@ const get_deployed_game = async function(address){
 
 const get_deployed_dai = async function(address){
     const a = await hre.ethers.getContractFactory("TestDAI");
-    const deployed_dai = await a.attach(rinkeby_dai_address);
+    const deployed_dai = await a.attach(r_fake_dai);
 
 
     signers = await hre.ethers.getSigners();
@@ -69,7 +70,7 @@ const get_dai_balance = async function(address){
 }
 
 const deposit_dai_to_zk = async function(stringAmount:string){
-    syncWallet.provider.tokenSet.tokensBySymbol.DAI.address = rinkeby_dai_address
+    syncWallet.provider.tokenSet.tokensBySymbol.DAI.address = r_fake_dai
     if(syncWallet){
         const deposit = await syncWallet.depositToSyncFromEthereum({
             depositTo: signers[0].address,
@@ -81,7 +82,7 @@ const deposit_dai_to_zk = async function(stringAmount:string){
     }
 }
 const mint_nft = async function(nftname){
-    const mint = await game.mintNFTAndDeployDonationAddress(`http://fuckit.com${nftname}`,rinkeby_dai_address);
+    const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${nftname}`, r_fake_dai);
     const waited = await mint.wait();
     console.log(waited)
 }
@@ -92,7 +93,7 @@ async function main(){
 
     for(let i = 0; i <= 16; i++) {
         console.log("Minting stuffs")
-        const mint = await game.mintNFTAndDeployDonationAddress(`http://fuck.com/${i}`, rinkeby_dai_address);
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://fuck.com/${i}`, r_fake_dai);
         let waited = await mint.wait()
 
         const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')
@@ -107,41 +108,32 @@ async function main(){
 
 
 
-    //get deployed game contract
-    // game = await get_deployed_game(rinkeby_game_address);
-    // dai = await get_deployed_dai(rinkeby_dai_address);
-    // const hr_dai = ethers.utils.formatUnits(await get_dai_balance(signers[0].address), "ether");
 
-    // await mint_nft();
 
-    //deposit dai to zk
+    // deposit dai to zk
     // if(Number(hr_dai) > 0){
     //     await setup_zk(signers[0])
     //     const dep = await deposit_dai_to_zk("0.010")
     //     console.log("Deposited to ZK ", dep)
     // }
 
-    //ZK Setup
+    // ZK Setup
     // await setup_zk(signers[0])
-    // await mint_dai(signers[0].address)
-    // const dep = await deposit_dai_to_zk("10")
-    // console.log("Deposited to ZK ", dep)
-
-
-
+    //
+    //
     // const nftID = 0;
     // const nftAddress = '0x8d2177845aE634CFc92597918573B7860150de37'
     // const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("0.1"));
     // await setup_zk(signers[0])
-
+    //
     // const transfer = await syncWallet.syncTransfer({
     //     to: nftAddress,
-    //     token: "ETH",
+    //     token: "DAI",
     //     amount,
     // })
     // const transfer_recepit = await transfer.awaitReceipt();
     // console.log("transferred on l2", transfer_recepit);
-    // //
+    //
     // // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
     // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
     //     ethAddress:nftAddress,
