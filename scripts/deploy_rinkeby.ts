@@ -5,6 +5,7 @@ import * as zksync from "zksync"
 
 const hre = require('hardhat');
 import { Signer } from "ethers";
+import {expect} from "chai";
 
 const rinkeby_dai_address = '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa';
 const rinkeby_game_address = '0x59A6C0197D174c018f10886e25AD7A4AdF7ba63c';
@@ -15,14 +16,19 @@ let signers = [];
 
 let syncWallet;
 
+const numDancers = 15;
+
 const deploy_game = async function(){
     const Game = await hre.ethers.getContractFactory("Game");
     const round_blocktime = 150;
-    game = await Game.deploy(8,round_blocktime,rinkeby_dai_address);
+    game = await Game.deploy(16,round_blocktime, rinkeby_dai_address);
     await game.deployed();
     const address = await game.address
     console.log("Game Deployed to: " + address)
+    return game;
 }
+
+
 const setup_zk = async function(ethSigner){
     const syncProvider = await zksync.getDefaultProvider('rinkeby');
     syncWallet = await zksync.Wallet.fromEthSigner(ethSigner,syncProvider );
@@ -74,16 +80,37 @@ const deposit_dai_to_zk = async function(stringAmount:string){
         console.log("dep rec", receipt)
     }
 }
-const mint_nft = async function(){
-    const mint = await game.mintNFTAndDeployDonationAddress("fuckit",rinkeby_dai_address);
+const mint_nft = async function(nftname){
+    const mint = await game.mintNFTAndDeployDonationAddress(`http://fuckit.com${nftname}`,rinkeby_dai_address);
     const waited = await mint.wait();
     console.log(waited)
 }
 async function main(){
+
+    const game = await deploy_game()
+    console.log(game.deployed().address)
+
+    for(let i = 0; i <= 16; i++) {
+        console.log("Minting stuffs")
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://fuck.com/${i}`, rinkeby_dai_address);
+        let waited = await mint.wait()
+
+        const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')
+        const nft_mint_e = waited.events.filter(event=>event.event === 'NFTMinted')
+        const mint_debug_e = waited.events.filter(event=>event.event === 'MintDebug')
+        console.log(" NFT mint debug", nft_mint_e[0].args[0] )
+        const deployedDBAddress = dancer_created_e[0].args[0]
+        console.log("deployed dancerproxy address ",deployedDBAddress)
+
+        // dancer_base_contracts[i] = deployedDBAddress;
+    }
+
+
+
     //get deployed game contract
-    game = await get_deployed_game(rinkeby_game_address);
-    dai = await get_deployed_dai(rinkeby_dai_address);
-    const hr_dai = ethers.utils.formatUnits(await get_dai_balance(signers[0].address), "ether");
+    // game = await get_deployed_game(rinkeby_game_address);
+    // dai = await get_deployed_dai(rinkeby_dai_address);
+    // const hr_dai = ethers.utils.formatUnits(await get_dai_balance(signers[0].address), "ether");
 
     // await mint_nft();
 
@@ -94,33 +121,35 @@ async function main(){
     //     console.log("Deposited to ZK ", dep)
     // }
 
-    await setup_zk(signers[0])
+    //ZK Setup
+    // await setup_zk(signers[0])
     // await mint_dai(signers[0].address)
     // const dep = await deposit_dai_to_zk("10")
     // console.log("Deposited to ZK ", dep)
 
 
-    const nftID = 0;
-    const nftAddress = '0x8d2177845aE634CFc92597918573B7860150de37'
-    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("0.1"));
-    await setup_zk(signers[0])
 
-    const transfer = await syncWallet.syncTransfer({
-        to: nftAddress,
-        token: "ETH",
-        amount,
-    })
-    const transfer_recepit = await transfer.awaitReceipt();
-    console.log("transferred on l2", transfer_recepit);
-    //
-    // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
-    const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
-        ethAddress:nftAddress,
-        token: "ETH",
-        amount: ethers.utils.parseEther("0.05")
-    })
-    const wd_verification = await wd_from_sync.awaitVerifyReceipt()
-    console.log("Withdrawl verification", wd_verification);
+    // const nftID = 0;
+    // const nftAddress = '0x8d2177845aE634CFc92597918573B7860150de37'
+    // const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("0.1"));
+    // await setup_zk(signers[0])
+
+    // const transfer = await syncWallet.syncTransfer({
+    //     to: nftAddress,
+    //     token: "ETH",
+    //     amount,
+    // })
+    // const transfer_recepit = await transfer.awaitReceipt();
+    // console.log("transferred on l2", transfer_recepit);
+    // //
+    // // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
+    // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
+    //     ethAddress:nftAddress,
+    //     token: "ETH",
+    //     amount: ethers.utils.parseEther("0.05")
+    // })
+    // const wd_verification = await wd_from_sync.awaitVerifyReceipt()
+    // console.log("Withdrawl verification", wd_verification);
 }
 
 main()

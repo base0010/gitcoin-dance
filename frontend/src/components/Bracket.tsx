@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {GameContext, ERC721MintableContext} from "./../hardhat/SymfoniContext";
+import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniContext";
 
 import {
   Modal,
@@ -13,11 +15,16 @@ import {VoteButton} from "./VoteButton";
 
 import gitcoinLogo from "../assets/gitcoin/gitcoin-logo-illustrated-icon.png"
 import danceOff from "../assets/gitcoin/danceOff.svg"
+import {gameArray} from "../fixtures/gameData";
 
 const classNames = require('classnames');
 
 
 export function Bracket(props: any) {
+  const game = useContext(GameContext)
+  const nft = useContext(ERC721MintableContext)
+  const provider = useContext(ProviderContext)
+
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
@@ -35,6 +42,31 @@ export function Bracket(props: any) {
       toast("Something went wrong")
     }
   };
+
+  useEffect(  () => {
+    const initContract = async() =>{
+      if (!game.instance) return;
+      console.log("Game is deployed at ", game.instance.address);
+
+      // const  w = await game.instance.determineBrackets();
+      // alert(w?.value)
+
+      // const mint = await game.instance.mintNFTAndDeployDonationAddress('http://fuck.com', game.instance.address);
+      // let waited = await mint.wait()
+      //
+      // const dancer_created_e = waited?.events?.filter(event=>event.event === 'DancerCreated')
+      // const nft_mint_e = waited?.events?.filter(event=>event.event === 'NFTMinted')
+      // // const mint_debug_e = waited?.events?.filter(event=>event.event === 'MintDebug')
+      // // console.log(" NFT mint debug", nft_mint_e?[0].args[0] )
+      // console.log(" NFT mint debug", nft_mint_e)
+      //
+      // // const deployedDBAddress = dancer_created_e[0].args[0]
+      // // console.log("deployed dancerproxy address ",deployedDBAddress)
+      // console.log("deployed dancerproxy address ",dancer_created_e)
+
+    };
+    initContract();
+  },[game]);
 
   const Msg = ({ closeToast, toastProps } : any) => (
     <div>
@@ -266,7 +298,7 @@ export function Bracket(props: any) {
                       <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTESF</span>
                     </li>
                   </span>
                   </>
