@@ -53,7 +53,7 @@ export function Home(props : any) {
       {!gameData1 && (
         <div>
          {' '}
-         <LinearProgress />
+         {/*<LinearProgress />*/}
       </div>
      )}
       {gameData1 && 

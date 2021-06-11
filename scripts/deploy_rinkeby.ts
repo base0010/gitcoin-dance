@@ -18,17 +18,6 @@ let syncWallet;
 
 const numDancers = 15;
 
-const deploy_game = async function(){
-    const Game = await hre.ethers.getContractFactory("Game");
-    const round_blocktime = 25;
-
-    game = await Game.deploy(16,round_blocktime, r_fake_dai);
-    await game.deployed();
-    const address = await game.address
-    console.log("Game Deployed to: " + address)
-    return game;
-}
-
 
 const setup_zk = async function(ethSigner){
     const syncProvider = await zksync.getDefaultProvider('rinkeby');
@@ -86,6 +75,26 @@ const mint_nft = async function(nftname){
     const waited = await mint.wait();
     console.log(waited)
 }
+
+// let game;
+// let dai;
+// let signers = [];
+//
+// let syncWallet;
+//
+// const numDancers = 15;
+
+const deploy_game = async function(){
+    const Game = await hre.ethers.getContractFactory("Game");
+    const round_blocktime = 25;
+
+    game = await Game.deploy(16,round_blocktime, r_fake_dai);
+    await game.deployed();
+    const address = await game.address
+    console.log("Game Deployed to: " + address)
+    return game;
+}
+
 async function main(){
 
     const game = await deploy_game()

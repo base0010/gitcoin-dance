@@ -9,6 +9,9 @@ contract DancerProxy is AccessControl{
     //this is the Voting Logic contract
     Game public game;
 
+    address ZKL1Proxy = "0x82F67958A5474e40E1485742d648C0b0686b6e5D";
+
+    event WithdrawnFromL2ToSelf(uint amount);
     event WithdrawlToGameLogic(address indexed game);
 
     constructor(address _game_contract, address daiAddress){
@@ -16,6 +19,12 @@ contract DancerProxy is AccessControl{
 
         game = Game(_game_contract);
         dai = IERC20(daiAddress);
+    }
+
+
+    receive() external payable {
+        require(msg.sender == ZKL1Proxy);
+        emit WithdrawnFromL2ToSelf(msg.value);
     }
 
     function withdrawlDAI() public returns (uint256 bal){

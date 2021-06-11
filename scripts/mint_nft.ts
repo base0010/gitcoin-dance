@@ -5,7 +5,7 @@ const hre = require('hardhat');
 const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
 
 const num_dancers = 16;
-const r_game_address = '0xE1EE35396406B7e295561563B5b613124362Ef94'
+const r_game_address = '0x78bd73E0D79AebdF1fa0020E6DF70913D057cb90'
 const fake_dai = '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa';
 let dancer_base_contracts = [];
 

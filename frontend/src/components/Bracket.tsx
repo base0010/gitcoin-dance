@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {GameContext, ERC721MintableContext} from "./../hardhat/SymfoniContext";
 import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniContext";
-import { ethers} from "hardhat";
+// import { ethers} from "hardhat";
+import * as ethers from 'ethers'
 import hre from 'hardhat'
 import * as zksync from "zksync"
 
@@ -55,40 +56,37 @@ export function Bracket(props: any) {
     setApiCall(true)
     console.log(nft, "nft")
 
-    // @ts-ignore
+    //@ts-ignore
     const nftAddress = await game.instance?.donationAddressByNftId(nft.nftId -1);
+    console.log(nftAddress);
+
     const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("100"));
 
-    const setProviders = async function(){
-      const zkprovider =  await zksync.getDefaultProvider("rinkeby");
+    const zkprovider =  await zksync.getDefaultProvider("rinkeby");
 
-      // const ethprovider = await ethers.getDefaultProvider("rinkeby");
-      const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+    const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
 
-      const signer = provider.getSigner()
-      const syncWallet = await zksync.Wallet.fromEthSigner(signer, zkprovider);
+    const signer = provider.getSigner()
 
-      const transfer = await syncWallet.syncTransfer({
-          to: nftAddress || "",
-          token: "DAI",
-          amount,
-      })
-      const transfer_recepit = await transfer.awaitReceipt();
-      console.log("transferred on l2", transfer_recepit);
-    }
+    const syncWallet = await zksync.Wallet.fromEthSigner(signer, zkprovider);
+    // console.log(`ZKSync Wallet ${JSON.stringify(syncWallet)}`)
 
+    // const transfer = await syncWallet.syncTransfer({
+    //       to: nftAddress || "",
+    //       token: "DAI",
+    //       amount,
+    //   })
+    // const transfer_recepit = await transfer.awaitReceipt();
+    // console.log(`transferred on 100 DAI on  l2 to ${nftAddress} ${transfer_recepit}`);
 
-
-
-    //
-    // // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
-    // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
-    //     ethAddress:nftAddress,
-    //     token: "ETH",
-    //     amount: ethers.utils.parseEther("0.05")
-    // })
-    // const wd_verification = await wd_from_sync.awaitVerifyReceipt()
-    // console.log("Withdrawl verification", wd_verification);
+    // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
+    const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
+        ethAddress: nftAddress || " ",
+        token: "DAI",
+        amount: ethers.utils.parseEther("50")
+    })
+    const wd_verification = await wd_from_sync.awaitVerifyReceipt()
+    console.log("Withdrawl verification", wd_verification);
 
     setTimeout(() => {
       setApiCall(false)
@@ -97,7 +95,6 @@ export function Bracket(props: any) {
       toast(<div><img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
       <div>You have succesfully voted for <b>{nft.name}</b>!! 🎉</div></div>)
     }, 3000)
-    // const ethAddress = await game.instance?.donationAddressByNftId(1)
     // console.log(ethAddress, "etths")
   }
 
@@ -105,22 +102,6 @@ export function Bracket(props: any) {
     const initContract = async() =>{
       if (!game.instance) return;
       console.log("Game is deployed at ", game.instance.address);
-
-      // const  w = await game.instance.determineBrackets();
-      // alert(w?.value)
-
-      // const mint = await game.instance.mintNFTAndDeployDonationAddress('http://fuck.com', game.instance.address);
-      // let waited = await mint.wait()
-      //
-      // const dancer_created_e = waited?.events?.filter(event=>event.event === 'DancerCreated')
-      // const nft_mint_e = waited?.events?.filter(event=>event.event === 'NFTMinted')
-      // // const mint_debug_e = waited?.events?.filter(event=>event.event === 'MintDebug')
-      // // console.log(" NFT mint debug", nft_mint_e?[0].args[0] )
-      // console.log(" NFT mint debug", nft_mint_e)
-      //
-      // // const deployedDBAddress = dancer_created_e[0].args[0]
-      // // console.log("deployed dancerproxy address ",deployedDBAddress)
-      // console.log("deployed dancerproxy address ",dancer_created_e)
 
     };
     initContract();
@@ -136,16 +117,16 @@ export function Bracket(props: any) {
   const CloseIcon = () => {
     return <div className="imgBorder marginTen xButton">X</div>
   }
-  
+
 
   return (
     <div>
       {activeNft && (
-        <Modal 
+        <Modal
         centered
         width={1200}
         bodyStyle={{background: "radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)", minHeight: "600px"}}
-        visible={modalOpen} 
+        visible={modalOpen}
         closeIcon={<CloseIcon/>}
         // title={activeNft.name}
         onCancel={() => {
@@ -173,12 +154,12 @@ export function Bracket(props: any) {
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDanceText" style={{position: "absolute", top: "16%", right: "45%"}}>_dance</h4>
-                <div className="imgBorder imageInCard" style={{  
+                <div className="imgBorder imageInCard" style={{
                   backgroundImage: `url(${activeNft[0].src})`,
                   minHeight: "200px"
                 }}></div>
               </span>
-                <img style={{alignSelf: "center", margin: "40px"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/> 
+                <img style={{alignSelf: "center", margin: "40px"}} src={danceOff} alt="Dance Off" width="270px" height="160px"/>
                 <span className="darkCard paddingForty" style={{position: "relative"}}>
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
                 <span className="ellipsisTruncation" style={{display: "flex"}}>
@@ -194,7 +175,7 @@ export function Bracket(props: any) {
                 <hr style={{width: "20%", backgroundColor: "yellow"}}></hr>
                 </span>
                 <h4 className="underscoreDanceText" style={{position: "absolute", top: "16%", right: "45%"}}>_dance</h4>
-                <div className="imgBorder imageInCard" style={{  
+                <div className="imgBorder imageInCard" style={{
                   backgroundImage: `url(${activeNft[1].src})`,
                   minHeight: "200px"
                 }}></div>
@@ -215,7 +196,7 @@ export function Bracket(props: any) {
                </Button>
             }
                {
-                 voting === 0 &&       
+                 voting === 0 &&
                  <>
                 <Button
                  onClick={() => vote(activeNft[0])}
@@ -248,7 +229,7 @@ export function Bracket(props: any) {
               </Button>
                }
                {
-                 voting === 1 &&       
+                 voting === 1 &&
                  <>
                 <Button
                  onClick={() => vote(activeNft[1])}
@@ -310,7 +291,7 @@ export function Bracket(props: any) {
                 return (
                   <>
                   <li className="spacer">&nbsp;</li>
-                  <span>       
+                  <span>
                     <li className={topClass}>
                       <span className="darkCard darkCardBracket">
                       <img
@@ -320,7 +301,7 @@ export function Bracket(props: any) {
                         src={pnft ? pnft.src : ""}
                         alt={pnft ? pnft.description : ""}
                       />
-      
+
                       </span>
                       <span
                         className="link ellipsisTruncation tealText"
@@ -337,7 +318,7 @@ export function Bracket(props: any) {
                         <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
-                      
+
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{prevNft.voteCount} VOTES</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
@@ -350,7 +331,7 @@ export function Bracket(props: any) {
                       src={nft ? nft.src : ""}
                       alt={nft ? nft.description : ""}
                     />
-     
+
                     </span>
                       <span
                         className="link ellipsisTruncation tealText"
