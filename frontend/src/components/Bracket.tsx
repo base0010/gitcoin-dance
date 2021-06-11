@@ -33,6 +33,8 @@ export function Bracket(props: any) {
 
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
+  const [nftVotes, setnftVotes] = useState<string[]>([]);
+  const [zkDeps,setzkDeps] = useState<any[]>([]);
   const [apiCall, setApiCall] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
@@ -51,7 +53,31 @@ export function Bracket(props: any) {
       toast("Something went wrong")
     }
   };
+  const getVotes = async function(nftId:number):Promise<string>{
 
+    const nftAddress = await game.instance?.donationAddressByNftId(nftId);
+    const totalVotes = await game.instance?.votesPerNftId(1)
+
+
+    // if(nftAddress) {
+    //   const totalVotes = await game.instance?.votesPerNftId(nftAddress)
+    //
+      console.log(`NFT ADDRESS: ${nftAddress}, TOTAL VOTES:${totalVotes}`)
+    //
+    //   return totalVotes?.toString() || "4";
+    //
+    // }
+    return "1002";
+  }
+
+  const getZkVotes = async function(nftId:number){
+    const nftAddress = await game.instance?.donationAddressByNftId(nftId);
+    const zkprovider =  await zksync.getDefaultProvider("rinkeby");
+
+    const state = await zkprovider.getState(nftAddress || "")
+    return state;
+
+  }
   const vote = async (nft: ActiveNFT) => {
     setApiCall(true)
     console.log(nft, "nft")
@@ -81,9 +107,9 @@ export function Bracket(props: any) {
 
     // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
     const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
-        ethAddress: nftAddress || " ",
+        ethAddress: "nftAddress" || " ",
         token: "DAI",
-        amount: ethers.utils.parseEther("50")
+        amount: ethers.utils.parseEther("10")
     })
     const wd_verification = await wd_from_sync.awaitVerifyReceipt()
     console.log("Withdrawl verification", wd_verification);
@@ -105,7 +131,28 @@ export function Bracket(props: any) {
 
     };
     initContract();
-  },[game]);
+
+    const loadVotes = async()=> {
+      let voteArrary = [];
+      let zkDepArray = [];
+      for (let i = 0; i <= 16; i++) {
+        const votes = await getVotes(i)
+        voteArrary.push(votes)
+
+        const zkAccountInfo = await getZkVotes(i)
+        zkDepArray.push(zkAccountInfo)
+
+      }
+      setnftVotes(voteArrary);
+      setzkDeps(zkDepArray);
+
+      console.log("VOTES ARRY", voteArrary)
+      console.log("DEPS ARRY", zkDeps);
+    }
+    loadVotes()
+
+
+  },[game,nftVotes]);
 
   const Msg = ({ closeToast, toastProps } : any) => (
     <div>
@@ -199,7 +246,7 @@ export function Bracket(props: any) {
                  voting === 0 &&
                  <>
                 <Button
-                 onClick={() => vote(activeNft[0])}
+                 onClick={async () => await vote(activeNft[0])}
                  type="ghost"
                  size="large"
                  className="imgBorder2"
@@ -319,7 +366,10 @@ export function Bracket(props: any) {
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
 
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{prevNft.voteCount} VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{
+                       nftVotes[prevNft.nftId]
+
+                      } VOTES</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
                   <li className={bottomClass}>
@@ -348,7 +398,7 @@ export function Bracket(props: any) {
                       <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{n.voteCount} VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{nftVotes[n.nftId]} VOTES</span>
                     </li>
                   </span>
                   </>

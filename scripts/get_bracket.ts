@@ -1,12 +1,8 @@
 import {Game} from "../frontend/src/hardhat/typechain";
 const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
+import {r_dai_address, r_game_address} from "./constants";
 
-const r_game_address = '0xE1EE35396406B7e295561563B5b613124362Ef94'
-const fake_dai = '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa';
 const num_dancers = 16;
-let dancer_base_contracts = [];
-
-
 const roProvider = ethers.getDefaultProvider('rinkeby')
 
 async function main() {

@@ -1,6 +1,5 @@
-
 import {ERC20PresetMinterPauser} from "../frontend/src/hardhat/typechain";
-import {expect} from "chai";
+
 const {deployments, getNamedAccounts, ethers, provider, network} = require('hardhat')
 
 const r_fake_dai = '0x2e055eee18284513b993db7568a592679ab13188'

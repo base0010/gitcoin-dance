@@ -1,13 +1,13 @@
 import {Game} from "../frontend/src/hardhat/typechain/Game";
 import { ethers } from "hardhat";
 import * as zksync from "zksync"
+import {r_dai_address, r_game_address} from "./constants";
 
 
 const hre = require('hardhat');
 import { Signer } from "ethers";
 import {expect} from "chai";
 
-const r_fake_dai = '0x2e055eee18284513b993db7568a592679ab13188'
 const rinkeby_game_address = '0x59A6C0197D174c018f10886e25AD7A4AdF7ba63c';
 
 let game;
@@ -36,7 +36,7 @@ const get_deployed_game = async function(address){
 
 const get_deployed_dai = async function(address){
     const a = await hre.ethers.getContractFactory("TestDAI");
-    const deployed_dai = await a.attach(r_fake_dai);
+    const deployed_dai = await a.attach(r_dai_address);
 
 
     signers = await hre.ethers.getSigners();
@@ -59,7 +59,7 @@ const get_dai_balance = async function(address){
 }
 
 const deposit_dai_to_zk = async function(stringAmount:string){
-    syncWallet.provider.tokenSet.tokensBySymbol.DAI.address = r_fake_dai
+    syncWallet.provider.tokenSet.tokensBySymbol.DAI.address = r_dai_address
     if(syncWallet){
         const deposit = await syncWallet.depositToSyncFromEthereum({
             depositTo: signers[0].address,
@@ -71,7 +71,7 @@ const deposit_dai_to_zk = async function(stringAmount:string){
     }
 }
 const mint_nft = async function(nftname){
-    const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${nftname}`, r_fake_dai);
+    const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${nftname}`, r_dai_address);
     const waited = await mint.wait();
     console.log(waited)
 }
@@ -88,7 +88,7 @@ const deploy_game = async function(){
     const Game = await hre.ethers.getContractFactory("Game");
     const round_blocktime = 25;
 
-    game = await Game.deploy(16,round_blocktime, r_fake_dai);
+    game = await Game.deploy(16,round_blocktime, r_dai_address);
     await game.deployed();
     const address = await game.address
     console.log("Game Deployed to: " + address)
@@ -102,7 +102,7 @@ async function main(){
 
     for(let i = 0; i <= 16; i++) {
         console.log("Minting stuffs")
-        const mint = await game.mintNFTAndDeployDonationAddress(`http://fuck.com/${i}`, r_fake_dai);
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/${i}.gif`, r_dai_address);
         let waited = await mint.wait()
 
         const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')

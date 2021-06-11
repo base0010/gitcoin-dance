@@ -1,12 +1,11 @@
 import * as zksync from "zksync"
 import * as net from "net";
 import {Game} from "../frontend/src/hardhat/typechain";
+import {r_dai_address, r_game_address} from "./constants";
 const hre = require('hardhat');
 const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
 
 const num_dancers = 16;
-const r_game_address = '0x78bd73E0D79AebdF1fa0020E6DF70913D057cb90'
-const fake_dai = '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa';
 let dancer_base_contracts = [];
 
 async function main(){
@@ -16,7 +15,7 @@ async function main(){
 
     for(let i = 0; i <= num_dancers; i++) {
 
-        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${i}.gif`, fake_dai);
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${i}.gif`, r_dai_address);
         let waited = await mint.wait()
 
         const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')

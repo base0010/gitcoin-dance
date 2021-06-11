@@ -9,8 +9,7 @@ contract DancerProxy is AccessControl{
     //this is the Voting Logic contract
     Game public game;
 
-    address ZKL1Proxy = "0x82F67958A5474e40E1485742d648C0b0686b6e5D";
-
+    address ZKL1Proxy = address(0x82F67958A5474e40E1485742d648C0b0686b6e5D);
     event WithdrawnFromL2ToSelf(uint amount);
     event WithdrawlToGameLogic(address indexed game);
 

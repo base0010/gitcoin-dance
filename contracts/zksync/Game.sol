@@ -156,7 +156,7 @@ contract Game is MathLog, ERC721Mintable{
     }
 
     function withdrawlFromDonationProxyToSelf(address donation_proxy) public returns (bool success){
-        require(isBetweenRounds());
+//       todo: revert to this we're just doing this for testing require(isBetweenRounds());
         (bool success, bytes memory returnData) = address(donation_proxy).call(abi.encodeWithSignature("withdrawlDAI()"));
 
         if(success) {

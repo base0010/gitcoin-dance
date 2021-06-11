@@ -1,8 +1,8 @@
 
 import {Game} from "../frontend/src/hardhat/typechain";
-const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
+import {r_game_address} from "./constants";
 
-const r_game_address = '0xE1EE35396406B7e295561563B5b613124362Ef94'
+const {deployments, getNamedAcounts, ethers, provider, network} = require('hardhat')
 
 async function main(){
     let GameContract = await ethers.getContractFactory('Game')
