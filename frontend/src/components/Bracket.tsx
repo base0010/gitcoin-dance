@@ -53,21 +53,14 @@ export function Bracket(props: any) {
       toast("Something went wrong")
     }
   };
-  const getVotes = async function(nftId:number):Promise<string>{
+  const getVotes = async function(nftId:number){
 
-    const nftAddress = await game.instance?.donationAddressByNftId(nftId);
-    const totalVotes = await game.instance?.votesPerNftId(1)
+    const totalVotes = await game.instance?.votesPerNftId(nftId)
 
+    const formatedVotes = ethers.utils.formatEther(totalVotes?.toString() || "0")
+    console.log(`TOTAL VOTES:${formatedVotes}`)
 
-    // if(nftAddress) {
-    //   const totalVotes = await game.instance?.votesPerNftId(nftAddress)
-    //
-      console.log(`NFT ADDRESS: ${nftAddress}, TOTAL VOTES:${totalVotes}`)
-    //
-    //   return totalVotes?.toString() || "4";
-    //
-    // }
-    return "1002";
+    return formatedVotes.toString().slice(0, -2) || "0";
   }
 
   const getZkVotes = async function(nftId:number){
@@ -86,7 +79,7 @@ export function Bracket(props: any) {
     const nftAddress = await game.instance?.donationAddressByNftId(nft.nftId -1);
     console.log(nftAddress);
 
-    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("100"));
+    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("50"));
 
     const zkprovider =  await zksync.getDefaultProvider("rinkeby");
 
@@ -97,22 +90,26 @@ export function Bracket(props: any) {
     const syncWallet = await zksync.Wallet.fromEthSigner(signer, zkprovider);
     // console.log(`ZKSync Wallet ${JSON.stringify(syncWallet)}`)
 
-    // const transfer = await syncWallet.syncTransfer({
-    //       to: nftAddress || "",
-    //       token: "DAI",
-    //       amount,
-    //   })
-    // const transfer_recepit = await transfer.awaitReceipt();
-    // console.log(`transferred on 100 DAI on  l2 to ${nftAddress} ${transfer_recepit}`);
+    const transfer = await syncWallet.syncTransfer({
+          to: nftAddress || "",
+          token: "DAI",
+          amount,
+      })
+    const transfer_recepit = await transfer.awaitReceipt();
+
+    console.log(`transferred on 50 DAI on  l2 to ${nftAddress} ${transfer_recepit}`);
+    if(transfer_recepit.success) {
+      toast(`transferred on 50 DAI on  l2 to ${nftAddress} ${transfer_recepit}`)
+    }
 
     // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
-    const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
-        ethAddress: "nftAddress" || " ",
-        token: "DAI",
-        amount: ethers.utils.parseEther("10")
-    })
-    const wd_verification = await wd_from_sync.awaitVerifyReceipt()
-    console.log("Withdrawl verification", wd_verification);
+    // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
+    //     ethAddress: "nftAddress" || " ",
+    //     token: "DAI",
+    //     amount: ethers.utils.parseEther("10")
+    // })
+    // const wd_verification = await wd_from_sync.awaitVerifyReceipt()
+    // console.log("Withdrawl verification", wd_verification);
 
     setTimeout(() => {
       setApiCall(false)

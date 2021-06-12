@@ -10,14 +10,12 @@ import "./DancerProxy.sol";
 
 //Each "danceoff"
 contract Game is MathLog, ERC721Mintable{
+    IERC20 dai;
+
     using SafeMath for uint;
     event DancerCreated(address indexed a, uint indexed nftid);
     event GotBracketParticipants(uint bracket, address indexed a, address indexed b);
 
-//    address dai_address = 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa;
-    IERC20 dai;
-
-    mapping(uint=>bool) nftIdHasBeenPlaced;
     mapping(uint=>address) public donationAddressByNftId;
     mapping(address=>uint) public nftIdByDonationAddress;
     mapping(uint=>uint) public votesPerNftId;
@@ -26,22 +24,20 @@ contract Game is MathLog, ERC721Mintable{
     //number of the current game
     uint g_game_number = 0;
     uint public g_rounds = 0;
-    uint g_current_round;
+    uint public g_current_round;
 
-    uint g_start_block;
-    uint g_round_blocktime;
-    //this should go in the constructor too
-    uint g_intermission_blocktime = 50;
+    uint public g_start_block;
+    uint public g_round_blocktime;
+
+    uint public g_intermission_blocktime;
 
 
-    uint g_number_dancers;
-    uint g_current_number_dancers = 0;
-    bool g_game_started = false;
+    uint public g_number_dancers;
+    uint public g_current_number_dancers;
+    bool public g_game_started = false;
     //game_no->round->bracketnumber->addresses in bracket(competetors)
     mapping(uint=>mapping(uint=>mapping(uint=>uint[2]))) public gameByBracketByRound;
-    mapping(address=>bool) public notEliminated;
     mapping(uint=>address) public addressByNFTId;
-
 
     function isBetweenRounds() internal returns (bool isBetweenRounds){
         require(g_game_started);
@@ -56,23 +52,20 @@ contract Game is MathLog, ERC721Mintable{
         }
         return false;
     }
+
+    function determineGameRounds(uint _num_dancers) public returns (uint n) {
+        uint rounds = log2(_num_dancers);
+        g_rounds = rounds;
+        return rounds;
+    }
+
     function startGame() public {
         require(!g_game_started);
         g_start_block = block.number;
         g_game_started = true;
-        determineBrackets();
 
-    }
-    function advanceGame() public{
-        require(isBetweenRounds());
-        determineBracketWinners(g_current_round);
-    }
-    constructor (uint num_dancers, uint roundTimeInBlocks, address dai_address){
-        dai = IERC20(dai_address);
-        setGameParams(num_dancers);
-        setupNewGame(num_dancers);
-        //set rounds
-        g_round_blocktime = roundTimeInBlocks;
+        //initial determine brackets
+        determineBrackets();
     }
     function setGameParams(uint _num_dancers) internal {
         require(_num_dancers % 2 == 0, "this isnt a power of 2");
@@ -92,30 +85,65 @@ contract Game is MathLog, ERC721Mintable{
 
     }
 
-    function changeTime(uint round_time, uint intermission_time) internal{
-//        require(hasRole(ADMIN))
-        g_round_blocktime = round_time;
+    constructor (uint num_dancers, uint roundTimeInBlocks, uint intermission_time, address dai_address){
+        dai = IERC20(dai_address);
+        setGameParams(num_dancers);
+        setupNewGame(num_dancers);
+        //set rounds
+        g_round_blocktime = roundTimeInBlocks;
         g_intermission_blocktime = intermission_time;
     }
 
-    function getBracketEntropy(uint unfilled_brackets) public returns(uint bracketNo){
-        uint hash = uint(blockhash(block.number -1));
-        return hash.mod(unfilled_brackets);
+    event GotWinner(uint nftID);
+    event GotContestants(uint indexed a, uint indexed b, uint indexed winnerNFT);
+
+    function determineBracketWinner(uint roundNumber,uint bracketNumber) public returns(uint winner) {
+        //require(bracket number exists in the current round
+        uint [2] memory contestants = gameByBracketByRound[g_game_number][roundNumber][bracketNumber];
+
+        uint winner = votesPerNftId[contestants[0]] > votesPerNftId[contestants[1]]? contestants[0] : contestants[1];
+
+        emit GotContestants(contestants[0], contestants[1], winner);
+
+        return winner;
     }
 
-    function determineBracketWinners(uint bracketNumber) public {
-        //require(bracket number exists in the current round
-//        address [2] contestants = gameByBracketByRound[g_game_number][g_current_round][bracket];
-//        address winner = dai.balanceOf(contestants[1]) > dai.balanceOf(contestants[2])? contestants[1] : contestants[2];
-        //need data structure for winners and loosers;
+
+    mapping(uint=>uint[]) public winnersByRound;
+
+    function advanceGame() public{
+//        require(isBetweenRounds());
+        uint bracketsInRound = g_number_dancers.div(g_current_round);
+
+        //winners of current bracket
+        uint[] memory winners = new uint[](bracketsInRound);
+
+        for(uint i = 0; i <= bracketsInRound.div(2); i++){
+            uint winnerId = determineBracketWinner(g_current_round,i);
+            winnersByRound[g_current_round].push(winnerId);
+        }
+
+    }
+
+    event CreatedNewBracket(uint indexed bracketNo, uint indexed nftIda, uint indexed nftIdb);
+
+    function createNewRound() public{
+        g_current_round++;
+
+        uint j = 0;
+        for(uint i = 0; i < 4; i++){
+            fillBracket(i, [winnersByRound[g_current_round -1][j], winnersByRound[g_current_round -1][j+1]]);
+            emit CreatedNewBracket(i, winnersByRound[g_current_round -1][j], winnersByRound[g_current_round -1][j+1]);
+            j+=2;
+        }
     }
 
     function fillBracket(uint bracket, uint[2] memory dancerIndex) internal {
         gameByBracketByRound[g_game_number][g_current_round][bracket] = dancerIndex;
     }
+
     function determineBrackets() public {
         uint bracketsToMake = g_current_number_dancers.div(g_current_round).div(2);
-        uint remainingDancersToPlace = g_current_number_dancers;
 
         uint index_a = 0;
         uint index_b = 1;
@@ -126,11 +154,6 @@ contract Game is MathLog, ERC721Mintable{
             index_a = index_b + 1;
             index_b = index_a + 1;
         }
-    }
-    function determineGameRounds(uint _num_dancers) public returns (uint n) {
-        uint rounds = log2(_num_dancers);
-        g_rounds = rounds;
-        return rounds;
     }
 
     function mintNFTAndDeployDonationAddress(string memory nftURI, address creator) public returns (address nft_donation_address){

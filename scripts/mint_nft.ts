@@ -13,7 +13,7 @@ async function main(){
     let GameContract = await ethers.getContractFactory('Game')
     const game = await GameContract.attach(r_game_address)
 
-    for(let i = 0; i <= num_dancers; i++) {
+    for(let i = 0; i < num_dancers; i++) {
 
         const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${i}.gif`, r_dai_address);
         let waited = await mint.wait()
