@@ -54,15 +54,14 @@ export function Bracket(props: any) {
     }
   };
   const getVotes = async function(nftId:number){
-
     const totalVotes = await game.instance?.votesPerNftId(nftId)
-
     const formatedVotes = ethers.utils.formatEther(totalVotes?.toString() || "0")
     console.log(`TOTAL VOTES:${formatedVotes}`)
 
     return formatedVotes.toString().slice(0, -2) || "0";
   }
 
+  //get zkDai balance (will be votes later)
   const getZkVotes = async function(nftId:number){
     const nftAddress = await game.instance?.donationAddressByNftId(nftId);
     const zkprovider =  await zksync.getDefaultProvider("rinkeby");
@@ -125,7 +124,6 @@ export function Bracket(props: any) {
     const initContract = async() =>{
       if (!game.instance) return;
       console.log("Game is deployed at ", game.instance.address);
-
     };
     initContract();
 

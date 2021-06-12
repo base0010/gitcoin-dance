@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
+
+import {GameContext} from "./../hardhat/SymfoniContext";
+import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniContext";
 
 const Timer = (props: any) => {
+  const game = useContext(GameContext)
+
   const [timerDays, setTimerDays] = useState(0o0);
   const [timerHours, setTimerHours] = useState(0o0);
   const [timerMinutes, setTimerMinutes] = useState(0o0);
   const [timerSeconds, setTimerSeconds] = useState(0o0);
+
+  const [currentRound, setCurrentRound] = useState<string>("0");
 
   const interval : any = useRef<number | undefined>();
 
@@ -39,6 +46,15 @@ const Timer = (props: any) => {
   }
 
   useEffect(() => {
+
+    // const getRound = async()=>{
+    //   // const round = await game.instance?.g_current_round()
+    //   //
+    //   // setCurrentRound(round?.toString() || "0")
+    //   // console.log(`current rounnd ${round}`)
+    // }
+    // getRound();
+
     if (props.active) {
       const localTimer = getTimeFromLocalStorage();
       if (localTimer) {
@@ -58,6 +74,7 @@ const Timer = (props: any) => {
 
   return (
     <div>
+
       <h5 className={props.active ? "yellowText": "polarisText"}>
         {String(timerHours).padStart(2, '0')}:
         {String(timerMinutes).padStart(2, '0')}:

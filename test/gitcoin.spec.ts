@@ -196,6 +196,8 @@ describe("Gitcoin Dance Tests", function () {
     const advanceGame = await game.advanceGame();
     const createRounds = await game.createNewRound()
 
+    const current_round = await game.g_current_round();
+
     const waited = await advanceGame.wait();
     const rounds_waited = await createRounds.wait();
 
@@ -215,6 +217,7 @@ describe("Gitcoin Dance Tests", function () {
       const totalVotes_b = await game.votesPerNftId(call_bracket_b)
 
       console.log(`Bracket ${i}, A:${call_bracket_a}, add:${a_address} votes: ${totalVotes_a}, B:${call_bracket_b} add:${b_address} votes: ${totalVotes_b}`)
+      console.log(`Current Round ${current_round}`)
     }
     expect(1===1)
   })

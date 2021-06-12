@@ -10,6 +10,7 @@ module.exports = async ({
     const r_fake_dai = '0x2e055eee18284513b993db7568a592679ab13188';
     const round_blocktime = 25;
     const num_dancers = 16;
+    const intermission_time = 50;
 
     let game;
     let dancer_base_contracts = [];
@@ -19,7 +20,7 @@ module.exports = async ({
 
         game = await deploy("Game",{
             from: deployer,
-            args:[num_dancers, round_blocktime, r_fake_dai]
+            args:[num_dancers, round_blocktime, intermission_time, r_fake_dai]
         })
 
         const address = await game.address;

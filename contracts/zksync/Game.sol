@@ -28,7 +28,6 @@ contract Game is MathLog, ERC721Mintable{
 
     uint public g_start_block;
     uint public g_round_blocktime;
-
     uint public g_intermission_blocktime;
 
 
