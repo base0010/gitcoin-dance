@@ -380,9 +380,8 @@ export function Bracket(props: any) {
                       </span>{' '}
 
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{
-                       nftVotes[prevNft.nftId]
+                       nftVotes[prevNft.nftId -1]
 
-                          //should we display pending votes on zk?
                        // + zkDeps[prevNft.nftId]?.verified.balances.DAI
                       } VOTES {}</span>
                     </li>
