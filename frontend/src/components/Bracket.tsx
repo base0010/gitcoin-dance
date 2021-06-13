@@ -27,9 +27,15 @@ const classNames = require('classnames');
 
 
 export function Bracket(props: any) {
-  const game = useContext(GameContext)
-  const nft = useContext(ERC721MintableContext)
-  const provider = useContext(ProviderContext)
+  const game = useContext(GameContext);
+
+  //zksync provider/wallet
+  const [zkProvider, setZkProvider] = useState<any>(undefined);
+  const [zkWallet, setZkWallet] = useState<any>(undefined);
+
+  const [zkDonation, setZkDonation] = useState<string>("");
+
+
 
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,6 +59,18 @@ export function Bracket(props: any) {
       toast("Something went wrong")
     }
   };
+  const setupZkProvider = async function(){
+    const zkprovider =  await zksync.getDefaultProvider("rinkeby");
+    setZkProvider(zkprovider)
+  }
+
+  const setupZkSigner = async function(){
+    const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+    const signer = provider.getSigner()
+    const zkWallet = await zksync.Wallet.fromEthSigner(signer, zkProvider);
+    setZkWallet(zkWallet)
+  }
+
   const getVotes = async function(nftId:number){
     const totalVotes = await game.instance?.votesPerNftId(nftId)
     const formatedVotes = ethers.utils.formatEther(totalVotes?.toString() || "0")
@@ -62,34 +80,46 @@ export function Bracket(props: any) {
   }
 
   //get zkDai balance (will be votes later)
-  const getZkVotes = async function(nftId:number){
+  const getNftZkAccountState = async function(nftId:number){
     const nftAddress = await game.instance?.donationAddressByNftId(nftId);
     const zkprovider =  await zksync.getDefaultProvider("rinkeby");
 
     const state = await zkprovider.getState(nftAddress || "")
     return state;
+  }
+
+  const getNftZkBalances = async function(num_dancers:number = 16){
+      let voteArrary = [];
+      let zkDepArray = [];
+      for (let i = 0; i <= num_dancers; i++) {
+        const votes = await getVotes(i)
+        voteArrary.push(votes)
+        const zkAccountInfo = await getNftZkAccountState(i)
+        zkDepArray.push(zkAccountInfo)
+      }
+      setnftVotes(voteArrary);
+      setzkDeps(zkDepArray);
+
+      console.log("VOTES ARRY", voteArrary)
+      console.log("DEPS ARRY", zkDeps);
 
   }
-  const vote = async (nft: ActiveNFT) => {
+  const voteForNft = async (nft: ActiveNFT, zkDaiAmount:string) => {
     setApiCall(true)
-    console.log(nft, "nft")
+
 
     //@ts-ignore
     const nftAddress = await game.instance?.donationAddressByNftId(nft.nftId -1);
     console.log(nftAddress);
 
+    //todo: make this a dynamic dep amount
     const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("50"));
 
-    const zkprovider =  await zksync.getDefaultProvider("rinkeby");
-
     const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
-
     const signer = provider.getSigner()
+    const zWallet = await zksync.Wallet.fromEthSigner(signer, zkProvider);
 
-    const syncWallet = await zksync.Wallet.fromEthSigner(signer, zkprovider);
-    // console.log(`ZKSync Wallet ${JSON.stringify(syncWallet)}`)
-
-    const transfer = await syncWallet.syncTransfer({
+    const transfer = await zWallet.syncTransfer({
           to: nftAddress || "",
           token: "DAI",
           amount,
@@ -98,17 +128,9 @@ export function Bracket(props: any) {
 
     console.log(`transferred on 50 DAI on  l2 to ${nftAddress} ${transfer_recepit}`);
     if(transfer_recepit.success) {
-      toast(`transferred on 50 DAI on  l2 to ${nftAddress} ${transfer_recepit}`)
+      toast(`transferred on ${zkDaiAmount} DAI on  l2 to ${nftAddress} ${transfer_recepit}`)
     }
 
-    // const withdrawl_to_game= await game.withdrawlFromDonationProxyToSelf(nftAddress)
-    // const wd_from_sync = await syncWallet.withdrawFromSyncToEthereum({
-    //     ethAddress: "nftAddress" || " ",
-    //     token: "DAI",
-    //     amount: ethers.utils.parseEther("10")
-    // })
-    // const wd_verification = await wd_from_sync.awaitVerifyReceipt()
-    // console.log("Withdrawl verification", wd_verification);
 
     setTimeout(() => {
       setApiCall(false)
@@ -116,9 +138,11 @@ export function Bracket(props: any) {
       setVoting(null)
       toast(<div><img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
       <div>You have succesfully voted for <b>{nft.name}</b>!! 🎉</div></div>)
-    }, 3000)
+    }, 50)
     // console.log(ethAddress, "etths")
   }
+
+
 
   useEffect(() => {
     const initContract = async() =>{
@@ -126,26 +150,8 @@ export function Bracket(props: any) {
       console.log("Game is deployed at ", game.instance.address);
     };
     initContract();
-
-    const loadVotes = async()=> {
-      let voteArrary = [];
-      let zkDepArray = [];
-      for (let i = 0; i <= 16; i++) {
-        const votes = await getVotes(i)
-        voteArrary.push(votes)
-
-        const zkAccountInfo = await getZkVotes(i)
-        zkDepArray.push(zkAccountInfo)
-
-      }
-      setnftVotes(voteArrary);
-      setzkDeps(zkDepArray);
-
-      console.log("VOTES ARRY", voteArrary)
-      console.log("DEPS ARRY", zkDeps);
-    }
-    loadVotes()
-
+    setupZkProvider();
+    getNftZkBalances();
 
   },[game,nftVotes]);
 
@@ -241,7 +247,7 @@ export function Bracket(props: any) {
                  voting === 0 &&
                  <>
                 <Button
-                 onClick={async () => await vote(activeNft[0])}
+                 onClick={async () => await voteForNft(activeNft[0],zkDonation)}
                  type="ghost"
                  size="large"
                  className="imgBorder2"
@@ -273,8 +279,20 @@ export function Bracket(props: any) {
                {
                  voting === 1 &&
                  <>
+                   <form>
+                     <label>
+                       Donation:
+                       <input type="text" name="zkDai" onChange={(e)=> {
+                         const val = e.target.value
+                         if (val !== "") {
+                           setZkDonation(e.target.value)
+                         }
+                       }
+                       }/>
+                     </label>
+                   </form>
                 <Button
-                 onClick={() => vote(activeNft[1])}
+                 onClick={() => voteForNft(activeNft[1],zkDonation)}
                  type="ghost"
                  size="large"
                  className="imgBorder2"
@@ -364,7 +382,9 @@ export function Bracket(props: any) {
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{
                        nftVotes[prevNft.nftId]
 
-                      } VOTES</span>
+                          //should we display pending votes on zk?
+                       // + zkDeps[prevNft.nftId]?.verified.balances.DAI
+                      } VOTES {}</span>
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
                   <li className={bottomClass}>

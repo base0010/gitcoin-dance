@@ -3,6 +3,8 @@ import * as ethers from 'ethers'
 
 import React, { ChangeEvent, createRef, useContext, useEffect, useState} from "react";
 import {Button} from "antd";
+import {GameContext} from "./../hardhat/SymfoniContext";
+
 interface Props {};
 
 const MNEMONIC:string =  "test test test test test test test test test test test junk";
@@ -11,7 +13,11 @@ const MNEMONIC:string =  "test test test test test test test test test test test
 
 
 export const ZKSyncTest: React.FC<Props> = () => {
+
+    const game = useContext(GameContext);
+
     const [ethProvider, setEthProvider] = useState(undefined)
+
     const [zksyncProvider, setZksyncProvider] = useState(undefined);
 
     const [zWallet, setZWallet] = useState(undefined);
@@ -20,6 +26,9 @@ export const ZKSyncTest: React.FC<Props> = () => {
 
     const[verifiedETHDeposit, setVerifiedETHDeposit] = useState("")
     const[committedETHDeposit, setComittedETHDeposit] = useState("")
+
+    const[form, setForm] = useState(0);
+
 
     const setProviders = async function(){
         const zkprovider =  await zksync.getDefaultProvider("rinkeby");
@@ -40,6 +49,30 @@ export const ZKSyncTest: React.FC<Props> = () => {
         setZksyncProvider(zkprovider)
 
     }
+
+const withdrawlToL1= async(nftId:number) =>{
+    const nftAddress = await game.instance?.donationAddressByNftId(nftId);
+
+    if(zWallet !== undefined) {
+        //@ts-ignore
+        const wd_from_sync = await zWallet.withdrawFromSyncToEthereum({
+            ethAddress: nftAddress || " ",
+            token: "DAI",
+            amount: ethers.utils.parseEther("100")
+        })
+        console.log(wd_from_sync)
+        const wd_verification = await wd_from_sync.awaitVerifyReceipt()
+        console.log("Withdrawl verification", wd_verification);
+    }
+}
+const withdrawlFromDancerProxyToGame = async(nftId:number)=>{
+    const nftAddress = await game.instance?.donationAddressByNftId(nftId);
+    const withdrawl_to_game= await game.instance?.withdrawlFromDonationProxyToSelf(nftAddress || "")
+
+    const wd_awaited = await withdrawl_to_game?.wait()
+    console.log(wd_awaited)
+
+}
     const depositETHToL2 = async () => {
         if (zWallet){
             // @ts-ignore
@@ -70,9 +103,16 @@ export const ZKSyncTest: React.FC<Props> = () => {
 
         }
     }
+
+    const handleFormChange = (e:any)=>{
+        setForm(e.target.value);
+
+    }
     useEffect(()=>{
         setProviders()
         zkBalance()
+        document.body.style.backgroundColor = "white"
+
 
     }, [])
 
@@ -100,6 +140,17 @@ export const ZKSyncTest: React.FC<Props> = () => {
 
         <Button onClick={async ()=>{await depositETHToL2()}}>Deposit To L2</Button>
         <Button onClick={async ()=>{await zkBalance()}}>Refresh balances</Button>
+        <form >
+            <label>
+                Enter NFT ID:
+                <input type="text" value={form} name="nftId" onChange={handleFormChange}/>
+
+            </label>
+        </form>
+        <Button onClick={async()=>{await withdrawlToL1(form)}}>Withdrawl to L1(proxy)</Button>
+
+        <Button onClick={async()=>{await withdrawlFromDancerProxyToGame(form)}}>Withdrawl From Dancer to L1</Button>
+
 
         </div>
     )
