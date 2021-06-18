@@ -33,7 +33,7 @@ export function Bracket(props: any) {
   const [zkProvider, setZkProvider] = useState<any>(undefined);
   const [zkWallet, setZkWallet] = useState<any>(undefined);
 
-  const [zkDonation, setZkDonation] = useState<string>("");
+  const [zkDonation, setZkDonation] = useState<string>("50");
 
 
 
@@ -113,7 +113,7 @@ export function Bracket(props: any) {
     console.log(nftAddress);
 
     //todo: make this a dynamic dep amount
-    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther("50"));
+    const amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther(zkDonation.toString()));
 
     const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
     const signer = provider.getSigner()
@@ -126,9 +126,9 @@ export function Bracket(props: any) {
       })
     const transfer_recepit = await transfer.awaitReceipt();
 
-    console.log(`transferred on 50 DAI on  l2 to ${nftAddress} ${transfer_recepit}`);
+    console.log(`transferred on ${zkDonation} DAI on  zksync to ${nftAddress} ${JSON.stringify(transfer.txHash)}`);
     if(transfer_recepit.success) {
-      toast(`transferred on ${zkDaiAmount} DAI on  l2 to ${nftAddress} ${transfer_recepit}`)
+      toast(`transferred on ${zkDonation} DAI on  zksync to ${nftAddress} ${transfer.txHash}`)
     }
 
 
@@ -142,7 +142,11 @@ export function Bracket(props: any) {
     // console.log(ethAddress, "etths")
   }
 
-
+ const getZkVotes = (nftId:number) =>{
+   if(zkDeps[nftId - 1]?.committed !== undefined) {
+     return zkDeps[nftId - 1].committed?.balances.DAI
+   }
+ }
 
   useEffect(() => {
     const initContract = async() =>{
@@ -246,6 +250,18 @@ export function Bracket(props: any) {
                {
                  voting === 0 &&
                  <>
+                   <form>
+                     <label>
+                       Donation:
+                       <input type="text" name="zkDai" onChange={(e)=> {
+                         const val = e.target.value
+                         if (val !== "") {
+                           setZkDonation(e.target.value)
+                         }
+                       }
+                       }/>
+                     </label>
+                   </form>
                 <Button
                  onClick={async () => await voteForNft(activeNft[0],zkDonation)}
                  type="ghost"
@@ -413,6 +429,8 @@ export function Bracket(props: any) {
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{nftVotes[n.nftId - 1]} VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{getZkVotes(n.nftId)}ZK VOTES</span>
+
                     </li>
                   </span>
                   </>
