@@ -440,7 +440,8 @@ export function Bracket(props: any) {
                       <h4 style={{left: "20%", top: "10%", position: "absolute"}} className="underscoreDanceText">_dance</h4>
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{nftVotes[n.nftId - 1]} VOTES {getZkVotes(n.nftId)}ZK VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>
+                      <div>{nftVotes[n.nftId -1]} VOTES</div> <span>{getZkVotes(n.nftId)}ZK VOTES</span></span>
                       {/*<span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}></span>*/}
 
                     </li>
