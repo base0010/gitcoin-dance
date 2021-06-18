@@ -409,8 +409,8 @@ export function Bracket(props: any) {
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
 
-                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>{
-                       nftVotes[prevNft.nftId -1]} VOTES {getZkVotes(n.nftId)}ZK VOTES</span>
+                      <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>
+                      <div>{nftVotes[prevNft.nftId -1]} VOTES</div> <span>{getZkVotes(n.nftId)}ZK VOTES</span></span>
 
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
