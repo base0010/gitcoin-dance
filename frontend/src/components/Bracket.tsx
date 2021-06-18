@@ -263,9 +263,9 @@ export function Bracket(props: any) {
                  voting === 0 &&
                  <>
                    <form>
-                     <label>
+                     <label className="yellowText marginTen">
                        Donation:
-                       <input type="text" name="zkDai" onChange={(e)=> {
+                       <input className="polarisText" style={{margin: "0px 5px"}} type="text" name="zkDai" onChange={(e)=> {
                          const val = e.target.value
                          if (val !== "") {
                            setZkDonation(e.target.value)
@@ -279,6 +279,7 @@ export function Bracket(props: any) {
                  type="ghost"
                  size="large"
                  className="imgBorder2"
+                 style={{margin: "5px"}}
                  >
                   VOTE
                 </Button>
