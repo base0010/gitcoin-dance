@@ -11,23 +11,23 @@ main {
   padding: 0;
   margin: 20px;
 }
-.round .spacer {
-  flex-grow: 1;
-}
-.round .spacer:first-child,
-.round .spacer:last-child {
-  flex-grow: 0.5;
-}
+// .round .spacer {
+//   flex-grow: 1;
+// }
+// .round .spacer:first-child,
+// .round .spacer:last-child {
+//   flex-grow: 0.5;
+// }
 
-.round .game-spacer {
-  flex-grow: 1;
-}
+// .round .game-spacer {
+//   flex-grow: 1;
+// }
 
-.round-2,
-.round-3,
-.round-4 {
-  align-self: flex-start;
-}
+// .round-2,
+// .round-3,
+// .round-4 {
+//   align-self: flex-start;
+// }
 
 li.game.winner {
   font-weight: bold;
@@ -38,29 +38,36 @@ li.game span {
 
 li.game-top {
   border-bottom: 1px solid #aaa;
+  margin-top: 50px;
 }
 
-.round-2 li.game-spacer,
-.round-3 li.game-spacer,
+.round-2 li.game-spacer {
+  height: 210px;
+}
+
+.round-3 li.game-spacer {
+  height: 500px;
+}
+
 .round-4 li.game-spacer {
-  height: 45px;
+  height: 1080px;
 }
 
-.round-2 li.spacer {
-  height: 120px;
-}
+// .round-2 li.spacer {
+//   height: 120px;
+// }
 
-.round-3 li.spacer {
-  height: 240px;
-}
+// .round-3 li.spacer {
+//   height: 240px;
+// }
 
-.round-4 li.spacer {
-  height: 360px;
-}
+// .round-4 li.spacer {
+//   height: 360px;
+// }
 
-li.game-bottom {
-  border-top: 1px solid #aaa;
-}
+// li.game-bottom {
+//   border-top: 1px solid #aaa;
+// }
 
 .ant-carousel .slick-slide img {
   display: inline;

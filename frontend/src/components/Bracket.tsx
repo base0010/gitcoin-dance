@@ -354,7 +354,7 @@ export function Bracket(props: any) {
           <h5 className="yellowText">FIRST</h5>
           <Timer active/>
           </span>
-            <hr></hr>
+            {/* <hr></hr> */}
             {gameData1.map((n : any, i : number) => {
               let nft = nfts.find((nf) => nf.id === n.gifId);
               let pnft
@@ -380,8 +380,8 @@ export function Bracket(props: any) {
                 });
                 return (
                   <>
-                  <li className="spacer">&nbsp;</li>
-                  <span>
+                  {/* <li className="spacer">&nbsp;</li> */}
+                  <span style={{margin: "auto"}}>
                     <li className={topClass}>
                       <span className="darkCard darkCardBracket">
                       <img
@@ -410,7 +410,7 @@ export function Bracket(props: any) {
                       </span>{' '}
 
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>
-                      <div>{nftVotes[prevNft.nftId -1]} VOTES</div> <span>{getZkVotes(prevNft.nftId)}ZK VOTES</span></span>
+                      <div>{nftVotes[prevNft.nftId -1]} VOTES</div> <span>{getZkVotes(prevNft.nftId)} ZK VOTES</span></span>
 
                     </li>
                       <li className="game game-spacer">&nbsp;</li>
@@ -441,7 +441,7 @@ export function Bracket(props: any) {
                         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
                       </span>{' '}
                       <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}>
-                      <div>{nftVotes[n.nftId -1]} VOTES</div> <span>{getZkVotes(n.nftId)}ZK VOTES</span></span>
+                      <div>{nftVotes[n.nftId -1]} VOTES</div> <span>{getZkVotes(n.nftId)} ZK VOTES</span></span>
                       {/*<span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}></span>*/}
 
                     </li>
@@ -454,16 +454,16 @@ export function Bracket(props: any) {
                 </>
               );
             })}
-            <li className="spacer">&nbsp;</li>
+            {/* <li className="spacer">&nbsp;</li> */}
           </ul>
           <ul className="round round-2">
           <span className="spaceBetween">
           <h5 className="polarisText">SECOND</h5>
           <Timer/>
           </span>
-          <hr></hr>
+          {/* <hr></hr> */}
           {gd2.map((n : any, i : number) => {
-              if (i % 2 !== 0 || i === 0) {
+              if (i % 2 !== 0) {
                 return <EmptyBracketCell/>
               }
               return (
@@ -477,9 +477,9 @@ export function Bracket(props: any) {
           <h5 className="polarisText">SEMIS</h5>
           <Timer/>
           </span>
-          <hr></hr>
+          {/* <hr></hr> */}
           {gd3.map((n : any, i : number) => {
-              if (i % 2 !== 0 || i === 0) {
+              if (i % 2 !== 0) {
                 return <EmptyBracketCell/>
               }
               return (
@@ -493,9 +493,9 @@ export function Bracket(props: any) {
           <h5 className="polarisText">FINALS</h5>
           <Timer/>
           </span>
-          <hr></hr>
+          {/* <hr></hr> */}
           {gd4.map((n : any, i : number) => {
-              if (i % 2 !== 0 || i === 0) {
+              if (i % 2 !== 0) {
                 return <EmptyBracketCell/>
               }
               return (
