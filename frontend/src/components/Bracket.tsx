@@ -128,7 +128,11 @@ export function Bracket(props: any) {
 
     console.log(`transferred on ${zkDonation} DAI on  zksync to ${nftAddress} ${JSON.stringify(transfer.txHash)}`);
     if(transfer_recepit.success) {
-      toast(`transferred on ${zkDonation} DAI on  zksync to ${nftAddress} ${transfer.txHash}`)
+      toast(<div className="purpTeal">transferred on {zkDonation} DAI on  l2 to {nftAddress} {transfer.txHash}</div>,{
+        className: 'purpTeal yellowText',
+        bodyClassName: "purpTeal yellowText",
+        progressClassName: 'fancy-progress-bar'
+      })
     }
 
 
@@ -136,8 +140,12 @@ export function Bracket(props: any) {
       setApiCall(false)
       setModalOpen(false)
       setVoting(null)
-      toast(<div><img style={{margin: "5px"}} height="50px" width="50px" src={gitcoinLogo} alt={'gitcoin Logo'} />
-      <div>You have succesfully voted for <b>{nft.name}</b>!! 🎉</div></div>)
+      toast(<span className="purpTeal"><img style={{margin: "5px", display: "inline"}} height="20px" width="20px" src={gitcoinLogo} alt={'gitcoin Logo'} />
+      <span>You have succesfully voted for <b>{nft.name}</b>!! 🎉</span></span>, {
+  className: 'purpTeal yellowText',
+  bodyClassName: "purpTeal yellowText",
+  progressClassName: 'fancy-progress-bar'
+})
     }, 50)
     // console.log(ethAddress, "etths")
   }
@@ -281,7 +289,7 @@ export function Bracket(props: any) {
                 </>
                }
             </div>
-            <div style={{width: "615px", textAlign: "end", display: "inline-block"}}>
+            <div style={{width: voting ? "650px" : "615px", textAlign: "end", display: "inline-block"}}>
                {voting !== 1 &&
                 <Button
                 onClick={() => setVoting(1)}
@@ -296,9 +304,9 @@ export function Bracket(props: any) {
                  voting === 1 &&
                  <>
                    <form>
-                     <label>
+                     <label className="yellowText marginTen">
                        Donation:
-                       <input type="text" name="zkDai" onChange={(e)=> {
+                       <input className="polarisText" style={{margin: "0px 5px"}} type="text" name="zkDai" onChange={(e)=> {
                          const val = e.target.value
                          if (val !== "") {
                            setZkDonation(e.target.value)
@@ -312,6 +320,7 @@ export function Bracket(props: any) {
                  type="ghost"
                  size="large"
                  className="imgBorder2"
+                 style={{margin: "5px"}}
                  >
                   VOTE
                 </Button>
