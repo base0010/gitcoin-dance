@@ -17,6 +17,7 @@
     "react-dom": "^16.14.0",
     "react-scripts": "3.4.3",
     "react-toastify": "^7.0.3",
+    "three": "^0.129.0",
     "typescript": "^3.9.7",
     "web3modal": "^1.9.1",
     "zksync": "^0.10.9"
@@ -42,5 +43,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/three": "^0.129.1"
+  }
 }
