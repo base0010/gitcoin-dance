@@ -3,7 +3,7 @@ import React from 'react';
 
 const classNames = require('classnames');
 
-export function EmptyBracketCell(props: any) {
+export function EmptyBracketCell() {
   const bottomClass2 = classNames({
     game: true,
     'game-bottom': true,
