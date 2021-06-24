@@ -9,7 +9,7 @@ import * as zksync from 'zksync';
 import { toast } from 'react-toastify';
 import { GameContext } from '../../hardhat/SymfoniContext';
 import { nfts, ActiveNFT } from '../../assets/index';
-import gitcoinLogo from '../../assets/gitcoin/gitcoin-logo-illustrated-icon.png';
+import gitcoinLogo from '../../assets/gitcoin/gitcoinIcon.png';
 import DanceOffModal from '../danceOffModal/DanceOffModal';
 import InactiveRound from './InactiveRound';
 import ActiveRound from './ActiveRound';

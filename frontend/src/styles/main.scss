@@ -70,7 +70,7 @@ body {
 
 .imgBorder {
   border: 1px solid;
-  border-radius: 4px;
+  border-radius: 0px;
   border-image-slice: 1;
   border-image-source: $orangeGradient1;
 }
@@ -260,6 +260,10 @@ hr:before {
   border-radius: 4px !important;
   font-size: 24px !important;
   color: white !important;
+}
+
+.ant-spin-dot-item {
+  background-color: $milky-way-blue !important;
 }
 
 .slick-list {

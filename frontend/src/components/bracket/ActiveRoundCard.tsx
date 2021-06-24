@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import { Spin } from 'antd';
 
 export function ActiveRoundCard(props: any) {
   const {
@@ -51,17 +52,35 @@ export function ActiveRoundCard(props: any) {
         </h4>
         {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
       </span>{' '}
-      <span
-        className="tealText"
-        style={{
-          position: 'absolute',
-          right: '10%',
-          bottom: '10%',
-        }}
-      >
-        <div>{nftVotes[activeNft.nftId - 1]} VOTES</div>{' '}
-        <span>{getZkVotes(activeNft.nftId, zkDeps, ethers)} ZK VOTES</span>
-      </span>
+      {nftVotes.length > 0 && (
+        <span
+          className="tealText"
+          style={{
+            position: 'absolute',
+            right: '10%',
+            bottom: '10%',
+          }}
+        >
+          <div>{nftVotes[activeNft.nftId - 1]} VOTES</div>{' '}
+          <span>{getZkVotes(activeNft.nftId, zkDeps, ethers)} ZK VOTES</span>
+        </span>
+      )}
+      {nftVotes.length < 1 && (
+        <span
+          style={{
+            position: 'absolute',
+            right: '20%',
+            bottom: '0%',
+          }}
+        >
+          <div style={{ margin: '15px' }}>
+            <Spin spinning={nftVotes.length < 1} />
+          </div>
+          <div style={{ margin: '15px' }}>
+            <Spin spinning={nftVotes.length < 1} />
+          </div>
+        </span>
+      )}
     </>
   );
 }
