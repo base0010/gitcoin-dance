@@ -1,34 +1,68 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
 export function ActiveRoundCard(props: any) {
-  const { activeNft } = props;
+  const {
+    nft,
+    activeNft,
+    n,
+    openModal,
+    zkDeps,
+    ethers,
+    getZkVotes,
+    nftVotes,
+    prevNft,
+    name,
+  } = props;
   return (
-    <span className="darkCard paddingForty" style={{ position: 'relative' }}>
-      <span className="ellipsisTruncation" style={{ display: 'flex' }}>
-        <hr style={{ width: '20%', backgroundColor: 'yellow' }} />
-        <h3
-          title={activeNft.description}
-          className="tealText ellipsisTruncation cardTitleModal"
-        >
-          {activeNft.description}
-        </h3>
-        <hr style={{ width: '20%', backgroundColor: 'yellow' }} />
+    <>
+      <span className="darkCard darkCardBracket">
+        <img
+          style={{ textAlign: 'center', display: 'inline' }}
+          height="60px"
+          width="60px"
+          src={nft ? nft.src : ''}
+          alt={nft ? nft.description : ''}
+        />
       </span>
-      <h4
-        className="underscoreDanceText"
-        style={{ position: 'absolute', top: '16%', right: '45%' }}
+      <span
+        className="link ellipsisTruncation tealText"
+        style={{ position: 'relative' }}
+        onClick={() => openModal(prevNft, n)}
       >
-        _dance
-      </h4>
-      <div
-        className="imgBorder imageInCard"
+        <h3
+          title={name}
+          style={{ marginLeft: '10px' }}
+          className="tealText ellipsisTruncation"
+        >
+          {name}
+        </h3>
+        <h4
+          style={{
+            left: '20%',
+            top: '10%',
+            position: 'absolute',
+          }}
+          className="underscoreDanceText"
+        >
+          _dance
+        </h4>
+        {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
+      </span>{' '}
+      <span
+        className="tealText"
         style={{
-          backgroundImage: `url(${activeNft.src})`,
-          minHeight: '200px',
+          position: 'absolute',
+          right: '10%',
+          bottom: '10%',
         }}
-      />
-    </span>
+      >
+        <div>{nftVotes[activeNft.nftId - 1]} VOTES</div>{' '}
+        <span>{getZkVotes(activeNft.nftId, zkDeps, ethers)} ZK VOTES</span>
+      </span>
+    </>
   );
 }
 

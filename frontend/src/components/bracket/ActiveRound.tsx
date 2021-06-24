@@ -4,6 +4,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import ActiveRoundCard from './ActiveRoundCard';
 import Timer from './Timer';
 
 const classNames = require('classnames');
@@ -51,7 +52,19 @@ export function ActiveRound(props: any) {
             <>
               <span style={{ margin: 'auto' }}>
                 <li className={topClass}>
-                  <span className="darkCard darkCardBracket">
+                  <ActiveRoundCard
+                    nft={pnft}
+                    activeNft={prevNft}
+                    prevNft={prevNft}
+                    n={n}
+                    openModal={openModal}
+                    nftVotes={nftVotes}
+                    name={prevNft.name}
+                    getZkVotes={getZkVotes}
+                    zkDeps={zkDeps}
+                    ethers={ethers}
+                  />
+                  {/* <span className="darkCard darkCardBracket">
                     <img
                       style={{ textAlign: 'center', display: 'inline' }}
                       height="60px"
@@ -81,10 +94,10 @@ export function ActiveRound(props: any) {
                       className="underscoreDanceText"
                     >
                       _dance
-                    </h4>
-                    {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
-                  </span>{' '}
-                  <span
+                    </h4> */}
+                  {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
+                  {/* </span>{' '} */}
+                  {/* <span
                     className="tealText"
                     style={{
                       position: 'absolute',
@@ -96,11 +109,23 @@ export function ActiveRound(props: any) {
                     <span>
                       {getZkVotes(prevNft.nftId, zkDeps, ethers)} ZK VOTES
                     </span>
-                  </span>
+                  </span> */}
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li className={bottomClass}>
-                  <span className="darkCard darkCardBracket">
+                  <ActiveRoundCard
+                    nft={nft}
+                    prevNft={prevNft}
+                    activeNft={n}
+                    n={n}
+                    name={n.name}
+                    openModal={openModal}
+                    nftVotes={nftVotes}
+                    getZkVotes={getZkVotes}
+                    zkDeps={zkDeps}
+                    ethers={ethers}
+                  />
+                  {/* <span className="darkCard darkCardBracket">
                     <img
                       style={{ textAlign: 'center', display: 'inline' }}
                       height="60px"
@@ -132,8 +157,8 @@ export function ActiveRound(props: any) {
                       _dance
                     </h4>
                     {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
-                  </span>{' '}
-                  <span
+                  {/* </span> */}
+                  {/* <span
                     className="tealText"
                     style={{
                       position: 'absolute',
@@ -143,7 +168,7 @@ export function ActiveRound(props: any) {
                   >
                     <div>{nftVotes[n.nftId - 1]} VOTES</div>{' '}
                     <span>{getZkVotes(n.nftId, zkDeps, ethers)} ZK VOTES</span>
-                  </span>
+                  </span> */}
                   {/* <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}></span> */}
                 </li>
               </span>

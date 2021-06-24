@@ -1,7 +1,7 @@
 const getVotes = async (nftId: number, game: any, ethers: any) => {
   const totalVotes = await game.instance?.votesPerNftId(nftId);
   const formatedVotes = ethers.utils.formatEther(totalVotes?.toString() || '0');
-  console.log(`TOTAL VOTES:${formatedVotes}`);
+  //   console.log(`TOTAL VOTES:${formatedVotes}`);
   return formatedVotes.toString().slice(0, -2) || '0';
 };
 
