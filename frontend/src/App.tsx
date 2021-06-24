@@ -7,7 +7,7 @@ import { Symfoni } from './hardhat/SymfoniContext';
 import { NFT } from './components/middleware/NFT';
 import { Home } from './components/Home';
 import { VoteButton } from './components/middleware/VoteButton';
-import { ZKSyncTest } from './components/middleware/ZKSyncTest';
+import ZKSyncTest from './components/middleware/ZKSyncTest';
 import { ConnectWallet } from './components/middleware/ConnectWallet';
 
 function App() {

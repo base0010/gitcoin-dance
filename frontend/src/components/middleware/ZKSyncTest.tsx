@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import * as zksync from 'zksync';
@@ -18,7 +19,7 @@ interface Props {}
 const MNEMONIC: string =
   'test test test test test test test test test test test junk';
 
-export const ZKSyncTest: React.FC<Props> = () => {
+const ZKSyncTest: React.FC<Props> = () => {
   const game = useContext(GameContext);
 
   const [ethProvider, setEthProvider] = useState(undefined);
@@ -178,3 +179,4 @@ export const ZKSyncTest: React.FC<Props> = () => {
     </div>
   );
 };
+export default ZKSyncTest;
