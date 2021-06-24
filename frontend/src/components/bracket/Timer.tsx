@@ -1,21 +1,23 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
-import {GameContext} from "./../hardhat/SymfoniContext";
-import { ProviderContext, CurrentAddressContext} from "./../hardhat/SymfoniContext";
+import { GameContext } from '../../hardhat/SymfoniContext';
 
 const Timer = (props: any) => {
-  const game = useContext(GameContext)
+  const game = useContext(GameContext);
 
   const [timerDays, setTimerDays] = useState(0o0);
   const [timerHours, setTimerHours] = useState(0o0);
   const [timerMinutes, setTimerMinutes] = useState(0o0);
   const [timerSeconds, setTimerSeconds] = useState(0o0);
 
-  const [currentRound, setCurrentRound] = useState<string>("0");
+  const [currentRound, setCurrentRound] = useState<string>('0');
 
-  const interval : any = useRef<number | undefined>();
+  const interval: any = useRef<number | undefined>();
 
-  const startTimer = (countdownDate : any) => {
+  const startTimer = (countdownDate: any) => {
     const now = new Date().getTime();
     const distance = countdownDate - now;
 
@@ -27,7 +29,7 @@ const Timer = (props: any) => {
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     if (distance < 0) {
-      localStorage.clear()
+      localStorage.clear();
       clearInterval(interval.current);
     } else {
       setTimerDays(days);
@@ -46,7 +48,6 @@ const Timer = (props: any) => {
   }
 
   useEffect(() => {
-
     // const getRound = async()=>{
     //   // const round = await game.instance?.g_current_round()
     //   //
@@ -72,10 +73,10 @@ const Timer = (props: any) => {
     }
   }, [timerHours]);
 
+  const { active } = props;
   return (
     <div>
-
-      <h5 className={props.active ? "yellowText": "polarisText"}>
+      <h5 className={active ? 'yellowText' : 'polarisText'}>
         {String(timerHours).padStart(2, '0')}:
         {String(timerMinutes).padStart(2, '0')}:
         {String(timerSeconds).padStart(2, '0')}

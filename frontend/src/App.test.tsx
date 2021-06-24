@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';

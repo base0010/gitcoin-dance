@@ -1,21 +1,23 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import { Carousel } from 'antd';
 import 'antd/dist/antd.css';
-import {nfts} from '../assets';
+import { nfts } from '../assets';
 
-const contentStyle : any = {
+const contentStyle: any = {
   color: '#fff',
   textAlign: 'center',
-  maxHeight: "277px"
+  maxHeight: '277px',
 };
 
-export function LatestActivityCarousel(props : any) {
+export function LatestActivityCarousel(props: any) {
   const { gameData } = props;
 
   return (
     <div className="paddingForty purpTeal">
-
-     <h1 className="yellowText">RECENT VOTES</h1>
+      <h1 className="yellowText">RECENT VOTES</h1>
       <Carousel
         slidesToShow={5}
         // arrows
@@ -25,32 +27,49 @@ export function LatestActivityCarousel(props : any) {
         dots={false}
         adaptiveHeight
       >
-        {gameData.map((n : any, i : any) => {
+        {gameData.map((n: any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
-          if(nft) {
+          if (nft) {
             return (
               <div className="darkCard paddingForty">
                 {/* <h3 style={{ color: 'white', textAlign: 'center' }}>{i}</h3> */}
-                <span className="ellipsisTruncation textOverlay" style={{display: "flex", position: "relative"}}>
-                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
-                <span></span>
-                <h3
-                  title={nft.description}
-                  className="tealText ellipsisTruncation cardTitle"
+                <span
+                  className="ellipsisTruncation textOverlay"
+                  style={{ display: 'flex', position: 'relative' }}
                 >
-                  {nft.description}
-                </h3>
-                {/* <hr style={{width: "20%", float: "right"}}></hr> */}
-                <h4 className="underscoreDanceText" style={{right: "25%", top: "25%", position: "absolute"}}>_dance</h4>
+                  {/* <hr style={{width: "20%", float: "right"}}></hr> */}
+                  <span />
+                  <h3
+                    title={nft.description}
+                    className="tealText ellipsisTruncation cardTitle"
+                  >
+                    {nft.description}
+                  </h3>
+                  {/* <hr style={{width: "20%", float: "right"}}></hr> */}
+                  <h4
+                    className="underscoreDanceText"
+                    style={{ right: '25%', top: '25%', position: 'absolute' }}
+                  >
+                    _dance
+                  </h4>
                 </span>
-                <div className="imgBorder imageInCard" style={{  
-                  backgroundImage: `url(${nft.src})`,
-                  minHeight: "100px"
-                }}></div>
-                <p style={{textAlign: "end"}} className="yellowText marginTen">{n.userAddress}</p>
+                <div
+                  className="imgBorder imageInCard"
+                  style={{
+                    backgroundImage: `url(${nft.src})`,
+                    minHeight: '100px',
+                  }}
+                />
+                <p
+                  style={{ textAlign: 'end' }}
+                  className="yellowText marginTen"
+                >
+                  {n.userAddress}
+                </p>
               </div>
             );
           }
+          return <span />;
         })}
       </Carousel>
     </div>

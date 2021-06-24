@@ -1,15 +1,13 @@
+/* eslint-disable global-require */
 export interface ActiveNFT {
   id: string | null;
   src: string | undefined;
   description: string | undefined;
   name?: string | null;
-  nftId?: string | null;
-
+  nftId?: number | null;
 }
 
-
-
-export const nfts : ActiveNFT[]  = [
+export const nfts: ActiveNFT[] = [
   {
     id: 'b304b757-30cf-4c16-a04b-8ad9ca369fd7',
     src: require('./nfts/adventureCat.gif'),
@@ -91,5 +89,3 @@ export const nfts : ActiveNFT[]  = [
     description: 'puppy',
   },
 ];
-
-
