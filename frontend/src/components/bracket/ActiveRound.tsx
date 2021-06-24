@@ -64,52 +64,6 @@ export function ActiveRound(props: any) {
                     zkDeps={zkDeps}
                     ethers={ethers}
                   />
-                  {/* <span className="darkCard darkCardBracket">
-                    <img
-                      style={{ textAlign: 'center', display: 'inline' }}
-                      height="60px"
-                      width="60px"
-                      src={pnft ? pnft.src : ''}
-                      alt={pnft ? pnft.description : ''}
-                    />
-                  </span>
-                  <span
-                    className="link ellipsisTruncation tealText"
-                    style={{ position: 'relative' }}
-                    onClick={() => openModal(prevNft, n)}
-                  >
-                    <h3
-                      title={prevNft.name}
-                      style={{ marginLeft: '10px' }}
-                      className="tealText ellipsisTruncation"
-                    >
-                      {prevNft.name}
-                    </h3>
-                    <h4
-                      style={{
-                        left: '20%',
-                        top: '10%',
-                        position: 'absolute',
-                      }}
-                      className="underscoreDanceText"
-                    >
-                      _dance
-                    </h4> */}
-                  {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
-                  {/* </span>{' '} */}
-                  {/* <span
-                    className="tealText"
-                    style={{
-                      position: 'absolute',
-                      right: '10%',
-                      bottom: '10%',
-                    }}
-                  >
-                    <div>{nftVotes[prevNft.nftId - 1]} VOTES</div>{' '}
-                    <span>
-                      {getZkVotes(prevNft.nftId, zkDeps, ethers)} ZK VOTES
-                    </span>
-                  </span> */}
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li className={bottomClass}>
@@ -125,51 +79,6 @@ export function ActiveRound(props: any) {
                     zkDeps={zkDeps}
                     ethers={ethers}
                   />
-                  {/* <span className="darkCard darkCardBracket">
-                    <img
-                      style={{ textAlign: 'center', display: 'inline' }}
-                      height="60px"
-                      width="60px"
-                      src={nft ? nft.src : ''}
-                      alt={nft ? nft.description : ''}
-                    />
-                  </span>
-                  <span
-                    className="link ellipsisTruncation tealText"
-                    style={{ position: 'relative' }}
-                    onClick={() => openModal(prevNft, n)}
-                  >
-                    <h3
-                      style={{ marginLeft: '10px' }}
-                      title={n.name}
-                      className="tealText ellipsisTruncation"
-                    >
-                      {n.name}
-                    </h3>
-                    <h4
-                      style={{
-                        left: '20%',
-                        top: '10%',
-                        position: 'absolute',
-                      }}
-                      className="underscoreDanceText"
-                    >
-                      _dance
-                    </h4>
-                    {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
-                  {/* </span> */}
-                  {/* <span
-                    className="tealText"
-                    style={{
-                      position: 'absolute',
-                      right: '10%',
-                      bottom: '10%',
-                    }}
-                  >
-                    <div>{nftVotes[n.nftId - 1]} VOTES</div>{' '}
-                    <span>{getZkVotes(n.nftId, zkDeps, ethers)} ZK VOTES</span>
-                  </span> */}
-                  {/* <span className="tealText" style={{position: "absolute", right: "10%", bottom: "10%"}}></span> */}
                 </li>
               </span>
             </>

@@ -142,7 +142,6 @@ export function Bracket(props: any) {
   };
 
   const openModal = (...nftArray: any[]) => {
-    console.log(nftArray, 'bftA?');
     const active1 = nfts.find((n) => n.id === nftArray[0].gifId);
     const active2 = nfts.find((n) => n.id === nftArray[1].gifId);
     if (active1 && active2) {
