@@ -48,7 +48,7 @@ export function DanceOffModal(props: any) {
         )}
         {!apiCall && (
           <>
-            <ModalCard activeNft={activeNft[0]} />
+            <ModalCard voting={voting} selection={0} activeNft={activeNft[0]} />
             <img
               style={{ alignSelf: 'center', margin: '40px' }}
               src={danceOff}
@@ -56,7 +56,7 @@ export function DanceOffModal(props: any) {
               width="270px"
               height="160px"
             />
-            <ModalCard activeNft={activeNft[1]} />
+            <ModalCard voting={voting} selection={1} activeNft={activeNft[1]} />
           </>
         )}
       </span>

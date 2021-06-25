@@ -2,10 +2,16 @@
 import React from 'react';
 
 export function ModalCard(props: any) {
-  const { activeNft } = props;
+  const { activeNft, voting, selection } = props;
   return (
-    <span className="darkCard paddingForty" style={{ position: 'relative' }}>
-      <span className="ellipsisTruncation" style={{ display: 'flex' }}>
+    <span
+      className="darkCard paddingForty"
+      style={{ position: 'relative', display: 'flex', flexWrap: 'wrap' }}
+    >
+      <span
+        className="ellipsisTruncation"
+        style={{ display: 'flex', margin: '5px' }}
+      >
         <hr style={{ width: '20%', backgroundColor: 'yellow' }} />
         <h3
           title={activeNft.description}
@@ -21,13 +27,30 @@ export function ModalCard(props: any) {
       >
         _dance
       </h4>
-      <div
-        className="imgBorder imageInCard"
-        style={{
-          backgroundImage: `url(${activeNft.src})`,
-          minHeight: '200px',
-        }}
-      />
+      {voting !== selection && (
+        <video
+          className="imgBorder imageInCard"
+          // height="120"
+          width="150"
+          autoPlay
+          muted
+          loop
+        >
+          <source src={activeNft.src} type="video/mp4" />
+        </video>
+      )}
+      {voting === selection && (
+        <video
+          className="imgBorder imageInCard"
+          // height="120"
+          width="150"
+          autoPlay
+          //   muted
+          loop
+        >
+          <source src={activeNft.src} type="video/mp4" />
+        </video>
+      )}
     </span>
   );
 }

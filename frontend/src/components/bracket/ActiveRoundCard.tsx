@@ -20,13 +20,23 @@ export function ActiveRoundCard(props: any) {
   return (
     <>
       <span className="darkCard darkCardBracket">
-        <img
+        {/* <img
           style={{ textAlign: 'center', display: 'inline' }}
           height="60px"
           width="60px"
           src={nft ? nft.src : ''}
           alt={nft ? nft.description : ''}
-        />
+        /> */}
+        <video
+          className="imgBorder imageInCard"
+          //   height="40"
+          width="40"
+          autoPlay
+          muted
+          loop
+        >
+          <source src={nft.src} type="video/mp4" />
+        </video>
       </span>
       <span
         className="link ellipsisTruncation tealText"
