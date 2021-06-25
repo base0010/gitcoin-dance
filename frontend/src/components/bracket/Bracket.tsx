@@ -26,6 +26,8 @@ export function Bracket(props: any) {
   const [zkDonation, setZkDonation] = useState<string>('50');
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
+  const [gameLoaded, setGameLoaded] = useState(false);
+
   const [nftVotes, setnftVotes] = useState<string[]>([]);
   const [zkDeps, setzkDeps] = useState<any[]>([]);
   const [apiCall, setApiCall] = useState(false);
@@ -57,10 +59,15 @@ export function Bracket(props: any) {
     const initContract = async () => {
       if (!game.instance) return;
       console.log('Game is deployed at ', game.instance.address);
+      if (game.instance.address) {
+        setGameLoaded(true);
+      }
     };
-    initContract();
-    setupZkProvider();
-    getNftZkBalances();
+    if (!gameLoaded) {
+      initContract();
+      setupZkProvider();
+      getNftZkBalances();
+    }
   }, [game, getNftZkBalances, nftVotes]);
 
   const setupZkSigner = async () => {
@@ -187,13 +194,13 @@ export function Bracket(props: any) {
             />
           </ul>
           <ul className="round round-2">
-            <InactiveRound gameData={gd2} header="SECOND" />
+            <InactiveRound key="gd2" gameData={gd2} header="SECOND" />
           </ul>
           <ul className="round round-3">
-            <InactiveRound gameData={gd3} header="SEMIS" />
+            <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
           </ul>
           <ul className="round round-4">
-            <InactiveRound gameData={gd4} header="FINALS" />
+            <InactiveRound key="gd4" gameData={gd4} header="FINALS" />
           </ul>
         </main>
       )}

@@ -50,7 +50,7 @@ export function ActiveRound(props: any) {
           });
           return (
             <>
-              <span style={{ margin: 'auto' }}>
+              <span key={i} style={{ margin: 'auto' }}>
                 <li className={topClass}>
                   <ActiveRoundCard
                     nft={pnft}

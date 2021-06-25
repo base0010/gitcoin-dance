@@ -16,7 +16,7 @@ export function InactiveRound(props: any) {
       {/* <hr></hr> */}
       {gameData.map((n: any, i: number) => {
         if (i % 2 !== 0) {
-          return <EmptyBracketCell />;
+          return <EmptyBracketCell key={i} />;
         }
         return <></>;
       })}
