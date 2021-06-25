@@ -37,6 +37,11 @@ body {
   margin: -50px 0px;
 }
 
+.faqText {
+  font-family: 'Space Mono', monospace;
+  color: #ffe924;
+}
+
 .underscoreDanceText {
   @include orangeGradient();
   font-family: 'Caveat', cursive;

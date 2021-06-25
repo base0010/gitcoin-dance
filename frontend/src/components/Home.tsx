@@ -31,13 +31,15 @@ export function Home() {
   }, [gameData1]);
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        <img
-          style={{ margin: 'auto' }}
-          src={gitcoinDance}
-          alt="Gitcoin Dance Logo"
-        />
-      </div>
+      <Link style={{ margin: 'auto' }} to="/">
+        <div style={{ display: 'flex' }}>
+          <img
+            style={{ margin: 'auto' }}
+            src={gitcoinDance}
+            alt="Gitcoin Dance Logo"
+          />
+        </div>
+      </Link>
       <div className="navBar">
         <Link to="/about">
           <h4 style={{ display: 'inline' }} className="yellowText marginTen">

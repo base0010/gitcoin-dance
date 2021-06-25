@@ -65,9 +65,9 @@ export function Bracket(props: any) {
     };
     if (!gameLoaded) {
       initContract();
-      setupZkProvider();
-      getNftZkBalances();
     }
+    setupZkProvider();
+    getNftZkBalances();
   }, [game, getNftZkBalances, nftVotes]);
 
   const setupZkSigner = async () => {

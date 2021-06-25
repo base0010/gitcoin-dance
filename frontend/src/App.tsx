@@ -9,6 +9,7 @@ import { Home } from './components/Home';
 import { VoteButton } from './components/middleware/VoteButton';
 import ZKSyncTest from './components/middleware/ZKSyncTest';
 import { ConnectWallet } from './components/middleware/ConnectWallet';
+import About from './components/About';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           / <Route exact path="/vote" component={VoteButton} />
           / <Route exact path="/zk" component={ZKSyncTest} />
           / <Route exact path="/connect" component={ConnectWallet} />
+          / <Route exact path="/about" component={About} />
         </Switch>
       </Symfoni>
     </div>

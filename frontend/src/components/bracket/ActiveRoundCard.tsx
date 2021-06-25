@@ -60,7 +60,7 @@ export function ActiveRoundCard(props: any) {
         >
           _dance
         </h4>
-        {/* <hr style={{borderTop: "1px solid yellow"}}></hr> */}
+        <hr style={{ borderTop: '1px solid yellow' }} />
       </span>{' '}
       {nftVotes.length > 0 && (
         <span
