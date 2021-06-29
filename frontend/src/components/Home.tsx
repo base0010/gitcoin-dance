@@ -25,6 +25,7 @@ export function Home() {
       if (!gameData1) {
         const res = await getGameDataFromArray();
         setGameData1(res);
+        setGameData2(res.slice(0, 8));
       }
     };
     getGameData();

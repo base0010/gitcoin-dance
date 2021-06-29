@@ -37,7 +37,6 @@ export function ActiveRound(props: any) {
             'game-bottom': true,
             purpTeal: true,
             ellipsisTruncation: true,
-            winner: n.voteCount > gameData[i - 1].voteCount,
             imageInBracketCard: true,
           });
           const topClass = classNames({
@@ -45,7 +44,6 @@ export function ActiveRound(props: any) {
             'game-top': true,
             purpTeal: true,
             ellipsisTruncation: true,
-            winner: n.voteCount > gameData[i].voteCount,
             imageInBracketCard: true,
           });
           return (
@@ -63,6 +61,8 @@ export function ActiveRound(props: any) {
                     getZkVotes={getZkVotes}
                     zkDeps={zkDeps}
                     ethers={ethers}
+                    votes={nftVotes[prevNft.nftId - 1]}
+                    zkVotes={getZkVotes(prevNft.nftId, zkDeps, ethers)}
                   />
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
@@ -78,6 +78,8 @@ export function ActiveRound(props: any) {
                     getZkVotes={getZkVotes}
                     zkDeps={zkDeps}
                     ethers={ethers}
+                    votes={nftVotes[n.nftId - 1]}
+                    zkVotes={getZkVotes(n.nftId, zkDeps, ethers)}
                   />
                 </li>
               </span>

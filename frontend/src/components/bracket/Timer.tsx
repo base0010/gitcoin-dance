@@ -31,9 +31,9 @@ const Timer = (props: any) => {
       (distance % (1000 * 60 * 60 * 1)) / (1000 * 60 * 60),
     );
     // to shorten to one minute change *60 to *1
-    const minutes = Math.floor((distance % (1000 * 60 * 1)) / (1000 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     // to shorten to ten seconds change *60 to *10
-    const seconds = Math.floor((distance % (1000 * 10)) / 1000);
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if (distance < 0) {
       localStorage.clear();
       clearInterval(interval.current);

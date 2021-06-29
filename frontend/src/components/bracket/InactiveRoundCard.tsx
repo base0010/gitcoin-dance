@@ -16,6 +16,8 @@ export function InactiveRoundCard(props: any) {
     nftVotes,
     prevNft,
     name,
+    votes,
+    zkVotes,
   } = props;
   return (
     <>
@@ -71,8 +73,8 @@ export function InactiveRoundCard(props: any) {
             bottom: '10%',
           }}
         >
-          <div>{nftVotes[activeNft.nftId - 1]} VOTES</div>{' '}
-          <span>{getZkVotes(activeNft.nftId, zkDeps, ethers)} ZK VOTES</span>
+          <div style={{ fontSize: '16px' }}>{zkVotes} VOTES</div>
+          <span style={{ fontSize: '12px' }}>{votes} CONFIRMED</span>{' '}
         </span>
       )}
       {nftVotes.length < 1 && (

@@ -26,8 +26,8 @@ export function PreviousRound(props: any) {
   return (
     <>
       <span className="spaceBetween">
-        <h5 className="yellowText">{header}</h5>
-        <Timer active newRound={() => props.newRound()} />
+        <h5 className="polarisText">{header}</h5>
+        <Timer active={false} />
       </span>
       {gameData.map((n: any, i: number) => {
         const nft = nfts.find((nf: any) => nf.id === n.gifId);
@@ -38,8 +38,12 @@ export function PreviousRound(props: any) {
           const bottomClass = classNames({
             game: true,
             'game-bottom': true,
-            purpTeal: false,
-            inactiveRound: true,
+            purpTeal:
+              Number(getZkVotes(prevNft.nftId, zkDeps, ethers)) <
+              Number(getZkVotes(n.nftId, zkDeps, ethers)),
+            inactiveRound:
+              Number(getZkVotes(prevNft.nftId, zkDeps, ethers)) >
+              Number(getZkVotes(n.nftId, zkDeps, ethers)),
             ellipsisTruncation: true,
             winner: n.voteCount > gameData[i - 1].voteCount,
             imageInBracketCard: true,
@@ -47,7 +51,12 @@ export function PreviousRound(props: any) {
           const topClass = classNames({
             game: true,
             'game-top': true,
-            purpTeal: true,
+            purpTeal:
+              Number(getZkVotes(prevNft.nftId, zkDeps, ethers)) >
+              Number(getZkVotes(n.nftId, zkDeps, ethers)),
+            inactiveRound:
+              Number(getZkVotes(prevNft.nftId, zkDeps, ethers)) <
+              Number(getZkVotes(n.nftId, zkDeps, ethers)),
             ellipsisTruncation: true,
             winner: n.voteCount > gameData[i].voteCount,
             imageInBracketCard: true,
@@ -56,45 +65,103 @@ export function PreviousRound(props: any) {
             <>
               <span key={i} style={{ margin: 'auto' }}>
                 <li className={topClass}>
-                  <ActiveRoundCard
-                    nft={pnft}
-                    activeNft={prevNft}
-                    prevNft={prevNft}
-                    n={n}
-                    openModal={openModal}
-                    nftVotes={nftVotes}
-                    name={prevNft.name}
-                    getZkVotes={getZkVotes}
-                    zkDeps={zkDeps}
-                    ethers={ethers}
-                  />
+                  {Number(
+                    getZkVotes(prevNft.nftId, zkDeps, ethers) +
+                      nftVotes[prevNft.nftId - 1],
+                  ) >=
+                    Number(
+                      getZkVotes(n.nftId, zkDeps, ethers) +
+                        nftVotes[n.nftId - 1],
+                    ) && (
+                    <ActiveRoundCard
+                      nft={pnft}
+                      activeNft={prevNft}
+                      prevNft={prevNft}
+                      n={n}
+                      openModal={openModal}
+                      nftVotes={nftVotes}
+                      name={prevNft.name}
+                      getZkVotes={getZkVotes}
+                      zkDeps={zkDeps}
+                      ethers={ethers}
+                      votes={nftVotes[prevNft.nftId - 1]}
+                      zkVotes={Number(
+                        getZkVotes(prevNft.nftId, zkDeps, ethers),
+                      )}
+                    />
+                  )}
+                  {Number(
+                    getZkVotes(prevNft.nftId, zkDeps, ethers) +
+                      nftVotes[prevNft.nftId - 1],
+                  ) <
+                    Number(
+                      getZkVotes(n.nftId, zkDeps, ethers) +
+                        nftVotes[n.nftId - 1],
+                    ) && (
+                    <InactiveRoundCard
+                      nft={pnft}
+                      activeNft={prevNft}
+                      prevNft={prevNft}
+                      n={n}
+                      openModal={openModal}
+                      nftVotes={nftVotes}
+                      name={prevNft.name}
+                      getZkVotes={getZkVotes}
+                      zkDeps={zkDeps}
+                      ethers={ethers}
+                      votes={nftVotes[prevNft.nftId - 1]}
+                      zkVotes={Number(
+                        getZkVotes(prevNft.nftId, zkDeps, ethers),
+                      )}
+                    />
+                  )}
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li className={bottomClass}>
-                  {/* <ActiveRoundCard
-                    nft={nft}
-                    prevNft={prevNft}
-                    activeNft={n}
-                    n={n}
-                    name={n.name}
-                    openModal={openModal}
-                    nftVotes={nftVotes}
-                    getZkVotes={getZkVotes}
-                    zkDeps={zkDeps}
-                    ethers={ethers}
-                  /> */}
-                  <InactiveRoundCard
-                    nft={nft}
-                    prevNft={prevNft}
-                    activeNft={n}
-                    n={n}
-                    name={n.name}
-                    openModal={openModal}
-                    nftVotes={nftVotes}
-                    getZkVotes={getZkVotes}
-                    zkDeps={zkDeps}
-                    ethers={ethers}
-                  />
+                  {Number(
+                    getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
+                  ) >=
+                    Number(
+                      getZkVotes(prevNft.nftId, zkDeps, ethers) +
+                        nftVotes[prevNft.nftId - 1],
+                    ) && (
+                    <ActiveRoundCard
+                      nft={nft}
+                      prevNft={prevNft}
+                      activeNft={n}
+                      n={n}
+                      name={n.name}
+                      openModal={openModal}
+                      nftVotes={nftVotes}
+                      getZkVotes={getZkVotes}
+                      zkDeps={zkDeps}
+                      ethers={ethers}
+                      votes={nftVotes[n.nftId - 1]}
+                      zkVotes={Number(getZkVotes(n.nftId, zkDeps, ethers))}
+                    />
+                  )}
+                  {Number(
+                    getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
+                  ) <
+                    Number(
+                      getZkVotes(prevNft.nftId, zkDeps, ethers) +
+                        nftVotes[prevNft.nftId - 1],
+                    ) && (
+                    <InactiveRoundCard
+                      nft={nft}
+                      prevNft={prevNft}
+                      activeNft={n}
+                      n={n}
+                      name={n.name}
+                      openModal={openModal}
+                      nftVotes={nftVotes}
+                      getZkVotes={getZkVotes}
+                      zkDeps={zkDeps}
+                      ethers={ethers}
+                      votes={nftVotes[n.nftId - 1]}
+                      zkVotes={Number(getZkVotes(n.nftId, zkDeps, ethers))}
+                    />
+                  )}
                 </li>
               </span>
             </>

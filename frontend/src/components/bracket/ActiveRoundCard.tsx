@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 
 export function ActiveRoundCard(props: any) {
+  // const [zkVotes, setZkVotes] = useState(null);
+  // const [votes, setVotes] = useState(null);
+
   const {
     nft,
     activeNft,
@@ -16,7 +19,20 @@ export function ActiveRoundCard(props: any) {
     nftVotes,
     prevNft,
     name,
+    votes,
+    zkVotes,
   } = props;
+
+  useEffect(() => {
+    // if (!zkVotes) {
+    //   const res = getZkVotes(activeNft.nftId, zkDeps, ethers);
+    //   setZkVotes(res);
+    // }
+    // if (!votes) {
+    //   setVotes(nftVotes[activeNft.nftId - 1]);
+    // }
+  });
+
   return (
     <>
       <span className="darkCard darkCardBracket">
@@ -62,7 +78,7 @@ export function ActiveRoundCard(props: any) {
         </h4>
         <hr style={{ borderTop: '1px solid yellow' }} />
       </span>{' '}
-      {nftVotes.length > 0 && (
+      {zkVotes && (
         <span
           className="tealText"
           style={{
@@ -71,11 +87,11 @@ export function ActiveRoundCard(props: any) {
             bottom: '10%',
           }}
         >
-          <div>{nftVotes[activeNft.nftId - 1]} VOTES</div>{' '}
-          <span>{getZkVotes(activeNft.nftId, zkDeps, ethers)} ZK VOTES</span>
+          <div style={{ fontSize: '16px' }}>{zkVotes} VOTES</div>
+          <span style={{ fontSize: '12px' }}>{votes} CONFIRMED</span>{' '}
         </span>
       )}
-      {nftVotes.length < 1 && (
+      {!zkVotes && (
         <span
           style={{
             position: 'absolute',

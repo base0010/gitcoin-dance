@@ -22,6 +22,7 @@ import PreviousRound from './PreviousRound';
 
 export function Bracket(props: any) {
   const game = useContext(GameContext);
+  const [gettingBalances, setGettingBalances] = useState(false);
   const [zkProvider, setZkProvider] = useState<any>(undefined);
   const [zkWallet, setZkWallet] = useState<any>(undefined);
   const [zkDonation, setZkDonation] = useState<string>('50');
@@ -39,12 +40,18 @@ export function Bracket(props: any) {
   const getNftZkBalances = async function (numDancers: number = 16) {
     const voteArrary = [];
     const zkDepArray = [];
+    setGettingBalances(true);
+    console.log('starting');
     for (let i = 0; i <= numDancers; i++) {
       const votes = await getVotes(i, game, ethers);
       voteArrary.push(votes);
       const zkAccountInfo = await getNftZkAccountState(i, game, zksync);
+
       zkDepArray.push(zkAccountInfo);
     }
+    console.log('finished');
+
+    setGettingBalances(false);
     setnftVotes(voteArrary);
     setzkDeps(zkDepArray);
 
@@ -65,11 +72,14 @@ export function Bracket(props: any) {
         setGameLoaded(true);
       }
     };
+
     if (!gameLoaded) {
       initContract();
     }
     setupZkProvider();
-    getNftZkBalances();
+    if (!gettingBalances) {
+      getNftZkBalances();
+    }
   }, [game, getNftZkBalances, nftVotes]);
 
   const setupZkSigner = async () => {
@@ -211,12 +221,27 @@ export function Bracket(props: any) {
                 getZkVotes={getZkVotes}
                 zkDeps={zkDeps}
                 ethers={ethers}
-                newRound={() => newRound()}
+                // newRound={() => newRound()}
               />
             )}
           </ul>
           <ul className="round round-2">
-            <InactiveRound key="gd2" gameData={gd2} header="SECOND" />
+            {round < 2 && (
+              <InactiveRound key="gd2" gameData={gd2} header="SECOND" />
+            )}
+            {round === 2 && (
+              <ActiveRound
+                gameData={gd2}
+                header="SECOND"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                newRound={() => newRound()}
+              />
+            )}
           </ul>
           <ul className="round round-3">
             <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
