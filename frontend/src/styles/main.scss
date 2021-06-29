@@ -54,6 +54,22 @@ body {
   background-size: 100%;
 }
 
+.inactiveUnderscoreDanceText {
+  font-family: 'Caveat', cursive;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  transform: rotate(-0.84deg);
+  background-size: 100%;
+  background: #e5e5e5;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
 .metaMaskText {
   @include orangeGradient();
 }
@@ -78,6 +94,10 @@ body {
   border-radius: 0px;
   border-image-slice: 1;
   border-image-source: $orangeGradient1;
+}
+
+.greyText {
+  color: #e5e5e5;
 }
 
 .xButton:hover {

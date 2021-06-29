@@ -5,11 +5,14 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ActiveRoundCard from './ActiveRoundCard';
+import InactiveRound from './InactiveRound';
+import InactiveRoundCard from './InactiveRoundCard';
+
 import Timer from './Timer';
 
 const classNames = require('classnames');
 
-export function ActiveRound(props: any) {
+export function PreviousRound(props: any) {
   const {
     gameData,
     header,
@@ -35,7 +38,8 @@ export function ActiveRound(props: any) {
           const bottomClass = classNames({
             game: true,
             'game-bottom': true,
-            purpTeal: true,
+            purpTeal: false,
+            inactiveRound: true,
             ellipsisTruncation: true,
             winner: n.voteCount > gameData[i - 1].voteCount,
             imageInBracketCard: true,
@@ -67,7 +71,19 @@ export function ActiveRound(props: any) {
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li className={bottomClass}>
-                  <ActiveRoundCard
+                  {/* <ActiveRoundCard
+                    nft={nft}
+                    prevNft={prevNft}
+                    activeNft={n}
+                    n={n}
+                    name={n.name}
+                    openModal={openModal}
+                    nftVotes={nftVotes}
+                    getZkVotes={getZkVotes}
+                    zkDeps={zkDeps}
+                    ethers={ethers}
+                  /> */}
+                  <InactiveRoundCard
                     nft={nft}
                     prevNft={prevNft}
                     activeNft={n}
@@ -90,4 +106,4 @@ export function ActiveRound(props: any) {
   );
 }
 
-export default ActiveRound;
+export default PreviousRound;

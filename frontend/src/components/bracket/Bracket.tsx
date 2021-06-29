@@ -18,6 +18,7 @@ import {
   getNftZkAccountState,
   getZkVotes,
 } from '../../logic/hardhat';
+import PreviousRound from './PreviousRound';
 
 export function Bracket(props: any) {
   const game = useContext(GameContext);
@@ -33,6 +34,7 @@ export function Bracket(props: any) {
   const [apiCall, setApiCall] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
+  const [round, setRound] = useState(1);
 
   const getNftZkBalances = async function (numDancers: number = 16) {
     const voteArrary = [];
@@ -163,6 +165,10 @@ export function Bracket(props: any) {
     }
   };
 
+  const newRound = () => {
+    setRound(round + 1);
+  };
+
   return (
     <div>
       {activeNft && (
@@ -182,16 +188,32 @@ export function Bracket(props: any) {
       {gameData1 && (
         <main id="tournament">
           <ul className="round round-1">
-            <ActiveRound
-              gameData={gameData1}
-              header="FIRST"
-              nfts={nfts}
-              openModal={openModal}
-              nftVotes={nftVotes}
-              getZkVotes={getZkVotes}
-              zkDeps={zkDeps}
-              ethers={ethers}
-            />
+            {round === 1 && (
+              <ActiveRound
+                gameData={gameData1}
+                header="FIRST"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                newRound={() => newRound()}
+              />
+            )}
+            {round > 1 && (
+              <PreviousRound
+                gameData={gameData1}
+                header="FIRST"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                newRound={() => newRound()}
+              />
+            )}
           </ul>
           <ul className="round round-2">
             <InactiveRound key="gd2" gameData={gd2} header="SECOND" />

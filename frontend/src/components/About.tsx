@@ -73,6 +73,7 @@ export function About() {
           <hr style={{ width: '85%', float: 'right' }} />
           <Row gutter={8}>
             <Col span={12}>
+              <h3>ABOUT GITCOIN DANCE</h3>
               <span className="faqText marginTen">
                 <p>
                   Gitcoin Dance is a bracket-style elimination danceoff where

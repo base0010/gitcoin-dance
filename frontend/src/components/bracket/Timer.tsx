@@ -12,22 +12,28 @@ const Timer = (props: any) => {
   const [timerHours, setTimerHours] = useState(0o0);
   const [timerMinutes, setTimerMinutes] = useState(0o0);
   const [timerSeconds, setTimerSeconds] = useState(0o0);
-
   const [currentRound, setCurrentRound] = useState<string>('0');
+  const [finished, setFinished] = useState(false);
+  const [started, setStarted] = useState(false);
 
   const interval: any = useRef<number | undefined>();
 
   const startTimer = (countdownDate: any) => {
+    if (finished) {
+      return;
+    }
     const now = new Date().getTime();
     const distance = countdownDate - now;
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    // * 1 === time length in hours, default is * 24, config?
     const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      (distance % (1000 * 60 * 60 * 1)) / (1000 * 60 * 60),
     );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+    // to shorten to one minute change *60 to *1
+    const minutes = Math.floor((distance % (1000 * 60 * 1)) / (1000 * 60));
+    // to shorten to ten seconds change *60 to *10
+    const seconds = Math.floor((distance % (1000 * 10)) / 1000);
     if (distance < 0) {
       localStorage.clear();
       clearInterval(interval.current);
@@ -36,6 +42,7 @@ const Timer = (props: any) => {
       setTimerHours(hours);
       setTimerMinutes(minutes);
       setTimerSeconds(seconds);
+      setStarted(true);
     }
   };
 
@@ -48,6 +55,9 @@ const Timer = (props: any) => {
   }
 
   useEffect(() => {
+    if (finished) {
+      props.newRound();
+    }
     // const getRound = async()=>{
     //   // const round = await game.instance?.g_current_round()
     //   //
@@ -56,7 +66,16 @@ const Timer = (props: any) => {
     // }
     // getRound();
 
-    if (props.active) {
+    if (
+      started &&
+      timerHours === 0 &&
+      timerMinutes === 0 &&
+      timerSeconds === 0
+    ) {
+      setFinished(true);
+    }
+
+    if (props.active && !finished) {
       const localTimer = getTimeFromLocalStorage();
       if (localTimer) {
         interval.current = setInterval(() => {
@@ -71,7 +90,7 @@ const Timer = (props: any) => {
       }
       return () => clearInterval(interval.current);
     }
-  }, [timerHours]);
+  }, [timerHours, timerSeconds, finished]);
 
   const { active } = props;
   return (
