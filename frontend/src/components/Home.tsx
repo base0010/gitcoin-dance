@@ -26,6 +26,8 @@ export function Home() {
         const res = await getGameDataFromArray();
         setGameData1(res);
         setGameData2(res.slice(0, 8));
+        setGameData3(res.slice(0, 4));
+        setGameData4(res.slice(0, 2));
       }
     };
     getGameData();

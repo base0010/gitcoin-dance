@@ -242,12 +242,81 @@ export function Bracket(props: any) {
                 newRound={() => newRound()}
               />
             )}
+            {round > 2 && (
+              <PreviousRound
+                gameData={gd2}
+                header="SECOND"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                // newRound={() => newRound()}
+              />
+            )}
           </ul>
           <ul className="round round-3">
-            <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
+            {round < 3 && (
+              <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
+            )}
+            {round === 3 && (
+              <ActiveRound
+                gameData={gd3}
+                header="SEMIS"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                newRound={() => newRound()}
+              />
+            )}
+            {round > 3 && (
+              <PreviousRound
+                gameData={gd3}
+                header="SEMIS"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                // newRound={() => newRound()}
+              />
+            )}
           </ul>
           <ul className="round round-4">
-            <InactiveRound key="gd4" gameData={gd4} header="FINALS" />
+            {round < 4 && (
+              <InactiveRound key="gd4" gameData={gd4} header="FINALS" />
+            )}
+            {round === 4 && (
+              <ActiveRound
+                gameData={gd4}
+                header="FINALS"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                newRound={() => newRound()}
+              />
+            )}
+            {round > 4 && (
+              <PreviousRound
+                gameData={gd4}
+                header="FINALS"
+                nfts={nfts}
+                openModal={openModal}
+                nftVotes={nftVotes}
+                getZkVotes={getZkVotes}
+                zkDeps={zkDeps}
+                ethers={ethers}
+                // newRound={() => newRound()}
+              />
+            )}
           </ul>
         </main>
       )}
