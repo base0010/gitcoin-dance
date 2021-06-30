@@ -32,8 +32,9 @@ export function DanceOffModal(props: any) {
         minHeight: '600px',
       }}
       visible={modalOpen}
-      closeIcon={<CloseIcon />}
+      // closeIcon={<CloseIcon />}
       onCancel={() => {
+        console.log('whattt');
         setActiveNft(null);
         setModalOpen(false);
       }}

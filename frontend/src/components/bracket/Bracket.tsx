@@ -80,7 +80,7 @@ export function Bracket(props: any) {
     if (!gettingBalances) {
       getNftZkBalances();
     }
-  }, [game, getNftZkBalances, nftVotes]);
+  }, [game, getNftZkBalances, nftVotes, modalOpen, activeNft]);
 
   const setupZkSigner = async () => {
     const provider = new ethers.providers.Web3Provider(

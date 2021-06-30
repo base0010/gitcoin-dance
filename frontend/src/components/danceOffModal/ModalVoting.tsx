@@ -31,9 +31,10 @@ export function ModalVoting(props: any) {
             <label className="yellowText marginTen">
               Donation:
               <input
+                placeholder="DAI"
                 className="polarisText"
                 style={{ margin: '0px 5px' }}
-                type="text"
+                type="number"
                 name="zkDai"
                 onChange={(e) => {
                   const val = e.target.value;

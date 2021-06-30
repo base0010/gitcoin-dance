@@ -64,7 +64,11 @@ export function PreviousRound(props: any) {
           return (
             <>
               <span key={i} style={{ margin: 'auto' }}>
-                <li className={topClass}>
+                <li
+                  onClick={() => openModal(prevNft, n)}
+                  className={topClass}
+                  style={{ cursor: 'pointer' }}
+                >
                   {Number(
                     getZkVotes(prevNft.nftId, zkDeps, ethers) +
                       nftVotes[prevNft.nftId - 1],
@@ -117,7 +121,11 @@ export function PreviousRound(props: any) {
                   )}
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
-                <li className={bottomClass}>
+                <li
+                  onClick={() => openModal(prevNft, n)}
+                  style={{ cursor: 'pointer' }}
+                  className={bottomClass}
+                >
                   {Number(
                     getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
                   ) >=

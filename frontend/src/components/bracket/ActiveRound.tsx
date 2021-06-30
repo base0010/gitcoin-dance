@@ -49,7 +49,11 @@ export function ActiveRound(props: any) {
           return (
             <>
               <span key={i} style={{ margin: 'auto' }}>
-                <li className={topClass}>
+                <li
+                  onClick={() => openModal(prevNft, n)}
+                  className={topClass}
+                  style={{ cursor: 'pointer' }}
+                >
                   <ActiveRoundCard
                     nft={pnft}
                     activeNft={prevNft}
@@ -66,7 +70,11 @@ export function ActiveRound(props: any) {
                   />
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
-                <li className={bottomClass}>
+                <li
+                  onClick={() => openModal(prevNft, n)}
+                  className={bottomClass}
+                  style={{ cursor: 'pointer' }}
+                >
                   <ActiveRoundCard
                     nft={nft}
                     prevNft={prevNft}

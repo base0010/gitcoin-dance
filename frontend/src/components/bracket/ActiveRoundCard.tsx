@@ -35,7 +35,11 @@ export function ActiveRoundCard(props: any) {
 
   return (
     <>
-      <span className="darkCard darkCardBracket">
+      <span
+        // onClick={() => openModal(prevNft, n)}
+        className="darkCard darkCardBracket"
+        // style={{ cursor: 'pointer' }}
+      >
         {/* <img
           style={{ textAlign: 'center', display: 'inline' }}
           height="60px"
@@ -57,7 +61,7 @@ export function ActiveRoundCard(props: any) {
       <span
         className="link ellipsisTruncation tealText"
         style={{ position: 'relative' }}
-        onClick={() => openModal(prevNft, n)}
+        // onClick={() => openModal(prevNft, n)}
       >
         <h3
           title={name}
