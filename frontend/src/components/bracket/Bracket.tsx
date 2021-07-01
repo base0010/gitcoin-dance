@@ -28,7 +28,7 @@ export function Bracket(props: any) {
   const [zkWallet, setZkWallet] = useState<any>(undefined);
   const [intermission, setIntermission] = useState<any>(false);
   const [zkDonation, setZkDonation] = useState<string>('50');
-  const { gameData1, gd2, gd3, gd4 } = props;
+  const { gameData1, gameData2, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [gameLoaded, setGameLoaded] = useState(false);
 
@@ -43,7 +43,6 @@ export function Bracket(props: any) {
     const voteArrary = [];
     const zkDepArray = [];
     setGettingBalances(true);
-    console.log('starting');
     for (let i = 0; i <= numDancers; i++) {
       const votes = await getVotes(i, game, ethers);
       voteArrary.push(votes);
@@ -51,14 +50,9 @@ export function Bracket(props: any) {
 
       zkDepArray.push(zkAccountInfo);
     }
-    console.log('finished');
-
     setGettingBalances(false);
     setnftVotes(voteArrary);
     setzkDeps(zkDepArray);
-
-    console.log('VOTES ARRY', voteArrary);
-    console.log('DEPS ARRY', zkDeps);
   };
 
   const setupZkProvider = async () => {
@@ -67,6 +61,7 @@ export function Bracket(props: any) {
   };
 
   useEffect(() => {
+    // console.log(gameData2, 'bracket');
     const initContract = async () => {
       if (!game.instance) return;
       console.log('Game is deployed at ', game.instance.address);
@@ -82,7 +77,7 @@ export function Bracket(props: any) {
     if (!gettingBalances) {
       getNftZkBalances();
     }
-  }, [game, getNftZkBalances, nftVotes, modalOpen, activeNft]);
+  }, [game, getNftZkBalances, nftVotes, modalOpen, activeNft, gameData2]);
 
   const setupZkSigner = async () => {
     const provider = new ethers.providers.Web3Provider(
@@ -133,6 +128,7 @@ export function Bracket(props: any) {
           className: 'purpTeal yellowText',
           bodyClassName: 'purpTeal yellowText',
           progressClassName: 'fancy-progress-bar',
+          autoClose: 50000,
         },
       );
     }
@@ -157,6 +153,7 @@ export function Bracket(props: any) {
           className: 'purpTeal yellowText',
           bodyClassName: 'purpTeal yellowText',
           progressClassName: 'fancy-progress-bar',
+          autoClose: 50000,
         },
       );
     }, 50);
@@ -177,11 +174,11 @@ export function Bracket(props: any) {
     }
   };
 
-  const newRound = () => {
+  const newRound = async () => {
     if (round < 5) {
       setRound(round + 1);
-      const res = props.getRound();
       setIntermission(true);
+      const res = await props.getRound(round);
       setTimeout(() => {
         setIntermission(false);
         toast(
@@ -204,18 +201,13 @@ export function Bracket(props: any) {
           },
         );
       }, 10000);
-      console.log(res, 'we made it?');
     }
   };
 
   return (
     <div>
       {intermission && (
-        <IntermissionModal
-          intermission={intermission}
-          setIntermission={setIntermission}
-          round={round}
-        />
+        <IntermissionModal intermission={intermission} round={round} />
       )}
       {activeNft && (
         <DanceOffModal
@@ -262,12 +254,12 @@ export function Bracket(props: any) {
             )}
           </ul>
           <ul className="round round-2">
-            {round < 2 && (
+            {(round < 2 || intermission) && (
               <InactiveRound key="gd2" gameData={gd2} header="SECOND" />
             )}
-            {!intermission && round === 2 && (
+            {!intermission && round === 2 && gameData2 && (
               <ActiveRound
-                gameData={gd2}
+                gameData={gameData2}
                 header="SECOND"
                 nfts={nfts}
                 openModal={openModal}
@@ -280,7 +272,7 @@ export function Bracket(props: any) {
             )}
             {round > 2 && (
               <PreviousRound
-                gameData={gd2}
+                gameData={gameData2}
                 header="SECOND"
                 nfts={nfts}
                 openModal={openModal}

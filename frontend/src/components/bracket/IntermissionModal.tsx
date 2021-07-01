@@ -8,7 +8,8 @@ import gitcoinIcon from '../../assets/gitcoin/gitcoinIcon.png';
 
 export function IntermissionModal(props: any) {
   const CloseIcon = () => <div className="imgBorder marginTen xButton">X</div>;
-  const { intermission, setIntermission, round } = props;
+  const [intermissionModal, setIntermissionModal] = useState<any>(true);
+  const { round } = props;
   return (
     <Modal
       centered
@@ -18,10 +19,10 @@ export function IntermissionModal(props: any) {
           'radial-gradient(93.24% 93.24% at 50% 41.32%, #613dda 13.88%, #6f3ff5 41.01%, #05f5bc 88.02%)',
         minHeight: '300px',
       }}
-      visible={intermission}
+      visible={intermissionModal}
       // closeIcon={<CloseIcon />}
       onCancel={() => {
-        setIntermission(false);
+        setIntermissionModal(false);
       }}
       footer={null}
     >
