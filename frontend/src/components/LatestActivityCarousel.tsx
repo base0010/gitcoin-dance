@@ -25,7 +25,7 @@ export function LatestActivityCarousel(props: any) {
         style={contentStyle}
         autoplay
         dots={false}
-        adaptiveHeight
+        // adaptiveHeight
       >
         {gameData.map((n: any) => {
           const nft = nfts.find((nf) => nf.id === n.gifId);
