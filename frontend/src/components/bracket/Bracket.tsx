@@ -19,12 +19,14 @@ import {
   getZkVotes,
 } from '../../logic/hardhat';
 import PreviousRound from './PreviousRound';
+import IntermissionModal from './IntermissionModal';
 
 export function Bracket(props: any) {
   const game = useContext(GameContext);
   const [gettingBalances, setGettingBalances] = useState(false);
   const [zkProvider, setZkProvider] = useState<any>(undefined);
   const [zkWallet, setZkWallet] = useState<any>(undefined);
+  const [intermission, setIntermission] = useState<any>(false);
   const [zkDonation, setZkDonation] = useState<string>('50');
   const { gameData1, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
@@ -176,13 +178,45 @@ export function Bracket(props: any) {
   };
 
   const newRound = () => {
-    setRound(round + 1);
-    const res = props.getRound();
-    console.log(res, 'we made it?');
+    if (round < 5) {
+      setRound(round + 1);
+      const res = props.getRound();
+      setIntermission(true);
+      setTimeout(() => {
+        setIntermission(false);
+        toast(
+          <span className="purpTeal">
+            <img
+              style={{ margin: '5px', display: 'inline' }}
+              height="20px"
+              width="20px"
+              src={gitcoinLogo}
+              alt="gitcoin Logo"
+            />
+            <span>
+              <b>ROUND {round} HAS BEGUN!</b>!! 🎉
+            </span>
+          </span>,
+          {
+            className: 'purpTeal yellowText',
+            bodyClassName: 'purpTeal yellowText',
+            progressClassName: 'fancy-progress-bar',
+          },
+        );
+      }, 10000);
+      console.log(res, 'we made it?');
+    }
   };
 
   return (
     <div>
+      {intermission && (
+        <IntermissionModal
+          intermission={intermission}
+          setIntermission={setIntermission}
+          round={round}
+        />
+      )}
       {activeNft && (
         <DanceOffModal
           modalOpen={modalOpen}
@@ -231,7 +265,7 @@ export function Bracket(props: any) {
             {round < 2 && (
               <InactiveRound key="gd2" gameData={gd2} header="SECOND" />
             )}
-            {round === 2 && (
+            {!intermission && round === 2 && (
               <ActiveRound
                 gameData={gd2}
                 header="SECOND"
@@ -262,7 +296,7 @@ export function Bracket(props: any) {
             {round < 3 && (
               <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
             )}
-            {round === 3 && (
+            {!intermission && round === 3 && (
               <ActiveRound
                 gameData={gd3}
                 header="SEMIS"
@@ -293,7 +327,7 @@ export function Bracket(props: any) {
             {round < 4 && (
               <InactiveRound key="gd4" gameData={gd4} header="FINALS" />
             )}
-            {round === 4 && (
+            {!intermission && round === 4 && (
               <ActiveRound
                 gameData={gd4}
                 header="FINALS"
