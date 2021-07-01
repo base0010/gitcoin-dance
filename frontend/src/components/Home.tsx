@@ -1,25 +1,43 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 // import { LinearProgress } from '@material-ui/core/';
 import { Button } from 'antd';
 import Bracket from './bracket/Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
 import { gameArray, dummyArray } from '../fixtures/gameData';
+import { GameContext } from '../hardhat/SymfoniContext';
 
 import gitcoinDance from '../assets/gitcoin/gitcoinDance.svg';
 import nftDanceOff from '../assets/gitcoin/nftDanceOff.svg';
 import iconWallet from '../assets/gitcoin/iconWallet.svg';
 
+const BigNumber = require('bignumber.js');
+
 export function Home() {
+  const game = useContext<any>(GameContext);
+
   const [gameData1, setGameData1] = useState<any>(null);
   const [gameData2, setGameData2] = useState<any>(dummyArray);
   const [gameData3, setGameData3] = useState<any>(dummyArray.slice(0, 5));
   const [gameData4, setGameData4] = useState<any>(dummyArray.slice(0, 3));
 
+  const getRound = async () => {
+    const res1 = await game.instance.gameByBracketByRound(1, 1, 2, 0);
+    const res2 = await game.instance.gameByBracketByRound(1, 1, 2, 1);
+    // const res3 = await game.instance.gameByBracketByRound(1, 2, 8, 3);
+    // const res4 = await game.instance.gameByBracketByRound(1, 2, 8, 4);
+    console.log(res1, 'res1');
+    console.log(res2, 'res2');
+    // console.log(res3, 'res3');
+    // console.log(res4, 'res4');
+    return [res1, res2];
+  };
+
   useEffect(() => {
+    console.log(game, 'changes?');
     const getGameData = async () => {
       const getGameDataFromArray = async () => gameArray;
       if (!gameData1) {
@@ -75,6 +93,7 @@ export function Home() {
               gd2={gameData2}
               gd3={gameData3}
               gd4={gameData4}
+              getRound={getRound}
             />
           </div>
         </span>

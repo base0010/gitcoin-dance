@@ -1,52 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Spin } from 'antd';
 
 export function ActiveRoundCard(props: any) {
-  // const [zkVotes, setZkVotes] = useState(null);
-  // const [votes, setVotes] = useState(null);
-
-  const {
-    nft,
-    activeNft,
-    n,
-    openModal,
-    zkDeps,
-    ethers,
-    getZkVotes,
-    nftVotes,
-    prevNft,
-    name,
-    votes,
-    zkVotes,
-  } = props;
-
-  useEffect(() => {
-    // if (!zkVotes) {
-    //   const res = getZkVotes(activeNft.nftId, zkDeps, ethers);
-    //   setZkVotes(res);
-    // }
-    // if (!votes) {
-    //   setVotes(nftVotes[activeNft.nftId - 1]);
-    // }
-  });
+  const { nft, nftVotes, name, votes, zkVotes } = props;
 
   return (
     <>
-      <span
-        // onClick={() => openModal(prevNft, n)}
-        className="darkCard darkCardBracket"
-        // style={{ cursor: 'pointer' }}
-      >
-        {/* <img
-          style={{ textAlign: 'center', display: 'inline' }}
-          height="60px"
-          width="60px"
-          src={nft ? nft.src : ''}
-          alt={nft ? nft.description : ''}
-        /> */}
+      <span className="darkCard darkCardBracket">
         <video
           className="imgBorder imageInCard"
           //   height="40"
@@ -61,7 +24,6 @@ export function ActiveRoundCard(props: any) {
       <span
         className="link ellipsisTruncation tealText"
         style={{ position: 'relative' }}
-        // onClick={() => openModal(prevNft, n)}
       >
         <h3
           title={name}

@@ -1,13 +1,10 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 // import { LinearProgress } from '@material-ui/core/';
 import { Button, Row, Col } from 'antd';
-import Bracket from './bracket/Bracket';
-import LatestActivityCarousel from './LatestActivityCarousel';
-import { gameArray, dummyArray } from '../fixtures/gameData';
 
 import gitcoinDance from '../assets/gitcoin/gitcoinDance.svg';
 import headerAbout from '../assets/gitcoin/headerAbout.svg';
@@ -16,21 +13,6 @@ import headerFAQs from '../assets/gitcoin/headerFAQs.svg';
 import iconWallet from '../assets/gitcoin/iconWallet.svg';
 
 export function About() {
-  const [gameData1, setGameData1] = useState<any>(null);
-  const [gameData2, setGameData2] = useState<any>(dummyArray);
-  const [gameData3, setGameData3] = useState<any>(dummyArray.slice(0, 5));
-  const [gameData4, setGameData4] = useState<any>(dummyArray.slice(0, 3));
-
-  useEffect(() => {
-    const getGameData = async () => {
-      const getGameDataFromArray = async () => gameArray;
-      if (!gameData1) {
-        const res = await getGameDataFromArray();
-        setGameData1(res);
-      }
-    };
-    getGameData();
-  }, [gameData1]);
   return (
     <div>
       <Link style={{ margin: 'auto' }} to="/">

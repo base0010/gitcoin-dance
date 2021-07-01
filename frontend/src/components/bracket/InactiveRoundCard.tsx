@@ -5,30 +5,10 @@ import React from 'react';
 import { Spin } from 'antd';
 
 export function InactiveRoundCard(props: any) {
-  const {
-    nft,
-    activeNft,
-    n,
-    openModal,
-    zkDeps,
-    ethers,
-    getZkVotes,
-    nftVotes,
-    prevNft,
-    name,
-    votes,
-    zkVotes,
-  } = props;
+  const { nft, nftVotes, name, votes, zkVotes } = props;
   return (
     <>
       <span className="darkCard darkCardBracket">
-        {/* <img
-          style={{ textAlign: 'center', display: 'inline' }}
-          height="60px"
-          width="60px"
-          src={nft ? nft.src : ''}
-          alt={nft ? nft.description : ''}
-        /> */}
         <video
           className="imageInCard"
           //   height="40"
@@ -43,7 +23,6 @@ export function InactiveRoundCard(props: any) {
       <span
         className="link ellipsisTruncation greyText"
         style={{ position: 'relative' }}
-        onClick={() => openModal(prevNft, n)}
       >
         <h3
           title={name}

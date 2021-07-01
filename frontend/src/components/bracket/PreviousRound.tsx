@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/extensions */
@@ -5,7 +7,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ActiveRoundCard from './ActiveRoundCard';
-import InactiveRound from './InactiveRound';
 import InactiveRoundCard from './InactiveRoundCard';
 
 import Timer from './Timer';

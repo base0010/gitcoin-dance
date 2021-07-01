@@ -177,6 +177,8 @@ export function Bracket(props: any) {
 
   const newRound = () => {
     setRound(round + 1);
+    const res = props.getRound();
+    console.log(res, 'we made it?');
   };
 
   return (
