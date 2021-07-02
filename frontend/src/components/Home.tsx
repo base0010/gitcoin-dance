@@ -26,75 +26,54 @@ export function Home() {
   const [gd4, setGd4] = useState<any>(dummyArray.slice(0, 3));
 
   const getRound = async (round: number) => {
-    let res1;
-    let res2;
-    let res3;
-    let res4;
-    let res5;
-    let res6;
-    let res7;
-    let res8;
-    let resArray;
+    if (!game.instance) {
+      return;
+    }
 
+    const resArray = [];
     const result: any = [];
-
+    let len = 16;
+    switch (round) {
+      case 1:
+        len = 16;
+        break;
+      case 2:
+        len = 8;
+        break;
+      case 3:
+        len = 4;
+        break;
+      case 4:
+        len = 2;
+        break;
+      default:
+        break;
+    }
+    for (let i = 0; i < len; i++) {
+      const res = await game.instance.gameByBracketByRound(
+        1,
+        round,
+        Math.floor(i / 2),
+        i % 2,
+      );
+      resArray.push(res.toNumber());
+    }
+    for (let i = 0; i < gameArray.length; i++) {
+      if (resArray.includes(i)) {
+        result.push(gameArray[i]);
+      }
+    }
     switch (round) {
       case 1:
         setGameData1(result);
         break;
       case 2:
-        res1 = await game.instance.gameByBracketByRound(1, 2, 0, 0);
-        res2 = await game.instance.gameByBracketByRound(1, 2, 0, 1);
-        res3 = await game.instance.gameByBracketByRound(1, 2, 1, 0);
-        res4 = await game.instance.gameByBracketByRound(1, 2, 1, 1);
-        res5 = await game.instance.gameByBracketByRound(1, 2, 2, 0);
-        res6 = await game.instance.gameByBracketByRound(1, 2, 2, 1);
-        res7 = await game.instance.gameByBracketByRound(1, 2, 3, 0);
-        res8 = await game.instance.gameByBracketByRound(1, 2, 3, 1);
-        resArray = [
-          res1.toNumber(),
-          res2.toNumber(),
-          res3.toNumber(),
-          res4.toNumber(),
-          res5.toNumber(),
-          res6.toNumber(),
-          res7.toNumber(),
-          res8.toNumber(),
-        ];
-        for (let i = 0; i < gameArray.length; i++) {
-          if (resArray.includes(i)) {
-            result.push(gameArray[i]);
-          }
-        }
         setGameData2(result);
         break;
       case 3:
-        res1 = await game.instance.gameByBracketByRound(1, 3, 0, 0);
-        res2 = await game.instance.gameByBracketByRound(1, 3, 0, 1);
-        res3 = await game.instance.gameByBracketByRound(1, 3, 1, 0);
-        res4 = await game.instance.gameByBracketByRound(1, 3, 1, 1);
-        resArray = [
-          res1.toNumber(),
-          res2.toNumber(),
-          res3.toNumber(),
-          res4.toNumber(),
-        ];
-        for (let i = 0; i < gameArray.length; i++) {
-          if (resArray.includes(i)) {
-            result.push(gameArray[i]);
-          }
-        }
         setGameData3(result);
         break;
       case 4:
-        res1 = await game.instance.gameByBracketByRound(1, 4, 0, 0);
-        res2 = await game.instance.gameByBracketByRound(1, 4, 0, 1);
-        resArray = [res1.toNumber(), res2.toNumber()];
-        for (let i = 0; i < gameArray.length; i++) {
-          if (resArray.includes(i)) {
-            result.push(gameArray[i]);
-          }
-        }
         setGameData4(result);
         break;
       default:
@@ -105,7 +84,9 @@ export function Home() {
   useEffect(() => {
     const getCurrentRound = async () => {
       const currentRound = await game.instance?.g_current_round();
-      return currentRound;
+      if (currentRound) {
+        return currentRound.toNumber();
+      }
     };
     const getGameData = async () => {
       const getGameDataFromArray = async () => gameArray;
@@ -114,45 +95,10 @@ export function Home() {
         setGameData1(res);
       }
       const cr = await getCurrentRound();
-      if (cr && cr.toNumber() === 2) {
-        let res1;
-        let res2;
-        let res3;
-        let res4;
-        let res5;
-        let res6;
-        let res7;
-        let res8;
-        let resArray;
-        const result: any = [];
-        res1 = await game.instance.gameByBracketByRound(1, 2, 0, 0);
-        res2 = await game.instance.gameByBracketByRound(1, 2, 0, 1);
-        res3 = await game.instance.gameByBracketByRound(1, 2, 1, 0);
-        res4 = await game.instance.gameByBracketByRound(1, 2, 1, 1);
-        res5 = await game.instance.gameByBracketByRound(1, 2, 2, 0);
-        res6 = await game.instance.gameByBracketByRound(1, 2, 2, 1);
-        res7 = await game.instance.gameByBracketByRound(1, 2, 3, 0);
-        res8 = await game.instance.gameByBracketByRound(1, 2, 3, 1);
-        resArray = [
-          res1.toNumber(),
-          res2.toNumber(),
-          res3.toNumber(),
-          res4.toNumber(),
-          res5.toNumber(),
-          res6.toNumber(),
-          res7.toNumber(),
-          res8.toNumber(),
-        ];
-        for (let i = 0; i < gameArray.length; i++) {
-          if (resArray.includes(i)) {
-            result.push(gameArray[i]);
-          }
-        }
-        setGameData2(result);
-      }
+      getRound(cr);
     };
     getGameData();
-  }, [gameData1, gameData2]);
+  }, [gameData1, gameData2, gameData3, gameData4]);
   return (
     <div>
       <Link style={{ margin: 'auto' }} to="/">

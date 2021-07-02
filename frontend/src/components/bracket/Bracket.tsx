@@ -45,31 +45,9 @@ export function Bracket(props: any) {
 
   const newRound = async () => {
     if (round < 5) {
-      // setRound(round + 1);
       setIntermission(true);
       await props.getRound(round);
-      // setTimeout(() => {
       setIntermission(false);
-      // toast(
-      //   <span className="purpTeal">
-      //     <img
-      //       style={{ margin: '5px', display: 'inline' }}
-      //       height="20px"
-      //       width="20px"
-      //       src={gitcoinLogo}
-      //       alt="gitcoin Logo"
-      //     />
-      //     <span>
-      //       <b>ROUND {round} HAS BEGUN!</b>!! 🎉
-      //     </span>
-      //   </span>,
-      //   {
-      //     className: 'purpTeal yellowText',
-      //     bodyClassName: 'purpTeal yellowText',
-      //     progressClassName: 'fancy-progress-bar',
-      //   },
-      // );
-      // }, 10000);
     }
   };
 
@@ -87,7 +65,7 @@ export function Bracket(props: any) {
     setnftVotes(voteArrary);
     setzkDeps(zkDepArray);
     const currentRound = await game.instance?.g_current_round();
-    if (currentRound?.toNumber() !== round) {
+    if (round && currentRound?.toNumber() !== round) {
       setRound(currentRound?.toNumber());
       await newRound();
     }
