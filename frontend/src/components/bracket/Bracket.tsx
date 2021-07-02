@@ -6,13 +6,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import * as ethers from 'ethers';
 import * as zksync from 'zksync';
+import { Spin } from 'antd';
 import { toast } from 'react-toastify';
+import { LinearProgress } from '@material-ui/core';
 import { GameContext } from '../../hardhat/SymfoniContext';
 import { nfts, ActiveNFT } from '../../assets/index';
 import gitcoinLogo from '../../assets/gitcoin/gitcoinIcon.png';
 import DanceOffModal from '../danceOffModal/DanceOffModal';
 import InactiveRound from './InactiveRound';
 import ActiveRound from './ActiveRound';
+// import { LinearProgress } from '@material-ui/core/';
+
 import {
   getVotes,
   getNftZkAccountState,
@@ -28,7 +32,7 @@ export function Bracket(props: any) {
   const [zkWallet, setZkWallet] = useState<any>(undefined);
   const [intermission, setIntermission] = useState<any>(false);
   const [zkDonation, setZkDonation] = useState<string>('50');
-  const { gameData1, gameData2, gd2, gd3, gd4 } = props;
+  const { gameData1, gameData2, gameData3, gameData4, gd2, gd3, gd4 } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [gameLoaded, setGameLoaded] = useState(false);
 
@@ -37,7 +41,37 @@ export function Bracket(props: any) {
   const [apiCall, setApiCall] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
-  const [round, setRound] = useState(1);
+  const [round, setRound] = useState<any>(2);
+
+  const newRound = async () => {
+    if (round < 5) {
+      // setRound(round + 1);
+      setIntermission(true);
+      await props.getRound(round);
+      // setTimeout(() => {
+      setIntermission(false);
+      toast(
+        <span className="purpTeal">
+          <img
+            style={{ margin: '5px', display: 'inline' }}
+            height="20px"
+            width="20px"
+            src={gitcoinLogo}
+            alt="gitcoin Logo"
+          />
+          <span>
+            <b>ROUND {round} HAS BEGUN!</b>!! 🎉
+          </span>
+        </span>,
+        {
+          className: 'purpTeal yellowText',
+          bodyClassName: 'purpTeal yellowText',
+          progressClassName: 'fancy-progress-bar',
+        },
+      );
+      // }, 10000);
+    }
+  };
 
   const getNftZkBalances = async function (numDancers: number = 16) {
     const voteArrary = [];
@@ -47,12 +81,16 @@ export function Bracket(props: any) {
       const votes = await getVotes(i, game, ethers);
       voteArrary.push(votes);
       const zkAccountInfo = await getNftZkAccountState(i, game, zksync);
-
       zkDepArray.push(zkAccountInfo);
     }
     setGettingBalances(false);
     setnftVotes(voteArrary);
     setzkDeps(zkDepArray);
+    const currentRound = await game.instance?.g_current_round();
+    if (currentRound?.toNumber() !== round) {
+      setRound(currentRound?.toNumber());
+      await newRound();
+    }
   };
 
   const setupZkProvider = async () => {
@@ -61,7 +99,6 @@ export function Bracket(props: any) {
   };
 
   useEffect(() => {
-    // console.log(gameData2, 'bracket');
     const initContract = async () => {
       if (!game.instance) return;
       console.log('Game is deployed at ', game.instance.address);
@@ -77,7 +114,15 @@ export function Bracket(props: any) {
     if (!gettingBalances) {
       getNftZkBalances();
     }
-  }, [game, getNftZkBalances, nftVotes, modalOpen, activeNft, gameData2]);
+  }, [
+    game,
+    getNftZkBalances,
+    nftVotes,
+    modalOpen,
+    activeNft,
+    gameData2,
+    zkDeps,
+  ]);
 
   const setupZkSigner = async () => {
     const provider = new ethers.providers.Web3Provider(
@@ -174,36 +219,6 @@ export function Bracket(props: any) {
     }
   };
 
-  const newRound = async () => {
-    if (round < 5) {
-      setRound(round + 1);
-      setIntermission(true);
-      const res = await props.getRound(round);
-      setTimeout(() => {
-        setIntermission(false);
-        toast(
-          <span className="purpTeal">
-            <img
-              style={{ margin: '5px', display: 'inline' }}
-              height="20px"
-              width="20px"
-              src={gitcoinLogo}
-              alt="gitcoin Logo"
-            />
-            <span>
-              <b>ROUND {round} HAS BEGUN!</b>!! 🎉
-            </span>
-          </span>,
-          {
-            className: 'purpTeal yellowText',
-            bodyClassName: 'purpTeal yellowText',
-            progressClassName: 'fancy-progress-bar',
-          },
-        );
-      }, 10000);
-    }
-  };
-
   return (
     <div>
       {intermission && (
@@ -223,7 +238,21 @@ export function Bracket(props: any) {
           zkDonation={zkDonation}
         />
       )}
-      {gameData1 && (
+      {zkDeps.length < 1 && (
+        <div
+          style={{
+            margin: '40px',
+            height: '1000px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <LinearProgress />
+          <span className="yellowText textAlign">LOADING</span>
+        </div>
+      )}
+      {gameData1 && zkDeps.length > 0 && (
         <main id="tournament">
           <ul className="round round-1">
             {round === 1 && (
@@ -285,12 +314,12 @@ export function Bracket(props: any) {
             )}
           </ul>
           <ul className="round round-3">
-            {round < 3 && (
+            {(round < 3 || intermission) && (
               <InactiveRound key="gd3" gameData={gd3} header="SEMIS" />
             )}
-            {!intermission && round === 3 && (
+            {!intermission && round === 3 && gameData3 && (
               <ActiveRound
-                gameData={gd3}
+                gameData={gameData3}
                 header="SEMIS"
                 nfts={nfts}
                 openModal={openModal}
@@ -303,7 +332,7 @@ export function Bracket(props: any) {
             )}
             {round > 3 && (
               <PreviousRound
-                gameData={gd3}
+                gameData={gameData3}
                 header="SEMIS"
                 nfts={nfts}
                 openModal={openModal}
@@ -316,12 +345,12 @@ export function Bracket(props: any) {
             )}
           </ul>
           <ul className="round round-4">
-            {round < 4 && (
+            {(round || intermission) < 4 && (
               <InactiveRound key="gd4" gameData={gd4} header="FINALS" />
             )}
-            {!intermission && round === 4 && (
+            {!intermission && round === 4 && gameData4 && (
               <ActiveRound
-                gameData={gd4}
+                gameData={gameData4}
                 header="FINALS"
                 nfts={nfts}
                 openModal={openModal}
@@ -334,7 +363,7 @@ export function Bracket(props: any) {
             )}
             {round > 4 && (
               <PreviousRound
-                gameData={gd4}
+                gameData={gameData4}
                 header="FINALS"
                 nfts={nfts}
                 openModal={openModal}

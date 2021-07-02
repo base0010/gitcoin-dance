@@ -14,8 +14,6 @@ import gitcoinDance from '../assets/gitcoin/gitcoinDance.svg';
 import nftDanceOff from '../assets/gitcoin/nftDanceOff.svg';
 import iconWallet from '../assets/gitcoin/iconWallet.svg';
 
-const BigNumber = require('bignumber.js');
-
 export function Home() {
   const game = useContext<any>(GameContext);
 
@@ -28,55 +26,75 @@ export function Home() {
   const [gd4, setGd4] = useState<any>(dummyArray.slice(0, 3));
 
   const getRound = async (round: number) => {
-    const res1 = await game.instance.gameByBracketByRound(1, 2, 0, 0);
-    const res2 = await game.instance.gameByBracketByRound(1, 2, 0, 1);
-    const res3 = await game.instance.gameByBracketByRound(1, 2, 1, 0);
-    const res4 = await game.instance.gameByBracketByRound(1, 2, 1, 1);
-    const res5 = await game.instance.gameByBracketByRound(1, 2, 2, 0);
-    const res6 = await game.instance.gameByBracketByRound(1, 2, 2, 1);
-    const res7 = await game.instance.gameByBracketByRound(1, 2, 3, 0);
-    const res8 = await game.instance.gameByBracketByRound(1, 2, 3, 1);
-    // const res3 = await game.instance.gameByBracketByRound(1, 2, 8, 3);
-    // const res4 = await game.instance.gameByBracketByRound(1, 2, 8, 4);
-    console.log(res1.toNumber(), 'res1');
-    console.log(res2.toNumber(), 'res2');
-    console.log(res3.toNumber(), 'res3');
-    console.log(res4.toNumber(), 'res4');
-    console.log(res5.toNumber(), 'res5');
-    console.log(res6.toNumber(), 'res6');
-    console.log(res7.toNumber(), 'res7');
-    console.log(res8.toNumber(), 'res8');
-    // console.log(res3, 'res3');
-    // console.log(res4, 'res4');
-    const resArray = [
-      res1.toNumber(),
-      res2.toNumber(),
-      res3.toNumber(),
-      res4.toNumber(),
-      res5.toNumber(),
-      res6.toNumber(),
-      res7.toNumber(),
-      res8.toNumber(),
-    ];
-    const result = [];
+    let res1;
+    let res2;
+    let res3;
+    let res4;
+    let res5;
+    let res6;
+    let res7;
+    let res8;
+    let resArray;
 
-    for (let i = 0; i < gameArray.length; i++) {
-      if (resArray.includes(i)) {
-        result.push(gameArray[i]);
-      }
-    }
-    switch (round + 1) {
+    const result: any = [];
+
+    switch (round) {
       case 1:
         setGameData1(result);
         break;
       case 2:
-        console.log(result, resArray, 'f');
+        res1 = await game.instance.gameByBracketByRound(1, 2, 0, 0);
+        res2 = await game.instance.gameByBracketByRound(1, 2, 0, 1);
+        res3 = await game.instance.gameByBracketByRound(1, 2, 1, 0);
+        res4 = await game.instance.gameByBracketByRound(1, 2, 1, 1);
+        res5 = await game.instance.gameByBracketByRound(1, 2, 2, 0);
+        res6 = await game.instance.gameByBracketByRound(1, 2, 2, 1);
+        res7 = await game.instance.gameByBracketByRound(1, 2, 3, 0);
+        res8 = await game.instance.gameByBracketByRound(1, 2, 3, 1);
+        resArray = [
+          res1.toNumber(),
+          res2.toNumber(),
+          res3.toNumber(),
+          res4.toNumber(),
+          res5.toNumber(),
+          res6.toNumber(),
+          res7.toNumber(),
+          res8.toNumber(),
+        ];
+        for (let i = 0; i < gameArray.length; i++) {
+          if (resArray.includes(i)) {
+            result.push(gameArray[i]);
+          }
+        }
         setGameData2(result);
         break;
       case 3:
+        res1 = await game.instance.gameByBracketByRound(1, 3, 0, 0);
+        res2 = await game.instance.gameByBracketByRound(1, 3, 0, 1);
+        res3 = await game.instance.gameByBracketByRound(1, 3, 1, 0);
+        res4 = await game.instance.gameByBracketByRound(1, 3, 1, 1);
+        resArray = [
+          res1.toNumber(),
+          res2.toNumber(),
+          res3.toNumber(),
+          res4.toNumber(),
+        ];
+        for (let i = 0; i < gameArray.length; i++) {
+          if (resArray.includes(i)) {
+            result.push(gameArray[i]);
+          }
+        }
         setGameData3(result);
         break;
       case 4:
+        res1 = await game.instance.gameByBracketByRound(1, 4, 0, 0);
+        res2 = await game.instance.gameByBracketByRound(1, 4, 0, 1);
+        resArray = [res1.toNumber(), res2.toNumber()];
+        for (let i = 0; i < gameArray.length; i++) {
+          if (resArray.includes(i)) {
+            result.push(gameArray[i]);
+          }
+        }
         setGameData4(result);
         break;
       default:
@@ -85,16 +103,52 @@ export function Home() {
   };
 
   useEffect(() => {
-    console.log(gameData2, 'home');
-
+    const getCurrentRound = async () => {
+      const currentRound = await game.instance?.g_current_round();
+      return currentRound;
+    };
     const getGameData = async () => {
       const getGameDataFromArray = async () => gameArray;
       if (!gameData1) {
         const res = await getGameDataFromArray();
         setGameData1(res);
-        // setGameData2(res.slice(0, 8));
-        // setGameData3(res.slice(0, 4));
-        // setGameData4(res.slice(0, 2));
+      }
+      const cr = await getCurrentRound();
+      if (cr && cr.toNumber() === 2) {
+        let res1;
+        let res2;
+        let res3;
+        let res4;
+        let res5;
+        let res6;
+        let res7;
+        let res8;
+        let resArray;
+        const result: any = [];
+        res1 = await game.instance.gameByBracketByRound(1, 2, 0, 0);
+        res2 = await game.instance.gameByBracketByRound(1, 2, 0, 1);
+        res3 = await game.instance.gameByBracketByRound(1, 2, 1, 0);
+        res4 = await game.instance.gameByBracketByRound(1, 2, 1, 1);
+        res5 = await game.instance.gameByBracketByRound(1, 2, 2, 0);
+        res6 = await game.instance.gameByBracketByRound(1, 2, 2, 1);
+        res7 = await game.instance.gameByBracketByRound(1, 2, 3, 0);
+        res8 = await game.instance.gameByBracketByRound(1, 2, 3, 1);
+        resArray = [
+          res1.toNumber(),
+          res2.toNumber(),
+          res3.toNumber(),
+          res4.toNumber(),
+          res5.toNumber(),
+          res6.toNumber(),
+          res7.toNumber(),
+          res8.toNumber(),
+        ];
+        for (let i = 0; i < gameArray.length; i++) {
+          if (resArray.includes(i)) {
+            result.push(gameArray[i]);
+          }
+        }
+        setGameData2(result);
       }
     };
     getGameData();
@@ -140,6 +194,8 @@ export function Home() {
             <Bracket
               gameData1={gameData1}
               gameData2={gameData2}
+              gameData3={gameData3}
+              gameData4={gameData4}
               gd2={gd2}
               gd3={gd3}
               gd4={gd4}
