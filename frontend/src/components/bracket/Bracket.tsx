@@ -41,7 +41,7 @@ export function Bracket(props: any) {
   const [apiCall, setApiCall] = useState(false);
   const [voting, setVoting] = useState<null | number>(null);
   const [activeNft, setActiveNft] = useState<null | ActiveNFT[]>(null);
-  const [round, setRound] = useState<any>(2);
+  const [round, setRound] = useState<any>(null);
 
   const newRound = async () => {
     if (round < 5) {
@@ -50,25 +50,25 @@ export function Bracket(props: any) {
       await props.getRound(round);
       // setTimeout(() => {
       setIntermission(false);
-      toast(
-        <span className="purpTeal">
-          <img
-            style={{ margin: '5px', display: 'inline' }}
-            height="20px"
-            width="20px"
-            src={gitcoinLogo}
-            alt="gitcoin Logo"
-          />
-          <span>
-            <b>ROUND {round} HAS BEGUN!</b>!! 🎉
-          </span>
-        </span>,
-        {
-          className: 'purpTeal yellowText',
-          bodyClassName: 'purpTeal yellowText',
-          progressClassName: 'fancy-progress-bar',
-        },
-      );
+      // toast(
+      //   <span className="purpTeal">
+      //     <img
+      //       style={{ margin: '5px', display: 'inline' }}
+      //       height="20px"
+      //       width="20px"
+      //       src={gitcoinLogo}
+      //       alt="gitcoin Logo"
+      //     />
+      //     <span>
+      //       <b>ROUND {round} HAS BEGUN!</b>!! 🎉
+      //     </span>
+      //   </span>,
+      //   {
+      //     className: 'purpTeal yellowText',
+      //     bodyClassName: 'purpTeal yellowText',
+      //     progressClassName: 'fancy-progress-bar',
+      //   },
+      // );
       // }, 10000);
     }
   };
@@ -99,6 +99,13 @@ export function Bracket(props: any) {
   };
 
   useEffect(() => {
+    const getCurrentRound = async () => {
+      const currentRound = await game.instance?.g_current_round();
+      setRound(currentRound?.toNumber());
+    };
+    if (!round) {
+      getCurrentRound();
+    }
     const initContract = async () => {
       if (!game.instance) return;
       console.log('Game is deployed at ', game.instance.address);
@@ -122,6 +129,7 @@ export function Bracket(props: any) {
     activeNft,
     gameData2,
     zkDeps,
+    round,
   ]);
 
   const setupZkSigner = async () => {
