@@ -86,7 +86,7 @@ export function PreviousRound(props: any) {
             <>
               <span key={i} style={{ margin: 'auto' }}>
                 <li
-                  onClick={() => openModal(prevNft, n)}
+                  onClick={() => openModal(false, prevNft, n)}
                   className={topClass}
                   style={{ cursor: 'pointer' }}
                 >
@@ -143,7 +143,7 @@ export function PreviousRound(props: any) {
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li
-                  onClick={() => openModal(prevNft, n)}
+                  onClick={() => openModal(false, prevNft, n)}
                   style={{ cursor: 'pointer' }}
                   className={bottomClass}
                 >

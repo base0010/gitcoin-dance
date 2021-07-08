@@ -52,7 +52,7 @@ export function ActiveRound(props: any) {
             <>
               <span key={i} style={{ margin: 'auto' }}>
                 <li
-                  onClick={() => openModal(prevNft, n)}
+                  onClick={() => openModal(true, prevNft, n)}
                   className={topClass}
                   style={{ cursor: 'pointer' }}
                 >
@@ -73,7 +73,7 @@ export function ActiveRound(props: any) {
                 </li>
                 <li className="game game-spacer">&nbsp;</li>
                 <li
-                  onClick={() => openModal(prevNft, n)}
+                  onClick={() => openModal(true, prevNft, n)}
                   className={bottomClass}
                   style={{ cursor: 'pointer' }}
                 >

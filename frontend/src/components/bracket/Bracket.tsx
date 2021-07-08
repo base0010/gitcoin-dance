@@ -28,6 +28,7 @@ import IntermissionModal from './IntermissionModal';
 export function Bracket(props: any) {
   const game = useContext(GameContext);
   const [gettingBalances, setGettingBalances] = useState(false);
+  const [winner, setWinner] = useState<any>(null);
   const [zkProvider, setZkProvider] = useState<any>(undefined);
   const [zkWallet, setZkWallet] = useState<any>(undefined);
   const [intermission, setIntermission] = useState<any>(false);
@@ -159,7 +160,7 @@ export function Bracket(props: any) {
           className: 'purpTeal yellowText',
           bodyClassName: 'purpTeal yellowText',
           progressClassName: 'fancy-progress-bar',
-          autoClose: 50000,
+          autoClose: 10000,
         },
       );
     }
@@ -184,13 +185,20 @@ export function Bracket(props: any) {
           className: 'purpTeal yellowText',
           bodyClassName: 'purpTeal yellowText',
           progressClassName: 'fancy-progress-bar',
-          autoClose: 50000,
+          autoClose: 10000,
         },
       );
     }, 50);
   };
 
-  const openModal = (...nftArray: any[]) => {
+  const openModal = (currentRound: boolean, ...nftArray: any[]) => {
+    if (!currentRound) {
+      for (let i = 0; i < nftArray.length; i++) {
+        if (gameData2.includes(nftArray[i])) {
+          setWinner(i);
+        }
+      }
+    }
     const active1 = nfts.find((n) => n.id === nftArray[0].gifId);
     const active2 = nfts.find((n) => n.id === nftArray[1].gifId);
     if (active1 && active2) {
@@ -222,6 +230,7 @@ export function Bracket(props: any) {
           setZkDonation={setZkDonation}
           voteForNft={voteForNft}
           zkDonation={zkDonation}
+          winner={winner}
         />
       )}
       {zkDeps.length < 1 && (

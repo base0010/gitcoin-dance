@@ -21,6 +21,7 @@ export function DanceOffModal(props: any) {
     setZkDonation,
     voteForNft,
     zkDonation,
+    winner,
   } = props;
   return (
     <Modal
@@ -34,7 +35,6 @@ export function DanceOffModal(props: any) {
       visible={modalOpen}
       // closeIcon={<CloseIcon />}
       onCancel={() => {
-        console.log('whattt');
         setActiveNft(null);
         setModalOpen(false);
       }}
@@ -49,7 +49,12 @@ export function DanceOffModal(props: any) {
         )}
         {!apiCall && (
           <>
-            <ModalCard voting={voting} selection={0} activeNft={activeNft[0]} />
+            <ModalCard
+              voting={voting}
+              winner={winner}
+              selection={0}
+              activeNft={activeNft[0]}
+            />
             <img
               style={{ alignSelf: 'center', margin: '40px' }}
               src={danceOff}
@@ -57,7 +62,12 @@ export function DanceOffModal(props: any) {
               width="270px"
               height="160px"
             />
-            <ModalCard voting={voting} selection={1} activeNft={activeNft[1]} />
+            <ModalCard
+              voting={voting}
+              winner={winner}
+              selection={1}
+              activeNft={activeNft[1]}
+            />
           </>
         )}
       </span>
