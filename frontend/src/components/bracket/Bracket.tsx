@@ -29,6 +29,7 @@ export function Bracket(props: any) {
   const game = useContext(GameContext);
   const [gettingBalances, setGettingBalances] = useState(false);
   const [winner, setWinner] = useState<any>(null);
+  const [currentGameData, setCurrentGameData] = useState<any>(null);
   const [zkProvider, setZkProvider] = useState<any>(undefined);
   const [zkWallet, setZkWallet] = useState<any>(undefined);
   const [intermission, setIntermission] = useState<any>(false);
@@ -84,6 +85,25 @@ export function Bracket(props: any) {
     };
     if (!round) {
       getCurrentRound();
+    }
+    if (round && !currentGameData) {
+      switch (round) {
+        case 1:
+          setCurrentGameData(gameData1);
+          break;
+        case 2:
+          setCurrentGameData(gameData2);
+          break;
+        case 3:
+          setCurrentGameData(gameData3);
+          break;
+        case 4:
+          setCurrentGameData(gameData4);
+          break;
+        default:
+          setCurrentGameData(gameData1);
+          break;
+      }
     }
     const initContract = async () => {
       if (!game.instance) return;
@@ -194,7 +214,7 @@ export function Bracket(props: any) {
   const openModal = (currentRound: boolean, ...nftArray: any[]) => {
     if (!currentRound) {
       for (let i = 0; i < nftArray.length; i++) {
-        if (gameData2.includes(nftArray[i])) {
+        if (currentGameData.includes(nftArray[i])) {
           setWinner(i);
         }
       }
@@ -231,6 +251,7 @@ export function Bracket(props: any) {
           voteForNft={voteForNft}
           zkDonation={zkDonation}
           winner={winner}
+          setWinner={setWinner}
         />
       )}
       {zkDeps.length < 1 && (

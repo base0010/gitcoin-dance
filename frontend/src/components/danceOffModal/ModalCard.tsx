@@ -3,7 +3,7 @@ import React from 'react';
 import illusCrown from '../../assets/gitcoin/illusCrown.svg';
 
 export function ModalCard(props: any) {
-  const { activeNft, voting, selection, winner = true } = props;
+  const { activeNft, voting, selection, winner } = props;
   return (
     <span style={{ position: 'relative' }}>
       {winner === selection && (

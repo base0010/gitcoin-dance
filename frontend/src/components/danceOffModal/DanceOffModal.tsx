@@ -22,6 +22,7 @@ export function DanceOffModal(props: any) {
     voteForNft,
     zkDonation,
     winner,
+    setWinner,
   } = props;
   return (
     <Modal
@@ -37,6 +38,7 @@ export function DanceOffModal(props: any) {
       onCancel={() => {
         setActiveNft(null);
         setModalOpen(false);
+        setWinner(null);
       }}
       footer={null}
     >
