@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { Button } from 'antd';
+import Dai from '../../assets/gitcoin/dai.svg';
 
 export function ModalVoting(props: any) {
   const {
@@ -31,7 +32,8 @@ export function ModalVoting(props: any) {
             <label className="yellowText marginTen">
               Donation:
               <input
-                placeholder="DAI"
+                // placeholder="DAI"
+                id="dai"
                 className="polarisText"
                 style={{ margin: '0px 5px' }}
                 type="number"
