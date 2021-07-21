@@ -30,10 +30,10 @@ export function ModalVoting(props: any) {
         <>
           <form>
             <label className="yellowText marginTen">
-              Donation:
+              <img src={Dai} alt="dai" height="20" width="20" />
+              <span className="layer_icon mr-1">L2</span>
               <input
-                // placeholder="DAI"
-                id="dai"
+                // id="dai"
                 className="polarisText"
                 style={{ margin: '0px 5px' }}
                 type="number"
