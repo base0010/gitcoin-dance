@@ -81,6 +81,7 @@ export function Bracket(props: any) {
   useEffect(() => {
     const getCurrentRound = async () => {
       const currentRound = await game.instance?.g_current_round();
+      console.log(currentRound?.toNumber(), 'current round');
       setRound(currentRound?.toNumber());
     };
     const getCurrentBlockNumber = async () => {
@@ -88,24 +89,23 @@ export function Bracket(props: any) {
         window.web3.currentProvider,
       );
       const currentBlock = await provider.getBlockNumber();
-      console.log(currentBlock, 'cb');
+      console.log(currentBlock, 'current block');
     };
 
     const getStartBlock = async () => {
-      console.log(game, 'ggg');
       const sb = await game.instance?.g_start_block();
       if (sb) {
-        console.log(sb.toNumber(), 'sb');
+        console.log(sb.toNumber(), 'start block');
         const bt = await game.instance?.g_round_blocktime();
         if (bt) {
-          console.log(bt.toNumber(), 'bt');
+          console.log(bt.toNumber(), 'blocktime');
         }
         return sb.toNumber();
       }
     };
-    getStartBlock();
+    // getStartBlock();
 
-    getCurrentBlockNumber();
+    // getCurrentBlockNumber();
     if (!round) {
       getCurrentRound();
     }

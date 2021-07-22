@@ -36,7 +36,6 @@ export function PreviousRound(props: any) {
         let pnft;
         if (i % 2 !== 0) {
           const prevNft = gameData[i - 1];
-          console.log(currentGameData.includes(n));
           pnft = nfts.find((nf: any) => nf.id === prevNft.gifId);
           const bottomClass = classNames({
             game: true,

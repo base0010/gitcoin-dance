@@ -15,12 +15,12 @@ export const nfts: ActiveNFT[] = [
   },
   {
     id: '674448bf-4cbe-46cc-9fa0-98b87710f831',
-    src: require('./nfts/Chibie.mp4'),
+    src: require('./nfts/Chibie_scaled.mp4'),
     description: 'chibie',
   },
   {
     id: 'e4288011-8a4f-494b-a4e0-b7442b3329fa',
-    src: require('./nfts/Owocki.mp4'),
+    src: require('./nfts/Owocki_scaled.mp4'),
     description: 'owocki',
   },
   {
