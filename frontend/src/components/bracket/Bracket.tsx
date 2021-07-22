@@ -83,6 +83,28 @@ export function Bracket(props: any) {
       const currentRound = await game.instance?.g_current_round();
       setRound(currentRound?.toNumber());
     };
+    const getCurrentBlockNumber = async () => {
+      const provider = new ethers.providers.Web3Provider(
+        window.web3.currentProvider,
+      );
+      const currentBlock = await provider.getBlockNumber();
+      console.log(currentBlock, 'cb');
+    };
+
+    const getStartBlock = async () => {
+      const sb = await game.instance?.g_start_block();
+      if (sb) {
+        console.log(sb.toNumber(), 'sb');
+        const bt = await game.instance?.g_round_blocktime();
+        if (bt) {
+          console.log(bt.toNumber(), 'bt');
+        }
+        return sb.toNumber();
+      }
+    };
+    // getStartBlock();
+
+    // getCurrentBlockNumber();
     if (!round) {
       getCurrentRound();
     }
@@ -214,6 +236,7 @@ export function Bracket(props: any) {
   const openModal = (currentRound: boolean, ...nftArray: any[]) => {
     if (!currentRound) {
       for (let i = 0; i < nftArray.length; i++) {
+        console.log(nftArray, nftArray[i], 'nftarr');
         if (currentGameData.includes(nftArray[i])) {
           setWinner(i);
         }
@@ -294,6 +317,7 @@ export function Bracket(props: any) {
                 getZkVotes={getZkVotes}
                 zkDeps={zkDeps}
                 ethers={ethers}
+                currentGameData={currentGameData}
                 // newRound={() => newRound()}
               />
             )}
@@ -325,6 +349,7 @@ export function Bracket(props: any) {
                 getZkVotes={getZkVotes}
                 zkDeps={zkDeps}
                 ethers={ethers}
+                currentGameData={currentGameData}
                 // newRound={() => newRound()}
               />
             )}
@@ -356,6 +381,7 @@ export function Bracket(props: any) {
                 getZkVotes={getZkVotes}
                 zkDeps={zkDeps}
                 ethers={ethers}
+                currentGameData={currentGameData}
                 // newRound={() => newRound()}
               />
             )}
@@ -387,6 +413,7 @@ export function Bracket(props: any) {
                 getZkVotes={getZkVotes}
                 zkDeps={zkDeps}
                 ethers={ethers}
+                currentGameData={currentGameData}
                 // newRound={() => newRound()}
               />
             )}

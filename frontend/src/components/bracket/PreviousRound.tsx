@@ -23,6 +23,7 @@ export function PreviousRound(props: any) {
     getZkVotes,
     zkDeps,
     ethers,
+    currentGameData,
   } = props;
   return (
     <>
@@ -35,26 +36,13 @@ export function PreviousRound(props: any) {
         let pnft;
         if (i % 2 !== 0) {
           const prevNft = gameData[i - 1];
+          console.log(currentGameData.includes(n));
           pnft = nfts.find((nf: any) => nf.id === prevNft.gifId);
           const bottomClass = classNames({
             game: true,
             'game-bottom': true,
-            purpTeal:
-              Number(
-                getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                  nftVotes[prevNft.nftId - 1],
-              ) <
-              Number(
-                getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-              ),
-            inactiveRound:
-              Number(
-                getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                  nftVotes[prevNft.nftId - 1],
-              ) >
-              Number(
-                getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-              ),
+            purpTeal: currentGameData.includes(n),
+            inactiveRound: !currentGameData.includes(n),
             ellipsisTruncation: true,
             winner: n.voteCount > gameData[i - 1].voteCount,
             imageInBracketCard: true,
@@ -62,22 +50,8 @@ export function PreviousRound(props: any) {
           const topClass = classNames({
             game: true,
             'game-top': true,
-            purpTeal:
-              Number(
-                getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                  nftVotes[prevNft.nftId - 1],
-              ) >
-              Number(
-                getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-              ),
-            inactiveRound:
-              Number(
-                getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                  nftVotes[prevNft.nftId - 1],
-              ) <
-              Number(
-                getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-              ),
+            purpTeal: currentGameData.includes(prevNft),
+            inactiveRound: !currentGameData.includes(prevNft),
             ellipsisTruncation: true,
             winner: n.voteCount > gameData[i].voteCount,
             imageInBracketCard: true,
@@ -90,14 +64,7 @@ export function PreviousRound(props: any) {
                   className={topClass}
                   style={{ cursor: 'pointer' }}
                 >
-                  {Number(
-                    getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                      nftVotes[prevNft.nftId - 1],
-                  ) >=
-                    Number(
-                      getZkVotes(n.nftId, zkDeps, ethers) +
-                        nftVotes[n.nftId - 1],
-                    ) && (
+                  {currentGameData.includes(prevNft) && (
                     <ActiveRoundCard
                       nft={pnft}
                       activeNft={prevNft}
@@ -115,14 +82,7 @@ export function PreviousRound(props: any) {
                       )}
                     />
                   )}
-                  {Number(
-                    getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                      nftVotes[prevNft.nftId - 1],
-                  ) <
-                    Number(
-                      getZkVotes(n.nftId, zkDeps, ethers) +
-                        nftVotes[n.nftId - 1],
-                    ) && (
+                  {!currentGameData.includes(prevNft) && (
                     <InactiveRoundCard
                       nft={pnft}
                       activeNft={prevNft}
@@ -147,13 +107,7 @@ export function PreviousRound(props: any) {
                   style={{ cursor: 'pointer' }}
                   className={bottomClass}
                 >
-                  {Number(
-                    getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-                  ) >=
-                    Number(
-                      getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                        nftVotes[prevNft.nftId - 1],
-                    ) && (
+                  {currentGameData.includes(n) && (
                     <ActiveRoundCard
                       nft={nft}
                       prevNft={prevNft}
@@ -169,13 +123,7 @@ export function PreviousRound(props: any) {
                       zkVotes={Number(getZkVotes(n.nftId, zkDeps, ethers))}
                     />
                   )}
-                  {Number(
-                    getZkVotes(n.nftId, zkDeps, ethers) + nftVotes[n.nftId - 1],
-                  ) <
-                    Number(
-                      getZkVotes(prevNft.nftId, zkDeps, ethers) +
-                        nftVotes[prevNft.nftId - 1],
-                    ) && (
+                  {!currentGameData.includes(n) && (
                     <InactiveRoundCard
                       nft={nft}
                       prevNft={prevNft}
