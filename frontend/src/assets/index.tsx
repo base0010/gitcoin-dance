@@ -11,22 +11,22 @@ export const nfts: ActiveNFT[] = [
   {
     id: 'b304b757-30cf-4c16-a04b-8ad9ca369fd7',
     src: require('./nfts/combonus.mp4'),
-    description: 'adventureCat',
+    description: 'alex',
   },
   {
     id: '674448bf-4cbe-46cc-9fa0-98b87710f831',
-    src: require('./nfts/combonus.mp4'),
-    description: 'famGuy',
+    src: require('./nfts/Chibie.mp4'),
+    description: 'chibie',
   },
   {
     id: 'e4288011-8a4f-494b-a4e0-b7442b3329fa',
-    src: require('./nfts/combonus.mp4'),
-    description: 'banana',
+    src: require('./nfts/Owocki.mp4'),
+    description: 'owocki',
   },
   {
     id: '8c713f8a-79e4-49de-9ac9-f3e1a7868e68',
-    src: require('./nfts/combonus.mp4'),
-    description: 'combonus',
+    src: require('./nfts/Connor.mp4'),
+    description: 'connor',
   },
   {
     id: 'c50218a4-5c60-4af6-bd55-3268fac273c6',

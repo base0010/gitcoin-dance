@@ -92,6 +92,7 @@ export function Bracket(props: any) {
     };
 
     const getStartBlock = async () => {
+      console.log(game, 'ggg');
       const sb = await game.instance?.g_start_block();
       if (sb) {
         console.log(sb.toNumber(), 'sb');
@@ -102,9 +103,9 @@ export function Bracket(props: any) {
         return sb.toNumber();
       }
     };
-    // getStartBlock();
+    getStartBlock();
 
-    // getCurrentBlockNumber();
+    getCurrentBlockNumber();
     if (!round) {
       getCurrentRound();
     }
