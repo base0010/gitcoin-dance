@@ -35,7 +35,7 @@ const gameArray = [
     voteCount: 5,
   },
   {
-    name: 'carlton',
+    name: 'dylan',
     userAddress: '0x6',
     gifId: '32b7496c-c655-475f-b218-7060bcdf3178',
     nftId: 6,
@@ -70,14 +70,14 @@ const gameArray = [
     voteCount: 11,
   },
   {
-    name: 'boombox',
+    name: 'sam',
     userAddress: '0x11',
     gifId: 'c50218a4-5c60-4af6-bd55-3268fac273c6',
     nftId: 11,
     voteCount: 425,
   },
   {
-    name: 'Cat',
+    name: 'disruptionJoe',
     userAddress: '0x12',
     gifId: 'a141de63-09f1-40bd-914d-8f8447e75475',
     nftId: 12,

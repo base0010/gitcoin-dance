@@ -2,14 +2,14 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Modal, Spin } from 'antd';
 import danceOff from '../../assets/gitcoin/danceOff.svg';
 import ModalCard from './ModalCard';
 import ModalVoting from './ModalVoting';
 
 export function DanceOffModal(props: any) {
-  const CloseIcon = () => <div className="imgBorder marginTen xButton">X</div>;
+  // const CloseIcon = () => <div className="imgBorder marginTen xButton">X</div>;
   const {
     modalOpen,
     setActiveNft,
