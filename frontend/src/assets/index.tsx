@@ -45,7 +45,7 @@ export const nfts: ActiveNFT[] = [
   },
   {
     id: 'd07fc3f8-2876-46d6-abb1-2da1a2f71f39',
-    src: require('./nfts/zackDuck.mp4'),
+    src: require('./nfts/zackDuck_scaled.mp4'),
     description: 'zackDuck',
   },
   {
@@ -55,12 +55,12 @@ export const nfts: ActiveNFT[] = [
   },
   {
     id: '7eebd81d-5532-4a72-8659-313bba56bd43',
-    src: require('./nfts/Fred2.mp4'),
+    src: require('./nfts/Fred2_scaled.mp4'),
     description: 'fred2',
   },
   {
     id: 'b5117532-bcd1-483a-874f-1dc78d2ad8c1',
-    src: require('./nfts/Fred1.mp4'),
+    src: require('./nfts/Fred1_scaled.mp4'),
     description: 'fred1',
   },
   {
