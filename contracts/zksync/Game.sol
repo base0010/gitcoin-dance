@@ -189,5 +189,4 @@ contract Game is MathLog, ERC721Mintable{
        return success;
     }
 
-
 }

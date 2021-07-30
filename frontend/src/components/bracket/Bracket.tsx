@@ -57,6 +57,7 @@ export function Bracket(props: any) {
     const voteArrary = [];
     const zkDepArray = [];
     setGettingBalances(true);
+
     for (let i = 0; i <= numDancers; i++) {
       const votes = await getVotes(i, game, ethers);
       voteArrary.push(votes);

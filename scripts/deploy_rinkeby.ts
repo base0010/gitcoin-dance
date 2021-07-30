@@ -88,7 +88,7 @@ const deploy_game = async function(){
     const Game = await hre.ethers.getContractFactory("Game");
     const round_blocktime = 25;
 
-    game = await Game.deploy(16,round_blocktime, r_dai_address);
+    game = await Game.deploy(16,round_blocktime, 1000, r_dai_address);
     await game.deployed();
     const address = await game.address
     console.log("Game Deployed to: " + address)
@@ -102,7 +102,7 @@ async function main(){
 
     for(let i = 0; i <= 16; i++) {
         console.log("Minting stuffs")
-        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/${i}.gif`, r_dai_address);
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/${i}.mp4`, r_dai_address);
         let waited = await mint.wait()
 
         const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')

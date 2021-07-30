@@ -15,7 +15,7 @@ async function main(){
 
     for(let i = 0; i < num_dancers; i++) {
 
-        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${i}.gif`, r_dai_address);
+        const mint = await game.mintNFTAndDeployDonationAddress(`http://gitcoin.dance/nft/${i}.mp4`, r_dai_address);
         let waited = await mint.wait()
 
         const dancer_created_e = waited.events.filter(event=>event.event === 'DancerCreated')

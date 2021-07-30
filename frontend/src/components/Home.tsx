@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import Bracket from './bracket/Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
-import { gameArray, dummyArray } from '../fixtures/gameData';
+import { gameArray, dummyArray } from '../fixtures/nftData';
 import { GameContext } from '../hardhat/SymfoniContext';
 
 import gitcoinDance from '../assets/gitcoin/gitcoinDance.svg';
