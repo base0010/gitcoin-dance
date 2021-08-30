@@ -5,6 +5,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 // import { LinearProgress } from '@material-ui/core/';
 import { Button } from 'antd';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import Web3Modal from 'web3modal';
+
+import { toast } from 'react-toastify';
 import Bracket from './bracket/Bracket';
 import LatestActivityCarousel from './LatestActivityCarousel';
 import { gameArray, dummyArray } from '../fixtures/nftData';
@@ -15,9 +19,12 @@ import nftDanceOff from '../assets/gitcoin/nftDanceOff.svg';
 import iconWallet from '../assets/gitcoin/iconWallet.svg';
 
 export function Home() {
+  let provider;
+  let web3Modal: Web3Modal;
   const game = useContext<any>(GameContext);
 
   const [gameData1, setGameData1] = useState<any>(null);
+  const [walletSelected, setWalletSelected] = useState<any>(false);
   const [gameData2, setGameData2] = useState<any>(null);
   const [gameData3, setGameData3] = useState<any>(dummyArray.slice(0, 5));
   const [gameData4, setGameData4] = useState<any>(dummyArray.slice(0, 3));
@@ -97,8 +104,54 @@ export function Home() {
       const cr = await getCurrentRound();
       getRound(cr);
     };
-    getGameData();
-  }, [gameData1, gameData2, gameData3, gameData4]);
+
+    const selectWallet = async () => {
+      if (!walletSelected) {
+        const providerOptions = {
+          walletconnect: {
+            package: WalletConnectProvider, // required
+            options: {
+              infuraId: 'bea2648e203b482bbf33738642188ac4', // required
+            },
+          },
+        };
+
+        web3Modal = new Web3Modal({
+          network: 'rinkeby', // optional
+          cacheProvider: true, // optional
+
+          providerOptions, // required
+        });
+        provider = await web3Modal.connect();
+        provider.on('chainChanged', (chainId: number) => {
+          selectWallet();
+        });
+        let cid;
+        window.ethereum
+          .request({ method: 'eth_chainId' })
+          .then((chainId: any) => {
+            cid = parseInt(chainId, 16);
+            if (cid === 4) {
+              console.log('chainid', cid);
+              setWalletSelected(true);
+            } else {
+              alert('PLEASE SWITCH TO RINKEBY NETWORK AND RELOAD PAGE');
+            }
+          })
+          .catch((error: any) => {
+            console.error(
+              `Error fetching chainId: ${error.code}: ${error.message}`,
+            );
+          });
+      }
+    };
+    if (!walletSelected) {
+      selectWallet();
+    }
+    if (walletSelected) {
+      getGameData();
+    }
+  }, [gameData1, gameData2, gameData3, gameData4, walletSelected]);
   return (
     <div>
       <Link style={{ margin: 'auto' }} to="/">
