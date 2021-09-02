@@ -118,31 +118,36 @@ export function Home() {
 
         web3Modal = new Web3Modal({
           network: 'rinkeby', // optional
-          cacheProvider: true, // optional
+          // cacheProvider: true, // optional
 
           providerOptions, // required
         });
+        web3Modal.clearCachedProvider();
         provider = await web3Modal.connect();
-        provider.on('chainChanged', (chainId: number) => {
-          selectWallet();
-        });
+        // provider.on('chainChanged', (chainId: number) => {
+        //   selectWallet();
+        // });
         let cid;
-        window.ethereum
-          .request({ method: 'eth_chainId' })
-          .then((chainId: any) => {
-            cid = parseInt(chainId, 16);
-            if (cid === 4) {
-              console.log('chainid', cid);
-              setWalletSelected(true);
-            } else {
-              alert('PLEASE SWITCH TO RINKEBY NETWORK AND RELOAD PAGE');
-            }
-          })
-          .catch((error: any) => {
-            console.error(
-              `Error fetching chainId: ${error.code}: ${error.message}`,
-            );
-          });
+        if (!window.ethereum) {
+          setWalletSelected(false);
+        } else {
+          window.ethereum
+            .request({ method: 'eth_chainId' })
+            .then((chainId: any) => {
+              cid = parseInt(chainId, 16);
+              if (cid === 4) {
+                console.log('chainid', cid);
+                setWalletSelected(true);
+              } else {
+                alert('PLEASE SWITCH TO RINKEBY NETWORK AND RELOAD PAGE');
+              }
+            })
+            .catch((error: any) => {
+              console.error(
+                `Error fetching chainId: ${error.code}: ${error.message}`,
+              );
+            });
+        }
       }
     };
     if (!walletSelected) {
