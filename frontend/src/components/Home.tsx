@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
+import * as ethers from 'ethers';
 
 import { toast } from 'react-toastify';
 import Bracket from './bracket/Bracket';
@@ -124,9 +125,18 @@ export function Home() {
         });
         web3Modal.clearCachedProvider();
         provider = await web3Modal.connect();
-        // provider.on('chainChanged', (chainId: number) => {
-        //   selectWallet();
-        // });
+        provider.on('chainChanged', (chainId: string) => {
+          console.log('chainidl', parseInt(chainId, 16));
+          if (parseInt(chainId, 16) !== 4) {
+            console.log('wtffffff');
+            setGameData1(null);
+            // setWalletSelected(false);
+          }
+        });
+        provider.once('error', (message: string) => {
+          console.log(message, 'mmmm');
+        });
+
         let cid;
         if (!window.ethereum) {
           setWalletSelected(false);
@@ -138,6 +148,7 @@ export function Home() {
               if (cid === 4) {
                 console.log('chainid', cid);
                 setWalletSelected(true);
+                getGameData();
               } else {
                 alert('PLEASE SWITCH TO RINKEBY NETWORK AND RELOAD PAGE');
               }
@@ -153,9 +164,9 @@ export function Home() {
     if (!walletSelected) {
       selectWallet();
     }
-    if (walletSelected) {
-      getGameData();
-    }
+    // if (walletSelected) {
+    //   getGameData();
+    // }
   }, [gameData1, gameData2, gameData3, gameData4, walletSelected]);
   return (
     <div>
